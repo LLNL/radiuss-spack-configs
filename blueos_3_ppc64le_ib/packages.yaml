@@ -5,11 +5,13 @@ packages:
     target: [ppc64le]
     compiler: [gcc, pgi, clang, xl]
   cmake:
-    version: [3.14.5]
+    version: [3.18.0, 3.14.5]
     buildable: false
     externals:
-    - spec: cmake
+    - spec: cmake@3.14.5
       prefix: /usr/tce/packages/cmake/cmake-3.14.5
+    - spec: cmake@3.18.0
+      prefix: /usr/tce/packages/cmake/cmake-3.18.0
   cuda:
     version: [11.0.2, 10.1.243, 10.1.168, 9.2.148, 8.0]
     buildable: false
