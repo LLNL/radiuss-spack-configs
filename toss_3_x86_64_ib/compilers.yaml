@@ -126,10 +126,10 @@ compilers::
 - compiler:
     spec: intel@18.0.2
     paths:
-      cc: /usr/tce/packages/intel/intel-18.0.0/bin/icc
-      cxx: /usr/tce/packages/intel/intel-18.0.0/bin/icpc
-      f77: /usr/tce/packages/intel/intel-18.0.0/bin/ifort
-      fc: /usr/tce/packages/intel/intel-18.0.0/bin/ifort
+      cc: /usr/tce/packages/intel/intel-18.0.2/bin/icc
+      cxx: /usr/tce/packages/intel/intel-18.0.2/bin/icpc
+      f77: /usr/tce/packages/intel/intel-18.0.2/bin/ifort
+      fc: /usr/tce/packages/intel/intel-18.0.2/bin/ifort
     flags:
       cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
       cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
