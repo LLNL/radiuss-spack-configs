@@ -28,18 +28,28 @@ packages:
       prefix: /usr/tce/packages/cuda/cuda-8.0
   spectrum-mpi:
     externals:
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@19.7
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-19.7
+    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@19.10
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-19.10
     - spec: spectrum-mpi@10.3.1.03rtm0%pgi@20.4
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-20.4
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@8.3.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-8.3.1
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@4.9.3
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-4.9.3
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@10.0.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-10.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@9.0.0
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-9.0.0
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@9.0.0ibm
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-2019.10.03
     - spec: spectrum-mpi@10.3.1.03rtm0%clang@10.0.1ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-10.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2020.09.17
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.7
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2020.03.18
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@beta2019.06.20
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
     buildable: false
+  python:
+    buildable: false
+    version: [3.8.2]
+    externals:
+    - spec: python@3.8.2
+      prefix: /usr/tce/packages/python/python-3.8.2
