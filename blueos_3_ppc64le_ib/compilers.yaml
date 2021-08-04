@@ -65,6 +65,19 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
+    spec: clang@11.0.0ibm
+    paths:
+      cc: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang
+      cxx: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2020.11.12/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2020.11.12/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
     spec: clang@coral2018.08.08
     paths:
       cc: /usr/tce/packages/clang/clang-coral-2018.08.08/bin/clang
