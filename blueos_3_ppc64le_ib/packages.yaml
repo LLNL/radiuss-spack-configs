@@ -1,5 +1,18 @@
-packages:
+packages::
   all:
+    permissions:
+      read: world
+      write: group
+      group: radiuss
+    providers:
+      blas:
+      - netlib-lapack
+      lapack:
+      - netlib-lapack
+      mpi:
+      - spectrum-mpi
+      unwind:
+      - libunwind
     # This defaults us to machine specific flags of ivybridge which allows
     # us to run on broadwell as well
     target: [ppc64le]
@@ -55,3 +68,63 @@ packages:
     externals:
     - spec: python@3.8.2
       prefix: /usr/tce/packages/python/python-3.8.2
+
+  # Blas/Lapack virtual package provider
+  netlib-lapack:
+    buildable: false
+    version: [3.9.0]
+    externals:
+    - spec: netlib-lapack@3.9.0
+      prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-P9-xl-2020.03.18
+
+  #ncurses has a bug in their 6.2 that says that getopt is not present
+  # see: https://github.com/spack/spack/issues/16269
+  ncurses:
+    version: [6.1]
+
+  # System level packages to not build
+  autoconf:
+    buildable: false
+    externals:
+    - spec: autoconf@2.69
+      prefix: /usr
+  automake:
+    buildable: false
+    externals:
+    - spec: automake@1.13.4
+      prefix: /usr
+  bzip2:
+    buildable: false
+    externals:
+    - spec: bzip2@1.0.6
+      prefix: /usr
+  gettext:
+    buildable: false
+    externals:
+    - spec: gettext@0.19.8.1
+      prefix: /usr
+  libtool:
+    buildable: false
+    externals:
+    - spec: libtool@2.4.2
+      prefix: /usr
+  m4:
+    buildable: false
+    externals:
+    - spec: m4@1.4.16
+      prefix: /usr
+  perl:
+    buildable: false
+    externals:
+    - spec: perl@5.16.3
+      prefix: /usr
+  pkg-config:
+    buildable: false
+    externals:
+    - spec: pkg-config@0.27.1
+      prefix: /usr
+  tar:
+    buildable: false
+    externals:
+    - spec: tar@1.26
+      prefix: /usr
