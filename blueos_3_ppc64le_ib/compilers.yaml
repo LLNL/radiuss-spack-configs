@@ -78,7 +78,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@11.0.0ibm
+    spec: clang@11ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang++
