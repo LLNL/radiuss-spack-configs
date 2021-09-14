@@ -134,7 +134,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: intel@2021.2.oneapi
+    spec: intel-oneapi@2021.2-ifort
     paths:
       cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
       cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
@@ -144,6 +144,22 @@ compilers:
       cflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
       cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/g++
       fflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
+    operating_system: rhel7
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: intel-oneapi@2021.2-ifx
+    paths:
+      cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
+      cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
+      f77: /usr/tce/packages/intel/intel-2021.2/bin/ifx
+      fc: /usr/tce/packages/intel/intel-2021.2/bin/ifx
+    flags:
+      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/gcc
+      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/g++
+      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/gcc
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -240,4 +256,3 @@ compilers:
     modules: []
     environment: {}
     extra_rpaths: []
-    
