@@ -140,7 +140,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: intel-oneapi@2021.2-ifort
+    spec: oneapi@2021.2-ifort
     paths:
       cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
       cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
@@ -156,7 +156,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: intel-oneapi@2021.2-ifx
+    spec: oneapi@2021.2-ifx
     paths:
       cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
       cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
