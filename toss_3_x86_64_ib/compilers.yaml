@@ -147,8 +147,8 @@ compilers::
       f77: /usr/tce/packages/intel/intel-2021.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-2021.2/bin/ifort
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/g++
+      cflags: -gcc-toolchain=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
+      cxxflags: -gcc-toolchain=/usr/tce/packages/gcc/gcc-8.1.0/bin/g++
       fflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
     operating_system: rhel7
     target: x86_64
@@ -163,8 +163,8 @@ compilers::
       f77: /usr/tce/packages/intel/intel-2021.2/bin/ifx
       fc: /usr/tce/packages/intel/intel-2021.2/bin/ifx
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/g++
+      cflags: -gcc-toolchain=/usr/tce/packages/gcc/gcc-10.2.1/bin/gcc
+      cxxflags: -gcc-toolchain=/usr/tce/packages/gcc/gcc-10.2.1/bin/g++
       fflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.2.1/bin/gcc
     operating_system: rhel7
     target: x86_64
