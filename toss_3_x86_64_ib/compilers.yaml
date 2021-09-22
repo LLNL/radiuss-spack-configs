@@ -142,8 +142,8 @@ compilers::
 - compiler:
     spec: oneapi@2021.2-ifort
     paths:
-      cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
-      cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
+      cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icx
+      cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpx
       f77: /usr/tce/packages/intel/intel-2021.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-2021.2/bin/ifort
     flags:
@@ -158,8 +158,8 @@ compilers::
 - compiler:
     spec: oneapi@2021.2-ifx
     paths:
-      cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icc
-      cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpc
+      cc: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icx
+      cxx: /usr/tce/packages/intel/intel-oneapi-2021.2/bin/icpx
       f77: /usr/tce/packages/intel/intel-2021.2/bin/ifx
       fc: /usr/tce/packages/intel/intel-2021.2/bin/ifx
     flags:
