@@ -15,9 +15,11 @@ packages::
     - spec: cmake@3.20.2
       prefix: /usr/tce/packages/cmake/cmake-3.20.2
   cuda:
-    version: [11.0.2, 10.1.243, 10.1.168]
+    version: [11.2.0, 11.0.2, 10.1.243, 10.1.168]
     buildable: false
     externals:
+    - spec: cuda@11.2.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.2.0
     - spec: cuda@11.0.2+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-11.0.2
     - spec: cuda@10.1.243+allow-unsupported-compilers
