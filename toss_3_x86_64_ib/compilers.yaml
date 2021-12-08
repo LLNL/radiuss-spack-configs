@@ -85,8 +85,9 @@ compilers:
       f77: /usr/tce/packages/intel/intel-16.0.4/bin/ifort
       fc: /usr/tce/packages/intel/intel-16.0.4/bin/ifort
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-4.9.3/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-4.9.3/bin/g++
+      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
+      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -100,8 +101,9 @@ compilers:
       f77: /usr/tce/packages/intel/intel-17.0.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-17.0.2/bin/ifort
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-4.9.3/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-4.9.3/bin/g++
+      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
+      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
     operating_system: rhel7
     target: x86_64
     modules: []
