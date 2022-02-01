@@ -2,8 +2,8 @@ packages:
   all:
     # This defaults us to machine specific flags of ivybridge which allows
     # us to run on broadwell as well
-    target: [ivybridge]
-    compiler: [gcc, clang]
+    target: [zen2]
+    compiler: [gcc, cce, clang]
   cmake:
     version: [3.14.5]
     buildable: false
