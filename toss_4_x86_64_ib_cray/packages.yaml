@@ -1,0 +1,86 @@
+packages:
+  all:
+    # This defaults us to machine specific flags of ivybridge which allows
+    # us to run on broadwell as well
+    target: [zen2]
+    compiler: [gcc, cce, clang]
+  cmake:
+    version: [3.14.5]
+    buildable: false
+
+    externals:
+    - spec: cmake
+      prefix: /usr/tce/packages/cmake/cmake-3.14.5
+  cuda:
+    version: [11.4.120]
+    buildable: false
+
+    externals:
+    - spec: cuda@11.4.120
+      prefix: /opt/toss/cudatoolkit/11.4/ 
+  hip:
+    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    buildable: false
+    externals:
+    - spec: hip@4.2.0
+      prefix: /opt/rocm-4.2.0/hip
+    - spec: hip@4.3.1
+      prefix: /opt/rocm-4.3.1/hip
+    - spec: hip@4.5.0
+      prefix: /opt/rocm-4.5.0/hip
+    - spec: hip@4.5.2
+      prefix: /opt/rocm-4.5.2/hip
+  llvm-amdgpu:
+    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    buildable: false
+    externals:
+    - spec: llvm-amdgpu@4.2.0
+      prefix: /opt/rocm-4.2.0/llvm
+    - spec: llvm-amdgpu@4.3.1
+      prefix: /opt/rocm-4.3.1/llvm
+    - spec: llvm-amdgpu@4.5.0
+      prefix: /opt/rocm-4.5.0/llvm
+    - spec: llvm-amdgpu@4.5.2
+      prefix: /opt/rocm-4.5.2/llvm
+  hsa-rocr-dev:
+    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    buildable: false
+    externals:
+    - spec: hsa-rocr-dev@4.2.0
+      prefix: /opt/rocm-4.2.0/
+    - spec: hsa-rocr-dev@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: hsa-rocr-dev@4.5.0
+      prefix: /opt/rocm-4.5.0/
+    - spec: hsa-rocr-dev@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  rocminfo:
+    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    buildable: false
+    externals:
+    - spec: rocminfo@4.2.0
+      prefix: /opt/rocm-4.2.0/
+    - spec: rocminfo@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: rocminfo@4.5.0
+      prefix: /opt/rocm-4.5.0/
+    - spec: rocminfo@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  rocm-device-libs:
+    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    buildable: false
+    externals:
+    - spec: rocm-device-libs@4.2.0
+      prefix: /opt/rocm-4.2.0/
+    - spec: rocm-device-libs@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: rocm-device-libs@4.5.0
+      prefix: /opt/rocm-4.5.0/
+    - spec: rocm-device-libs@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  cray_mpich:
+    externals:
+    - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/cray-mpich-tce/cray-mpich-8.1.9-gcc-10.2.1/
+    buildable: false
