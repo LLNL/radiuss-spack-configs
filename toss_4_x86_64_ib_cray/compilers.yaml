@@ -13,12 +13,12 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.0
+    spec: clang@11.0.0
     paths:
-      cc: /usr/tce/packages/cce-tce/cce-13.0.0/cce-clang/x86_64/bin/clang
-      cxx: /usr/tce/packages/cce-tce/cce-13.0.0/cce-clang/x86_64/bin/clang++
-      f77: /usr/tce/packages/cce-tce/cce-13.0.0/cce-clang/x86_64/bin/gfortran
-      fc: /usr/tce/packages/cce-tce/cce-13.0.0/cce-clang/x86_64/bin/gfortran
+      cc: /usr/bin/clang
+      cxx: /usr/bin/clang++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64
