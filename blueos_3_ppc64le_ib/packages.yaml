@@ -46,6 +46,8 @@ packages:
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-10.0.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.7
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2020.03.18
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.10
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@beta2019.06.20
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
     buildable: false
