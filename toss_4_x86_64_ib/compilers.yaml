@@ -1,11 +1,11 @@
 compilers:
 - compiler:
-    spec: clang@12.0.1
+    spec: clang@13.0.0
     paths:
-      cc: /usr/bin/clang
-      cxx: /usr/bin/clang++
-      f77: /usr/bin/gfortran
-      fc: /usr/bin/gfortran
+      cc: /opt/rocm-4.3.1/llvm/bin/amdclang
+      cxx: /opt/rocm-4.3.1/llvm/bin/amdclang++
+      f77: /opt/rocm-4.3.1/llvm/bin/gfortran
+      fc: /opt/rocm-4.3.1/llvm/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64 
