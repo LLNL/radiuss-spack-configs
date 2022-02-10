@@ -1,0 +1,40 @@
+compilers:
+- compiler:
+    spec: clang@12.0.1
+    paths:
+      cc: /usr/bin/clang
+      cxx: /usr/bin/clang++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: zen2
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: pgi@20.4
+    paths:
+      cc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgcc
+      cxx: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgc++
+      f77: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgfortran
+      fc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgfortran
+    flags: {}
+    operating_system: rhel8
+    target: zen2
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@10.3.1
+    paths:
+      cc: /usr/tce/bin/gcc
+      cxx: /usr/tce/bin/g++
+      f77: /usr/tce/bin/gfortran
+      fc: /usr/tce/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: zen2
+    modules: []
+    environment: {}
+    extra_rpaths: []

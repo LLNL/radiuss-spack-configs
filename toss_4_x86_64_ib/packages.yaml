@@ -1,0 +1,66 @@
+packages:
+  all:
+    # This defaults us to machine specific flags of ivybridge which allows
+    # us to run on broadwell as well
+    target: [ivybridge]
+    compiler: [gcc, intel, pgi, clang]
+  cmake:
+    version: [3.14.5]
+    buildable: false
+
+    externals:
+    - spec: cmake
+      prefix: /usr/tce/packages/cmake/cmake-3.14.5
+  cuda:
+    version: [10.1.168]
+    buildable: false
+
+    externals:
+    - spec: cuda@10.1.168
+      prefix: /usr/tce/packages/cuda/cuda-10.1.168
+  hip:
+    version: [4.3.1, 4.5.2]
+    buildable: false
+    externals:
+    - spec: hip@4.3.1
+      prefix: /opt/rocm-4.3.1/hip
+    - spec: hip@4.5.2
+      prefix: /opt/rocm-4.5.2/hip
+  llvm-amdgpu:
+    version: [4.3.1, 4.5.2]
+    buildable: false
+    externals:
+    - spec: llvm-amdgpu@4.3.1
+      prefix: /opt/rocm-4.3.1/llvm
+    - spec: llvm-amdgpu@4.5.2
+      prefix: /opt/rocm-4.5.2/llvm
+  hsa-rocr-dev:
+    version: [4.3.1, 4.5.2]
+    buildable: false
+    externals:
+    - spec: hsa-rocr-dev@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: hsa-rocr-dev@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  rocminfo:
+    version: [4.3.1, 4.5.2]
+    buildable: false
+    externals:
+    - spec: rocminfo@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: rocminfo@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  rocm-device-libs:
+    version: [4.3.1, 4.5.2]
+    buildable: false
+    externals:
+    - spec: rocm-device-libs@4.3.1
+      prefix: /opt/rocm-4.3.1/
+    - spec: rocm-device-libs@4.5.2
+      prefix: /opt/rocm-4.5.2/
+  mvapich2:
+    externals:
+    - spec: mvapich2@2.3.6%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.6-gcc-10.2.1 
+    buildable: false
