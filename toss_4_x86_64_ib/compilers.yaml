@@ -4,8 +4,8 @@ compilers:
     paths:
       cc: /opt/rocm-4.3.1/llvm/bin/amdclang
       cxx: /opt/rocm-4.3.1/llvm/bin/amdclang++
-      f77: /opt/rocm-4.3.1/llvm/bin/gfortran
-      fc: /opt/rocm-4.3.1/llvm/bin/gfortran
+      f77: /opt/rocm-4.3.1/llvm/bin/amdflang
+      fc: /opt/rocm-4.3.1/llvm/bin/amdflang
     flags: {}
     operating_system: rhel8
     target: x86_64 
