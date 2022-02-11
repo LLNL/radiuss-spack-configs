@@ -28,10 +28,10 @@ compilers:
 - compiler:
     spec: gcc@10.3.1
     paths:
-      cc: /usr/tce/bin/gcc
-      cxx: /usr/tce/bin/g++
-      f77: /usr/tce/bin/gfortran
-      fc: /usr/tce/bin/gfortran
+      cc: /usr/tce/packages/gcc-tce/gcc-10.2.1/bin/gcc
+      cxx: /usr/tce/packages/gcc-tce/gcc-10.2.1/bin/g++
+      f77: /usr/tce/packages/gcc-tce/gcc-10.2.1/bin/gfortran
+      fc: /usr/tce/packages/gcc-tce/gcc-10.2.1/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64
