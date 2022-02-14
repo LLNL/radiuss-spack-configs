@@ -1,4 +1,4 @@
-compilers:
+compilers::
 - compiler:
     spec: cce@12.0.3
     paths:
