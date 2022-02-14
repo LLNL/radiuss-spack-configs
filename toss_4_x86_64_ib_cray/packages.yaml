@@ -1,4 +1,4 @@
-packages:
+packages::
   all:
     # This defaults us to machine specific flags of ivybridge which allows
     # us to run on broadwell as well
@@ -9,7 +9,7 @@ packages:
     buildable: false
 
     externals:
-    - spec: cmake
+    - spec: cmake@3.14.5
       prefix: /usr/tce/packages/cmake/cmake-3.14.5
   cuda:
     version: [11.4.120]
