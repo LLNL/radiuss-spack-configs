@@ -19,65 +19,45 @@ packages::
     - spec: cuda@11.4.120
       prefix: /opt/toss/cudatoolkit/11.4/ 
   hip:
-    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    version: [4.5.2, 5.0.2]
     buildable: false
     externals:
-    - spec: hip@4.2.0
-      prefix: /opt/rocm-4.2.0/hip
-    - spec: hip@4.3.1
-      prefix: /opt/rocm-4.3.1/hip
-    - spec: hip@4.5.0
-      prefix: /opt/rocm-4.5.0/hip
     - spec: hip@4.5.2
       prefix: /opt/rocm-4.5.2/hip
+    - spec: hip@5.0.2
+      prefix: /opt/rocm-5.0.2/hip
   llvm-amdgpu:
-    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    version: [4.5.2, 5.0.2]
     buildable: false
     externals:
-    - spec: llvm-amdgpu@4.2.0
-      prefix: /opt/rocm-4.2.0/llvm
-    - spec: llvm-amdgpu@4.3.1
-      prefix: /opt/rocm-4.3.1/llvm
-    - spec: llvm-amdgpu@4.5.0
-      prefix: /opt/rocm-4.5.0/llvm
     - spec: llvm-amdgpu@4.5.2
       prefix: /opt/rocm-4.5.2/llvm
+    - spec: llvm-amdgpu@5.0.2
+      prefix: /opt/rocm-5.0.2/llvm
   hsa-rocr-dev:
-    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    version: [4.5.2, 5.0.2]
     buildable: false
     externals:
-    - spec: hsa-rocr-dev@4.2.0
-      prefix: /opt/rocm-4.2.0/
-    - spec: hsa-rocr-dev@4.3.1
-      prefix: /opt/rocm-4.3.1/
-    - spec: hsa-rocr-dev@4.5.0
-      prefix: /opt/rocm-4.5.0/
     - spec: hsa-rocr-dev@4.5.2
       prefix: /opt/rocm-4.5.2/
+    - spec: hsa-rocr-dev@5.0.2
+      prefix: /opt/rocm-5.0.2/
   rocminfo:
-    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    version: [4.5.2, 5.0.2]
     buildable: false
     externals:
-    - spec: rocminfo@4.2.0
-      prefix: /opt/rocm-4.2.0/
-    - spec: rocminfo@4.3.1
-      prefix: /opt/rocm-4.3.1/
-    - spec: rocminfo@4.5.0
-      prefix: /opt/rocm-4.5.0/
     - spec: rocminfo@4.5.2
       prefix: /opt/rocm-4.5.2/
+    - spec: rocminfo@5.0.2
+      prefix: /opt/rocm-5.0.2/
   rocm-device-libs:
-    version: [4.2.0, 4.3.1, 4.5.0, 4.5.2]
+    version: [4.5.2, 5.0.2]
     buildable: false
     externals:
-    - spec: rocm-device-libs@4.2.0
-      prefix: /opt/rocm-4.2.0/
-    - spec: rocm-device-libs@4.3.1
-      prefix: /opt/rocm-4.3.1/
-    - spec: rocm-device-libs@4.5.0
-      prefix: /opt/rocm-4.5.0/
     - spec: rocm-device-libs@4.5.2
       prefix: /opt/rocm-4.5.2/
+    - spec: rocm-device-libs@5.0.2
+      prefix: /opt/rocm-5.0.2/
   cray_mpich:
     externals:
     - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
