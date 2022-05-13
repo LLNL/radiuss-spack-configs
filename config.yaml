@@ -16,10 +16,12 @@
 config:
   # This is the path to the root of the Spack install tree.
   # You can use $spack here to refer to the root of the spack instance.
+  # RADIUSS NOTE: uberenv will add a directory level which depends on the
+  # architecture, no need to add it to the projection.
   install_tree:
     root: $spack/..
     projections:
-      all: "${COMPILERNAME}-${COMPILERVER}/${PACKAGE}-${VERSION}"
+      all: "${COMPILERNAME}-${COMPILERVER}/${PACKAGE}-${VERSION}-${HASH}"
     # install_tree can include an optional padded length (int or boolean)
     # default is False (do not pad)
     # if padded_length is True, Spack will pad as close to the system max path
