@@ -78,6 +78,12 @@ packages::
       prefix: /opt/rocm-5.0.2/
     - spec: rocm-device-libs@5.1.0
       prefix: /opt/rocm-5.1.0/
+  rocprim:
+    version: [5.1.0]
+    buildable: false
+    externals:
+    - spec: rocprim@5.1.0
+      prefix: /opt/rocm-5.1.0/
   mvapich2:
     externals:
     - spec: mvapich2@2.3.6%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
