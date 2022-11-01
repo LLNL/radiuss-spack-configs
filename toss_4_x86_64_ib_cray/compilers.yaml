@@ -26,6 +26,19 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
+    spec: cce@14.0.3
+    paths:
+      cc: /usr/tce/packages/cce-tce/cce-14.0.3/bin/craycc
+      cxx: /usr/tce/packages/cce-tce/cce-14.0.3/bin/crayCC
+      f77: /usr/tce/packages/cce-tce/cce-14.0.3/bin/crayftn
+      fc: /usr/tce/packages/cce-tce/cce-14.0.3/bin/crayftn
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
     spec: clang@11.0.0
     paths:
       cc: /usr/bin/clang
