@@ -120,6 +120,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_compiler_entries(self):
         spec = self.spec
+        compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(Raja, self).initconfig_compiler_entries()
 
@@ -152,7 +153,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
-        blt_link_helpers(entries, spec, self.compiler)
+        blt_link_helpers(entries, spec, compiler)
 
         return entries
 
@@ -170,7 +171,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            hip_for_radiuss_projects(entries, spec, self.compiler)
+            hip_for_radiuss_projects(entries, spec, compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 

@@ -182,6 +182,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_compiler_entries(self):
         spec = self.spec
+        compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(Umpire, self).initconfig_compiler_entries()
 
@@ -195,14 +196,14 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         option_prefix = "UMPIRE_" if spec.satisfies("@2022.03.0:") else ""
 
-        if "+fortran" in spec and self.compiler.fc is not None:
+        if "+fortran" in spec and compiler.fc is not None:
             entries.append(cmake_cache_option("ENABLE_FORTRAN", True))
         else:
             entries.append(cmake_cache_option("ENABLE_FORTRAN", False))
 
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
-        blt_link_helpers(entries, spec, self.compiler)
+        blt_link_helpers(entries, spec, compiler)
 
         #adrienbernede-22-11:
         #  Specific to Umpire local package, worth sharing?
@@ -224,7 +225,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            hip_for_radiuss_projects(entries, spec, self.compiler)
+            hip_for_radiuss_projects(entries, spec, compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
