@@ -213,6 +213,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_hardware_entries(self):
         spec = self.spec
+        compiler = self.compiler
         entries = super(Umpire, self).initconfig_hardware_entries()
 
         option_prefix = "UMPIRE_" if spec.satisfies("@2022.03.0:") else ""

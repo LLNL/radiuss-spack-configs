@@ -159,6 +159,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_hardware_entries(self):
         spec = self.spec
+        compiler = self.compiler
         entries = super(Raja, self).initconfig_hardware_entries()
 
         entries.append(cmake_cache_option("ENABLE_OPENMP", "+openmp" in spec))
