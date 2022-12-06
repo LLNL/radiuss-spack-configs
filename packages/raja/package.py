@@ -7,7 +7,9 @@ import socket
 import glob
 
 from spack.package import *
-from spack.pkg.builtin.camp import hip_repair_cache
+from spack.pkg.builtin.camp import hip_for_radiuss_projects
+from spack.pkg.builtin.camp import cuda_for_radiuss_projects
+from spack.pkg.builtin.camp import blt_link_helpers
 
 
 class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -150,6 +152,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
+        blt_link_helpers(options, spec, self.compiler)
+
         return entries
 
     def initconfig_hardware_entries(self):
@@ -160,29 +164,13 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+cuda" in spec:
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
-
-            if not spec.satisfies("cuda_arch=none"):
-                cuda_arch = spec.variants["cuda_arch"].value
-                entries.append(cmake_cache_string("CUDA_ARCH", "sm_{0}".format(cuda_arch[0])))
-                entries.append(
-                    cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0]))
-                )
+            cuda_for_radiuss_projects(entries, spec)
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            entries.append(cmake_cache_path("HIP_ROOT_DIR", "{0}".format(spec["hip"].prefix)))
-            hip_repair_cache(entries, spec)
-            archs = self.spec.variants["amdgpu_target"].value
-            if archs != "none":
-                arch_str = ",".join(archs)
-                entries.append(
-                    cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-                )
-                entries.append(
-                    cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-                )
+            hip_for_radiuss_projects(entries, spec, self.compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 

@@ -9,7 +9,9 @@ import socket
 import llnl.util.tty as tty
 
 from spack.package import *
-from spack.pkg.builtin.camp import hip_repair_cache
+from spack.pkg.builtin.camp import hip_for_radiuss_projects
+from spack.pkg.builtin.camp import cuda_for_radiuss_projects
+from spack.pkg.builtin.camp import blt_link_helpers
 
 import re
 
@@ -178,16 +180,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             self.spec.dag_hash(8)
         )
 
-    def spec_uses_toolchain(self, spec):
-        gcc_toolchain_regex = re.compile(".*gcc-toolchain.*")
-        using_toolchain = list(filter(gcc_toolchain_regex.match, spec.compiler_flags["cxxflags"]))
-        return using_toolchain
-
-    def spec_uses_gccname(self, spec):
-        gcc_name_regex = re.compile(".*gcc-name.*")
-        using_gcc_name = list(filter(gcc_name_regex.match, spec.compiler_flags["cxxflags"]))
-        return using_gcc_name
-
     def initconfig_compiler_entries(self):
         spec = self.spec
         # Default entries are already defined in CachedCMakePackage, inherit them:
@@ -210,31 +202,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
-        ### From local package:
-        fortran_compilers = ["gfortran", "xlf"]
-        if any(compiler in self.compiler.fc for compiler in fortran_compilers) and ("clang" in self.compiler.cxx):
-            # Pass fortran compiler lib as rpath to find missing libstdc++
-            libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(self.compiler.fc)), "lib")
-            flags = ""
-            for _libpath in [libdir, libdir + "64"]:
-                if os.path.exists(_libpath):
-                    flags += " -Wl,-rpath,{0}".format(_libpath)
-            description = ("Adds a missing libstdc++ rpath")
-            if flags:
-                entries.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
-
-            # Ignore conflicting default gcc toolchain
-            entries.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-
-        compilers_using_toolchain = ["pgi", "xl", "icpc"]
-        if any(compiler in self.compiler.cxx for compiler in compilers_using_toolchain):
-            if self.spec_uses_toolchain(self.spec) or self.spec_uses_gccname(self.spec):
-
-                # Ignore conflicting default gcc toolchain
-                entries.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-                "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
+        blt_link_helpers(options, spec, self.compiler)
 
         #adrienbernede-22-11:
         #  Specific to Umpire local package, worth sharing?
@@ -250,59 +218,13 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+cuda" in spec:
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
-
-            cuda_flags = []
-            if not spec.satisfies("cuda_arch=none"):
-                cuda_arch = spec.variants["cuda_arch"].value
-                cuda_flags.append("-arch sm_{0}".format(cuda_arch[0]))
-                entries.append(
-                    cmake_cache_string("CUDA_ARCH", "sm_{0}".format(cuda_arch[0])))
-                entries.append(
-                    cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
-            if self.spec_uses_toolchain(self.spec):
-                cuda_flags.append("-Xcompiler {}".format(self.spec_uses_toolchain(self.spec)[0]))
-            if (spec.satisfies("%gcc@8.1: target=ppc64le")):
-                cuda_flags.append("-Xcompiler -mno-float128")
-            entries.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
-
-            entries.append(
-                cmake_cache_option(
-                    "{}ENABLE_DEVICE_CONST".format(option_prefix), spec.satisfies("+deviceconst")
-                )
-            )
+            cuda_for_radiuss_projects(entries, spec)
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-
-            hip_root = spec["hip"].prefix
-            rocm_root = hip_root + "/.."
-            entries.append(cmake_cache_path("HIP_ROOT_DIR", hip_root))
-            entries.append(cmake_cache_path("ROCM_ROOT_DIR", rocm_root))
-
-            hip_repair_cache(entries, spec)
-            archs = self.spec.variants["amdgpu_target"].value
-            if archs != "none":
-                arch_str = ",".join(archs)
-                entries.append(
-                    cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-                )
-                entries.append(
-                    cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-                )
-
-            # adrienbernede-22-11:
-            #   Specific to Umpire, should we port to RAJA and CHAI?
-            hip_link_flags = ""
-            if "%gcc" in spec:
-                gcc_bin = os.path.dirname(self.compiler.cxx)
-                gcc_prefix = join_path(gcc_bin, "..")
-                entries.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
-                entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
-            else:
-                entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}/llvm/lib/".format(rocm_root)))
-
+            hip_for_radiuss_projects(entries, spec, self.compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
