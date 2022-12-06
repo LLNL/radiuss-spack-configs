@@ -152,7 +152,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
-        blt_link_helpers(options, spec, self.compiler)
+        blt_link_helpers(entries, spec, self.compiler)
 
         return entries
 

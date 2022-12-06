@@ -202,7 +202,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
-        blt_link_helpers(options, spec, self.compiler)
+        blt_link_helpers(entries, spec, self.compiler)
 
         #adrienbernede-22-11:
         #  Specific to Umpire local package, worth sharing?
