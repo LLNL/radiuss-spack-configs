@@ -34,7 +34,7 @@ def hip_repair_cache(options, spec):
         )
     )
 
-def hip_for_radiuss_projects(options, spec, compiler):
+def hip_for_radiuss_projects(options, spec, spec_compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
     rocm_root = hip_root + "/.."
@@ -57,7 +57,7 @@ def hip_for_radiuss_projects(options, spec, compiler):
     #   Specific to Umpire, attempt port to RAJA and CHAI
     hip_link_flags = ""
     if "%gcc" in spec:
-        gcc_bin = os.path.dirname(compiler.cxx)
+        gcc_bin = os.path.dirname(spec_compiler.cxx)
         gcc_prefix = join_path(gcc_bin, "..")
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
         options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
@@ -87,14 +87,14 @@ def cuda_for_radiuss_projects(options, spec):
         )
     )
 
-def blt_link_helpers(options, spec, compiler):
+def blt_link_helpers(options, spec, spec_compiler):
 
     ### From local package:
     fortran_compilers = ["gfortran", "xlf"]
-    if any(compiler in compiler.fc for compiler in fortran_compilers) and ("clang" in compiler.cxx):
+    if any(compiler in spec_compiler.fc for compiler in fortran_compilers) and ("clang" in spec_compiler.cxx):
         # Pass fortran compiler lib as rpath to find missing libstdc++
         libdir = os.path.join(os.path.dirname(
-                       os.path.dirname(compiler.fc)), "lib")
+                       os.path.dirname(spec_compiler.fc)), "lib")
         flags = ""
         for _libpath in [libdir, libdir + "64"]:
             if os.path.exists(_libpath):
@@ -108,7 +108,7 @@ def blt_link_helpers(options, spec, compiler):
         "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
     compilers_using_toolchain = ["pgi", "xl", "icpc"]
-    if any(compiler in compiler.cxx for compiler in compilers_using_toolchain):
+    if any(compiler in spec_compiler.cxx for compiler in compilers_using_toolchain):
         if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
 
             # Ignore conflicting default gcc toolchain
