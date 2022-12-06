@@ -5,6 +5,7 @@
 
 import os
 import socket
+import re
 
 import llnl.util.tty as tty
 
@@ -13,7 +14,6 @@ from spack.pkg.builtin.camp import hip_for_radiuss_projects
 from spack.pkg.builtin.camp import cuda_for_radiuss_projects
 from spack.pkg.builtin.camp import blt_link_helpers
 
-import re
 
 
 class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
