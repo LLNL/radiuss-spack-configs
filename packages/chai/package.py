@@ -5,11 +5,13 @@
 
 import os
 import socket
+import re
 
 from spack.package import *
-from spack.pkg.builtin.camp import hip_repair_cache
+from spack.pkg.builtin.camp import hip_for_radiuss_projects
+from spack.pkg.builtin.camp import cuda_for_radiuss_projects
+from spack.pkg.builtin.camp import blt_link_helpers
 
-import re
 
 
 class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -124,20 +126,9 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
             self.spec.dag_hash(8)
         )
 
-    ### From local package, improved with umpire package implementation
-    def spec_uses_toolchain(self, spec):
-        gcc_toolchain_regex = re.compile(".*gcc-toolchain.*")
-        using_toolchain = list(filter(gcc_toolchain_regex.match, spec.compiler_flags['cxxflags']))
-        return using_toolchain
-
-    ### From local package, improved with umpire package implementation
-    def spec_uses_gccname(self, spec):
-        gcc_name_regex = re.compile(".*gcc-name.*")
-        using_gcc_name = list(filter(gcc_name_regex.match, spec.compiler_flags['cxxflags']))
-        return using_gcc_name
-
     def initconfig_compiler_entries(self):
         spec = self.spec
+        compiler = self.compiler
         entries = super(Chai, self).initconfig_compiler_entries()
 
         # adrienbernede-22-11:
@@ -154,68 +145,24 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         #if "+rocm" in spec:
         #    entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
 
+        blt_link_helpers(entries, spec, compiler)
+
         return entries
-
-        ### From local package:
-        fortran_compilers = ["gfortran", "xlf"]
-        if any(compiler in self.compiler.fc for compiler in fortran_compilers) and ("clang" in self.compiler.cxx):
-            # Pass fortran compiler lib as rpath to find missing libstdc++
-            libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(self.compiler.fc)), "lib")
-            flags = ""
-            for _libpath in [libdir, libdir + "64"]:
-                if os.path.exists(_libpath):
-                    flags += " -Wl,-rpath,{0}".format(_libpath)
-            description = ("Adds a missing libstdc++ rpath")
-            if flags:
-                entries.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
-
-            # Ignore conflicting default gcc toolchain
-            entries.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-
-        compilers_using_toolchain = ["pgi", "xl", "icpc"]
-        if any(compiler in self.compiler.cxx for compiler in compilers_using_toolchain):
-            if self.spec_uses_toolchain(self.spec) or self.spec_uses_gccname(self.spec):
-
-                # Ignore conflicting default gcc toolchain
-                entries.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-                "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
     def initconfig_hardware_entries(self):
         spec = self.spec
+        compiler = self.compiler
         entries = super(Chai, self).initconfig_hardware_entries()
 
         if "+cuda" in spec:
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
-            entries.append(cmake_cache_option("CMAKE_CUDA_SEPARABLE_COMPILATION", True))
-            entries.append(cmake_cache_option("CUDA_SEPARABLE_COMPILATION", True))
-
-            cuda_flags = []
-            if not spec.satisfies("cuda_arch=none"):
-                cuda_arch = spec.variants["cuda_arch"].value
-                cuda_flags.append("-arch sm_{0}".format(cuda_arch[0]))
-                entries.append(
-                    cmake_cache_string("CUDA_ARCH", "sm_{0}".format(cuda_arch[0])))
-                entries.append(
-                    cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
-            entries.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
+            cuda_for_radiuss_projects(entries, spec)
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            entries.append(cmake_cache_path("HIP_ROOT_DIR", "{0}".format(spec["hip"].prefix)))
-            hip_repair_cache(entries, spec)
-            archs = self.spec.variants["amdgpu_target"].value
-            if archs != "none":
-                arch_str = ",".join(archs)
-                entries.append(
-                    cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-                )
-                entries.append(
-                    cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-                )
+            hip_for_radiuss_projects(entries, spec, compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
