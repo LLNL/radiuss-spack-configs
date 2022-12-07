@@ -83,12 +83,6 @@ def cuda_for_radiuss_projects(options, spec):
         cuda_flags.append("-Xcompiler -mno-float128")
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
-    options.append(
-        cmake_cache_option(
-            "{}ENABLE_DEVICE_CONST".format(option_prefix), spec.satisfies("+deviceconst")
-        )
-    )
-
 def blt_link_helpers(options, spec, spec_compiler):
 
     ### From local package:
