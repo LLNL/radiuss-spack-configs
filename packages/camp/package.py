@@ -141,8 +141,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("cub", when="+cuda")
 
     depends_on("blt")
-    # specific commit used here to be consistent with submodule -- no matching BLT release
-    depends_on("blt@git.8c229991e65e7a9603c621b47cb3ba158bb7468c=0.5.2", type="build", when="@2022.10.1:")
 
     def cmake_args(self):
         spec = self.spec
