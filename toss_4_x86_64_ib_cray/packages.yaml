@@ -29,7 +29,7 @@ packages::
     - spec: cuda@11.4.120
       prefix: /opt/toss/cudatoolkit/11.4/ 
   hip:
-    version: [4.5.2, 5.0.2, 5.3.0]
+    version: [4.5.2, 5.0.2, 5.3.0, 5.4.1]
     buildable: false
     externals:
     - spec: hip@4.5.2
@@ -38,8 +38,10 @@ packages::
       prefix: /opt/rocm-5.0.2/hip
     - spec: hip@5.3.0
       prefix: /opt/rocm-5.3.0/hip
+    - spec: hip@5.4.1
+      prefix: /opt/rocm-5.4.1/hip
   llvm-amdgpu:
-    version: [4.5.2, 5.0.2, 5.3.0]
+    version: [4.5.2, 5.0.2, 5.3.0, 5.4.1]
     buildable: false
     externals:
     - spec: llvm-amdgpu@4.5.2
@@ -48,8 +50,10 @@ packages::
       prefix: /opt/rocm-5.0.2/llvm
     - spec: llvm-amdgpu@5.3.0
       prefix: /opt/rocm-5.3.0/llvm
+    - spec: llvm-amdgpu@5.4.1
+      prefix: /opt/rocm-5.4.1/llvm
   hsa-rocr-dev:
-    version: [4.5.2, 5.0.2, 5.3.0]
+    version: [4.5.2, 5.0.2, 5.3.0, 5.4.1]
     buildable: false
     externals:
     - spec: hsa-rocr-dev@4.5.2
@@ -58,8 +62,10 @@ packages::
       prefix: /opt/rocm-5.0.2/
     - spec: hsa-rocr-dev@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: hsa-rocr-dev@5.4.1
+      prefix: /opt/rocm-5.4.1/
   rocminfo:
-    version: [4.5.2, 5.0.2, 5.3.0]
+    version: [4.5.2, 5.0.2, 5.3.0, 5.4.1]
     buildable: false
     externals:
     - spec: rocminfo@4.5.2
@@ -68,8 +74,10 @@ packages::
       prefix: /opt/rocm-5.0.2/
     - spec: rocminfo@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocminfo@5.4.1
+      prefix: /opt/rocm-5.4.1/
   rocm-device-libs:
-    version: [4.5.2, 5.0.2, 5.3.0]
+    version: [4.5.2, 5.0.2, 5.3.0, 5.4.1]
     buildable: false
     externals:
     - spec: rocm-device-libs@4.5.2
@@ -78,6 +86,8 @@ packages::
       prefix: /opt/rocm-5.0.2/
     - spec: rocm-device-libs@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocm-device-libs@5.4.1
+      prefix: /opt/rocm-5.4.1/
   cray_mpich:
     externals:
     - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
