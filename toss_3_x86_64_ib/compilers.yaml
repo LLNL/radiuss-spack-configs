@@ -240,10 +240,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-16.0.4/bin/icpc
       f77: /usr/tce/packages/intel/intel-16.0.4/bin/ifort
       fc: /usr/tce/packages/intel/intel-16.0.4/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -256,10 +253,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-17.0.2/bin/icpc
       f77: /usr/tce/packages/intel/intel-17.0.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-17.0.2/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -272,10 +266,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-18.0.0/bin/icpc
       f77: /usr/tce/packages/intel/intel-18.0.0/bin/ifort
       fc: /usr/tce/packages/intel/intel-18.0.0/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -288,10 +279,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-18.0.2/bin/icpc
       f77: /usr/tce/packages/intel/intel-18.0.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-18.0.2/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.3.0/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -304,10 +292,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-19.0.4/bin/icpc
       f77: /usr/tce/packages/intel/intel-19.0.4/bin/ifort
       fc: /usr/tce/packages/intel/intel-19.0.4/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.1.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.1.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-7.1.0/bin/g++
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -320,10 +305,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-19.1.0/bin/icpc
       f77: /usr/tce/packages/intel/intel-19.1.0/bin/ifort
       fc: /usr/tce/packages/intel/intel-19.1.0/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.1.0/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -336,10 +318,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-19.1.2/bin/icpc
       f77: /usr/tce/packages/intel/intel-19.1.2/bin/ifort
       fc: /usr/tce/packages/intel/intel-19.1.2/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -352,10 +331,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-2022.3/bin/icpc
       f77: /usr/tce/packages/intel/intel-2022.3/bin/ifort
       fc: /usr/tce/packages/intel/intel-2022.3/bin/ifort
-    flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -368,10 +344,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-oneapi.2022.2/bin/icpx
       f77: /usr/tce/packages/intel/intel-oneapi.2022.2/bin/ifx
       fc: /usr/tce/packages/intel/intel-oneapi.2022.2/bin/ifx
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
@@ -384,10 +357,7 @@ compilers::
       cxx: /usr/tce/packages/intel/intel-oneapi.2022.3/bin/icpx
       f77: /usr/tce/packages/intel/intel-oneapi.2022.3/bin/ifx
       fc: /usr/tce/packages/intel/intel-oneapi.2022.3/bin/ifx
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+    flags: {}
     operating_system: rhel7
     target: x86_64
     modules: []
