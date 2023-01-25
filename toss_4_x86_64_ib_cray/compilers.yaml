@@ -41,10 +41,10 @@ compilers::
 - compiler:
     spec: cce@15.0.0
     paths:
-      cc: /usr/tce/packages/cce-tce/cce-15.0.0/bin/craycc
-      cxx: /usr/tce/packages/cce-tce/cce-15.0.0/bin/crayCC
-      f77: /usr/tce/packages/cce-tce/cce-15.0.0/bin/crayftn
-      fc: /usr/tce/packages/cce-tce/cce-15.0.0/bin/crayftn
+      cc: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/craycc
+      cxx: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayCC
+      f77: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayftn
+      fc: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayftn
     flags: {}
     operating_system: rhel8
     target: x86_64
