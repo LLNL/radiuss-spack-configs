@@ -39,7 +39,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: cce@15.0.0
+    spec: cce@15.0.0.c
     paths:
       cc: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/craycc
       cxx: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayCC
