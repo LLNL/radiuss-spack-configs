@@ -7,6 +7,8 @@ import os
 import socket
 import glob
 import re
+## Solution A
+#import spack.variant
 
 from spack.package import *
 from spack.pkg.builtin.camp import hip_for_radiuss_projects
@@ -59,14 +61,51 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     variant("openmp", default=True, description="Build OpenMP backend")
     variant("shared", default=True, description="Build shared libs")
+    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
+    variant("desul", default=False, description="Build desul atomics backend")
+    variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
+
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
     # TODO: figure out gtest dependency and then set this default True
     # and remove the +tests conflict below.
     variant("tests", default=False, description="Build tests")
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
-    variant("desul", default=False, description="Build desul atomics backend")
-    variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
+
+    ## Solution A:
+    ## We set the variant so that it can take any combination of the tests known as
+    ## potentially failing. This allows flexibility, ignored test are visible in the
+    ## spec. However the list of test may be long, and by default the failing tests
+    ## are not ignored
+    #tests_that_may_fail = (
+    #    "test-algorithm-sort-Cuda.exe",
+    #    "test-algorithm-stable-sort-Cuda.exe")
+    #
+    #variant(
+    #    "ignore-test",
+    #    description="List of tests to ignore",
+    #    value=spack.variant.any_combination_of(*tests_that_may_fail))
+
+    ## Solution B:
+    ## We set the variant value conditionally, the tests in the variant value will
+    ## be ignored when the conditions are met.
+    ## The only advantage of that is make the ignored tests visible in the spec.
+    ## Not sure that’s worth the mess.
+    #variant(
+    #    "ignore-test",
+    #    values=("none",
+    #            conditional("test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe",
+    #                        when="+cuda %clang@12.0.0:13.9.999")),
+    #            conditional("test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe",
+    #                        when="+cuda %xl@16.1.1.12")),
+    #    multi=False,
+    #    description="Do not ignore tests known to fail"
+    #    )
+
+    ## Solution C:
+    ## we don’t use variants to express the failing test, we only add a variant to
+    ## define whether we want to run all the tests (including those known to fail)
+    ## or only the passing ones.
+    variant("run-all-tests", default=False, description="Run all the tests, including those known to fail.")
 
     depends_on("blt")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
@@ -242,6 +281,11 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("ENABLE_TESTS", False))
         else:
             entries.append(cmake_cache_option("ENABLE_TESTS", True))
+            if not "+run-all-tests" in spec:
+                if spec.satisfies("+cuda %clang@12.0.0:13.9.999"):
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TEST_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe")
+                if spec.satisfies("+cuda %xl@16.1.1.12"):
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TEST_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe")
 
         entries.append(cmake_cache_option("RAJA_HOST_CONFIG_LOADED", True))
 
