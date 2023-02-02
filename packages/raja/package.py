@@ -283,9 +283,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("ENABLE_TESTS", True))
             if not "+run-all-tests" in spec:
                 if spec.satisfies("+cuda %clang@12.0.0:13.9.999"):
-                    entries.append(cmake_cache_string("CTEST_CUSTOM_TEST_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe"))
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TESTS_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe"))
                 if spec.satisfies("+cuda %xl@16.1.1.12"):
-                    entries.append(cmake_cache_string("CTEST_CUSTOM_TEST_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe"))
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TESTS_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe"))
 
         entries.append(cmake_cache_option("RAJA_HOST_CONFIG_LOADED", True))
 
