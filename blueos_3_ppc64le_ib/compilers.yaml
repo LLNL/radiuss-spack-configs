@@ -127,8 +127,8 @@ compilers:
     paths:
       cc: /usr/tce/packages/clang/clang-14.0.5/bin/clang
       cxx: /usr/tce/packages/clang/clang-14.0.5/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
+      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
     flags: {}
     operating_system: rhel7
     target: ppc64le
@@ -140,8 +140,8 @@ compilers:
     paths:
       cc: /usr/tce/packages/clang/clang-14.0.5/bin/clang
       cxx: /usr/tce/packages/clang/clang-14.0.5/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
+      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
     flags:
       cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
       cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
