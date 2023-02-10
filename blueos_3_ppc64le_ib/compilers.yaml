@@ -418,6 +418,22 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
+    spec: xl@16.1.1.12.gcc.8.3.1
+    paths:
+      cc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlc_r
+      cxx: /usr/tce/packages/xl/xl-2022.08.19/bin/xlC_r
+      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
+    flags:
+      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
     spec: pgi@default
     paths:
       cc: pgcc
