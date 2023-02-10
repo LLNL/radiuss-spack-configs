@@ -322,6 +322,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_path(
                 "SQLite3_ROOT" ,spec["sqlite"].prefix))
 
+        if "+device_alloc" in spec:
+                entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", "-Wno-unused-variable"))
+
         # This option was renamed later than the others
         if spec.satisfies("@2022.10.0:"):
             entries.append(cmake_cache_option(
