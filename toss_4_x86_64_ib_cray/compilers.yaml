@@ -39,12 +39,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: cce@15.0.0.c
+    spec: cce@15.0.1
     paths:
-      cc: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/craycc
-      cxx: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayCC
-      f77: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayftn
-      fc: /usr/tce/packages/cce-tce/cce-15.0.0c/bin/crayftn
+      cc: /usr/tce/packages/cce-tce/cce-15.0.1/bin/craycc
+      cxx: /usr/tce/packages/cce-tce/cce-15.0.1/bin/crayCC
+      f77: /usr/tce/packages/cce-tce/cce-15.0.1/bin/crayftn
+      fc: /usr/tce/packages/cce-tce/cce-15.0.1/bin/crayftn
     flags: {}
     operating_system: rhel8
     target: x86_64
@@ -104,7 +104,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.0
+    spec: clang@13.0.0.rocm.5.3.0
     paths:
       cc: /opt/rocm-5.3.0/llvm/bin/amdclang
       cxx: /opt/rocm-5.3.0/llvm/bin/amdclang++
@@ -117,12 +117,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@15.0.0
+    spec: clang@15.0.0.rocm.5.4.3
     paths:
-      cc: /opt/rocm-5.4.2/llvm/bin/amdclang
-      cxx: /opt/rocm-5.4.2/llvm/bin/amdclang++
-      f77: /opt/rocm-5.4.2/llvm/bin/amdflang
-      fc: /opt/rocm-5.4.2/llvm/bin/amdflang
+      cc: /opt/rocm-5.4.3/llvm/bin/amdclang
+      cxx: /opt/rocm-5.4.3/llvm/bin/amdclang++
+      f77: /opt/rocm-5.4.3/llvm/bin/amdflang
+      fc: /opt/rocm-5.4.3/llvm/bin/amdflang
     flags: {}
     operating_system: rhel8
     target: x86_64
