@@ -10,6 +10,17 @@ import re
 
 from spack.package import *
 
+
+def spec_uses_toolchain(spec):
+    gcc_toolchain_regex = re.compile(".*gcc-toolchain.*")
+    using_toolchain = list(filter(gcc_toolchain_regex.match, spec.compiler_flags["cxxflags"]))
+    return using_toolchain
+
+def spec_uses_gccname(spec):
+    gcc_name_regex = re.compile(".*gcc-name.*")
+    using_gcc_name = list(filter(gcc_name_regex.match, spec.compiler_flags["cxxflags"]))
+    return using_gcc_name
+
 def hip_for_radiuss_projects(options, spec, spec_compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
