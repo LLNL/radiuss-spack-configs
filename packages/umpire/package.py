@@ -10,9 +10,9 @@ import re
 import llnl.util.tty as tty
 
 from spack.package import *
-from spack.pkg.builtin.camp import hip_for_radiuss_projects
-from spack.pkg.builtin.camp import cuda_for_radiuss_projects
-from spack.pkg.builtin.camp import blt_link_helpers
+from spack.pkg.llnl.radiuss.camp import hip_for_radiuss_projects
+from spack.pkg.llnl.radiuss.camp import cuda_for_radiuss_projects
+from spack.pkg.llnl.radiuss.camp import blt_link_helpers
 
 
 
