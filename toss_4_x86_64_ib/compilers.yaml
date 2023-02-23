@@ -1,6 +1,6 @@
 compilers::
 - compiler:
-    spec: clang@13.0.0
+    spec: rocm@5.1.1
     paths:
       cc: /opt/rocm-5.1.1/llvm/bin/amdclang
       cxx: /opt/rocm-5.1.1/llvm/bin/amdclang++
@@ -13,7 +13,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@14.0.0
+    spec: rocmcc@5.2.3
     paths:
       cc: /opt/rocm-5.2.3/llvm/bin/amdclang
       cxx: /opt/rocm-5.2.3/llvm/bin/amdclang++
@@ -26,7 +26,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@15.0.0
+    spec: rocmcc@5.4.1
     paths:
       cc: /opt/rocm-5.4.1/llvm/bin/amdclang
       cxx: /opt/rocm-5.4.1/llvm/bin/amdclang++
