@@ -1,6 +1,6 @@
 compilers::
 - compiler:
-    spec: rocm@5.1.1
+    spec: rocmcc@5.1.1
     paths:
       cc: /opt/rocm-5.1.1/llvm/bin/amdclang
       cxx: /opt/rocm-5.1.1/llvm/bin/amdclang++
