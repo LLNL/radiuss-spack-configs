@@ -21,6 +21,15 @@ def spec_uses_gccname(spec):
     using_gcc_name = list(filter(gcc_name_regex.match, spec.compiler_flags["cxxflags"]))
     return using_gcc_name
 
+def hip_repair_cache(options, spec):
+    # there is only one dir like this, but the version component is unknown
+    options.append(
+        cmake_cache_path(
+            "HIP_CLANG_INCLUDE_PATH",
+            glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0],
+        )
+    )
+
 def hip_for_radiuss_projects(options, spec, spec_compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
