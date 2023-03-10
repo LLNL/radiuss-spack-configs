@@ -1,5 +1,5 @@
 spack:
-  packages:
+  packages::
     all:
       # This defaults us to machine specific flags of ivybridge which allows
       # us to run on broadwell as well
@@ -76,7 +76,7 @@ spack:
       externals:
       - spec: python@3.8.2
         prefix: /usr/tce/packages/python/python-3.8.2
-  compilers:
+  compilers::
   - compiler:
       spec: clang@3.9.1
       paths:
