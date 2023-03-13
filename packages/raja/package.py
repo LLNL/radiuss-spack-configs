@@ -146,8 +146,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "+rocm" in spec:
             entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
 
-        # Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS add
-        # +libcpp specific flags
+        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
+        # Goal: add +libcpp specific flags
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -167,6 +167,11 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
+
+        fflags = " ".join(flags["fflags"])
+        if fflags:
+            entries.append(cmake_cache_string("CMAKE_Fortran_FLAGS", fflags))
+        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
         blt_link_helpers(entries, spec, compiler)
 
