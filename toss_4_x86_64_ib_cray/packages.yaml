@@ -102,10 +102,10 @@ packages::
       prefix: /usr/tce/packages/cray-mpich-tce/cray-mpich-8.1.9-gcc-10.2.1/
   python:
     buildable: false
-    version: [3.8.2]
+    version: [3.10.8]
     externals:
-    - spec: python@3.8.2
-      prefix: /usr/tce/packages/python/python-3.8.2
+    - spec: python@3.10.8
+      prefix: /usr/tce/packages/python/python-3.10.8
   elfutils:
     buildable: false
     version: [0.175]
