@@ -75,9 +75,3 @@ packages:
     externals:
     - spec: python@3.8.2
       prefix: /usr/tce/packages/python/python-3.8.2
-  elfutils:
-    buildable: false
-    version: [0.175]
-    externals:
-    - spec: elfutils@0.175
-      prefix: /usr/tce/packages/elfutils/elfutils-0.175
