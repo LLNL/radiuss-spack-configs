@@ -95,8 +95,14 @@ packages::
     - spec: rocprim@5.3.0
       prefix: /opt/rocm-5.3.0/
   cray_mpich:
+    buildable: false
     externals:
     - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich-tce/cray-mpich-8.1.9-gcc-10.2.1/
+  python:
     buildable: false
+    version: [3.8.2]
+    externals:
+    - spec: python@3.8.2
+      prefix: /usr/tce/packages/python/python-3.8.2
