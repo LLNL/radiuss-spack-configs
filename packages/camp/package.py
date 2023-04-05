@@ -152,13 +152,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
         options.append("-DBLT_SOURCE_DIR={0}".format(spec["blt"].prefix))
 
-        compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx", "oneapi"]
-        if any(compiler in self.compiler.cxx for compiler in compilers_using_toolchain):
-            if spec_uses_toolchain(self.spec) or spec_uses_gccname(self.spec):
-
-                # Ignore conflicting default gcc toolchain
-                options.append("-DBLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE=/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3")
-
         if "+cuda" in spec:
             options.extend([
                 "-DENABLE_CUDA=ON",
