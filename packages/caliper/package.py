@@ -45,7 +45,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
-    variant("adiak", default=True, description="Enable Adiak support")
+    variant("adiak", default=False, description="Enable Adiak support")
     variant("mpi", default=True, description="Enable MPI wrappers")
     # libunwind has some issues on Mac
     variant(
@@ -112,7 +112,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("BUILD_SHARED_LIBS", False))
 
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
-        entries.append(cmake_cache_option("BUILD_TESTING", "Off"))
+        entries.append(cmake_cache_option("BUILD_TESTING", "On"))
         entries.append(cmake_cache_option("BUILD_DOCS", "Off"))
 
         return entries
