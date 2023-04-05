@@ -25,7 +25,7 @@ packages::
     buildable: false
     externals:
     - spec: cuda@11.4.120
-      prefix: /opt/toss/cudatoolkit/11.4/
+      prefix: /opt/toss/cudatoolkit/11.4/ 
   hip:
     version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
@@ -87,15 +87,13 @@ packages::
     - spec: rocm-device-libs@5.4.3
       prefix: /opt/rocm-5.4.3/
   rocprim:
-    version: [5.2.3, 5.3.0, 5.4.3]
+    version: [5.2.3, 5.3.0]
     buildable: false
     externals:
     - spec: rocprim@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: rocprim@5.3.0
       prefix: /opt/rocm-5.3.0/
-    - spec: rocprim@5.4.3
-      prefix: /opt/rocm-5.4.3/
   cray_mpich:
     buildable: false
     externals:
