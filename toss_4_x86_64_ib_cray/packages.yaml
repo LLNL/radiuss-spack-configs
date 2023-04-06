@@ -25,7 +25,7 @@ packages::
     buildable: false
     externals:
     - spec: cuda@11.4.120
-      prefix: /opt/toss/cudatoolkit/11.4/ 
+      prefix: /opt/toss/cudatoolkit/11.4/
   hip:
     version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
@@ -87,16 +87,24 @@ packages::
     - spec: rocm-device-libs@5.4.3
       prefix: /opt/rocm-5.4.3/
   rocprim:
-    version: [5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.3]
     buildable: false
     externals:
     - spec: rocprim@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: rocprim@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocprim@5.4.3
+      prefix: /opt/rocm-5.4.3/
   cray_mpich:
+    buildable: false
     externals:
     - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich-tce/cray-mpich-8.1.9-gcc-10.2.1/
+  python:
     buildable: false
+    version: [3.10.8]
+    externals:
+    - spec: python@3.10.8
+      prefix: /usr/tce/packages/python/python-3.10.8
