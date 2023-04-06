@@ -164,7 +164,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         #If paths arent found, consider adding -D to these options
         if "+papi" in spec:
-            entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
+            entries.append(cmake_cache_path("-DPAPI_PREFIX", spec["papi"].prefix))
         if "+libdw" in spec:
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
         if "+libpfm" in spec:
