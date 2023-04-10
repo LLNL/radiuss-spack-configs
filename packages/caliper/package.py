@@ -106,10 +106,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("WITH_FORTRAN", False))
 
-        if "shared" in spec:
-            entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
-        else:
-            entries.append(cmake_cache_option("BUILD_SHARED_LIBS", False))
+        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
 
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
         entries.append(cmake_cache_option("BUILD_TESTING", "On"))
