@@ -102,17 +102,25 @@ def blt_link_helpers(options, spec, spec_compiler):
         if flags:
             options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
 
-        # Ignore conflicting default gcc toolchain
-        options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-        "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-
-    compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
-    if any(compiler in spec_compiler.cxx for compiler in compilers_using_toolchain):
-        if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
-
-            # Ignore conflicting default gcc toolchain
-            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
+    if spec.satisfies("target=ppc64le:"):
+        # Fix for working around CMake adding implicit link directories
+        # returned by the BlueOS compilers to link executables with
+        # non-system default stdlib
+        _roots = ["/usr/tce/packages/gcc/gcc-4.9.3", "/usr/tce/packages/gcc/gcc-4.9.3/gnu"]
+        _subdirs = ["lib64", "lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3"]
+        _existing_paths = []
+        for root in _roots:
+            for subdir in _subdirs:
+                _curr_path = pjoin(root, subdir)
+                if os.path.exists(_curr_path):
+                    _existing_paths.append(_curr_path)
+        if _existing_paths:
+            options.append(
+                cmake_cache_string(
+                    "BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
+                    ";".join(_existing_paths),
+                )
+            )
 
     if "cce" in spec_compiler.cxx:
         #AXOM STYLE
