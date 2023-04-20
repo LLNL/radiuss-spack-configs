@@ -123,12 +123,8 @@ def blt_link_helpers(options, spec, spec_compiler):
             )
 
     if "cce" in spec_compiler.cxx:
-        #AXOM STYLE
-        #libdir = pjoin(os.path.dirname(os.path.dirname(self.compiler.fc)), "lib")
-        #David’s suggestion (works)
+        # Here is where to find libs that work for fortran
         libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
-        #Another attempt
-        libdir = "/usr/tce/packages/cce-tce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
         description = (
             "Adds a missing rpath for libraries " "associated with the fortran compiler"
         )
