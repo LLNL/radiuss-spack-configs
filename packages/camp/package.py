@@ -114,10 +114,10 @@ def blt_link_helpers(options, spec, spec_compiler):
             options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
             "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
-    if "cce" in self_compiler.cxx:
+    if "cce" in spec_compiler.cxx:
         #AXOM STYLE
         #libdir = pjoin(os.path.dirname(os.path.dirname(self.compiler.fc)), "lib")
-        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(self_compiler.version)
+        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
         description = (
             "Adds a missing rpath for libraries " "associated with the fortran compiler"
         )
