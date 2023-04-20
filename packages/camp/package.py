@@ -61,7 +61,7 @@ def hip_for_radiuss_projects(options, spec, spec_compiler):
     if "%gcc" in spec or spec_uses_toolchain(spec):
         if "%gcc" in spec:
             gcc_bin = os.path.dirname(spec_compiler.cxx)
-            gcc_prefix = join_path(gcc_bin, "..")
+            gcc_prefix = os.path.join(gcc_bin, "..")
         else:
             gcc_prefix = spec_uses_toolchain(spec)[0]
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
@@ -111,7 +111,7 @@ def blt_link_helpers(options, spec, spec_compiler):
         _existing_paths = []
         for root in _roots:
             for subdir in _subdirs:
-                _curr_path = pjoin(root, subdir)
+                _curr_path = os.path.join(root, subdir)
                 if os.path.exists(_curr_path):
                     _existing_paths.append(_curr_path)
         if _existing_paths:
