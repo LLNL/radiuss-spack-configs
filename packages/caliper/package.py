@@ -19,7 +19,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     """
 
     homepage = "https://github.com/LLNL/Caliper"
-    git = "https://github.com/LLNL/Caliper.git"
+    #git = "https://github.com/LLNL/Caliper.git"
+    git = "https://lc.llnl.gov/gitlab/hooten1/Caliper-uberenv.git"
     url = "https://github.com/LLNL/Caliper/archive/v2.9.0.tar.gz"
     tags = ["e4s", "radiuss"]
 
