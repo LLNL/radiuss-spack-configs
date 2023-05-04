@@ -138,13 +138,6 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(Raja, self).initconfig_compiler_entries()
 
-        # Switch to hip as a CPP compiler.
-        # adrienbernede-22-11:
-        #   This was only done in upstream Spack raja package.
-        #   I could not find the equivalent logic in Spack source, so keeping it.
-        if "+rocm" in spec:
-            entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
-
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
         flags = spec.compiler_flags
 
