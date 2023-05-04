@@ -89,7 +89,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         multi=False,
         description="Tests to run",
     )
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
     variant("tools", default=False, description="Enable tools")
     variant("backtrace", default=False, description="Enable backtrace tools")
     variant("dev_benchmarks", default=False, description="Enable Developer Benchmarks")
@@ -174,7 +173,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         return sys_type
 
     @property
-    # TODO: name cache file conditionally to cuda and libcpp variants
     def cache_name(self):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
@@ -213,7 +211,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-        # Goal: add +libcpp specific flags
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -223,14 +220,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             cppflags += " "
 
         cflags = cppflags + " ".join(flags["cflags"])
-        if "+libcpp" in spec:
-            cflags += " ".join([cflags,"-DGTEST_HAS_CXXABI_H_=0"])
         if cflags:
             entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
 
         cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if "+libcpp" in spec:
-            cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
