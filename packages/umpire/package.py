@@ -174,6 +174,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         return sys_type
 
     @property
+    # TODO: name cache file conditionally to cuda and libcpp variants
     def cache_name(self):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
