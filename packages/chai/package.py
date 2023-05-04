@@ -55,7 +55,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         multi=False,
         description="Tests to run",
     )
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
 
     depends_on("cmake@3.8:", type="build")
     depends_on("cmake@3.9:", type="build", when="+cuda")
@@ -115,7 +114,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         return sys_type
 
     @property
-    # TODO: name cache file conditionally to cuda and libcpp variants
     def cache_name(self):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
@@ -148,7 +146,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         #    entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
 
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-        # Goal: add +libcpp specific flags
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -158,14 +155,10 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
             cppflags += " "
 
         cflags = cppflags + " ".join(flags["cflags"])
-        if "+libcpp" in spec:
-            cflags += " ".join([cflags,"-DGTEST_HAS_CXXABI_H_=0"])
         if cflags:
             entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
 
         cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if "+libcpp" in spec:
-            cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
