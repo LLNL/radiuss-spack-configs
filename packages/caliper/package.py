@@ -19,8 +19,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     """
 
     homepage = "https://github.com/LLNL/Caliper"
-    #git = "https://github.com/LLNL/Caliper.git"
-    git = "https://lc.llnl.gov/gitlab/hooten1/Caliper-uberenv.git"
+    git = "https://github.com/LLNL/Caliper.git"
+    #git = "https://lc.llnl.gov/gitlab/hooten1/Caliper-uberenv.git"
     url = "https://github.com/LLNL/Caliper/archive/v2.9.0.tar.gz"
     tags = ["e4s", "radiuss"]
 
@@ -190,7 +190,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("WITH_ROCM", "On"))
-            entries.append(cmake_cache_path("ROCM_PREFIX", "../rocm*"))
+            entries.append(cmake_cache_path("ROCM_PREFIX", "/opt/rocm-5.1.1"))
         
 
         return entries
