@@ -127,7 +127,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_CUPTI", False))
             entries.append(cmake_cache_option("WITH_NVTX", False))
         
-        if "rocm" in spec:
+        if "+rocm" in spec:
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
         else:
@@ -160,27 +160,27 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("WITH_SOSFLOW", "+sosflow" in spec))
         entries.append(cmake_cache_option("WITH_SAMPLER", "+sampler" in spec))
 
-        #If paths arent found, consider adding -D to these options
+        #If paths arent found, consider adding  to these options
         if "+papi" in spec:
-            entries.append(cmake_cache_path("-DPAPI_PREFIX", spec["papi"].prefix))
+            entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
         if "+libdw" in spec:
-            entries.append(cmake_cache_path("-DLIBDW_PREFIX", spec["elfutils"].prefix))
+            entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
         if "+libpfm" in spec:
-            entries.append(cmake_cache_path("-DLIBPFM_INSTALL", spec["libpfm4"].prefix))
+            entries.append(cmake_cache_path("LIBPFM_INSTALL", spec["libpfm4"].prefix))
         if "+sosflow" in spec:
-            entries.append(cmake_cache_path("-DSOS_PREFIX", spec["sosflow"].prefix))
+            entries.append(cmake_cache_path("SOS_PREFIX", spec["sosflow"].prefix))
 
-        # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
+        # WITH_CALLPATH was renamed WITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
         if "+libunwind" in spec:
-            entries.append(cmake_cache_path("-DLIBUNWIND_PREFIX", spec["unwind"].prefix))
+            entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
             entries.append(cmake_cache_option("WITH_%s" % callpath_flag, "On"))
         else:
             entries.append(cmake_cache_option("WITH_%s" % callpath_flag, "Off"))
 
         if "+mpi" in spec:
-            entries.append(cmake_cache_path("-DMPI_C_COMPILER", spec["mpi"].mpicc))
-            entries.append(cmake_cache_path("-DMPI_CXX_COMPILER", spec["mpi"].mpicxx))
+            entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
+            entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
 
         if "+cuda" in spec:
             entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
@@ -189,7 +189,9 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
 
         if "+rocm" in spec:
-            entries.append(cmake_cache_path("ROCM_PREFIX", spec["hsa-rocr-dev"].prefix))
+            entries.append(cmake_cache_option("WITH_ROCM", "On"))
+            entries.append(cmake_cache_path("ROCM_PREFIX", "../rocm*"))
+        
 
         return entries
         
