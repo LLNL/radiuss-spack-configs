@@ -9,6 +9,7 @@ import sys
 from llnl.util import tty
 
 from spack.package import *
+from spack.pkg.builtin.camp import hip_for_radiuss_projects
 
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -107,6 +108,9 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("WITH_FORTRAN", False))
 
+        if "+rocm" in spec:
+            hip_for_radiuss_projects(entries, spec, compiler)
+
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
 
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
@@ -162,7 +166,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         #If paths arent found, consider adding  to these options
         if "+papi" in spec:
-            entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
+            #entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
+            entries.append(cmake_cache_path("PAPI_PREFIX", "/usr/"))
         if "+libdw" in spec:
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
         if "+libpfm" in spec:
@@ -190,7 +195,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+rocm" in spec:
             entries.append(cmake_cache_option("WITH_ROCM", "On"))
-            entries.append(cmake_cache_path("ROCM_PREFIX", "/opt/rocm-5.1.1"))
+            #entries.append(cmake_cache_path("ROCM_PREFIX", spec["hip"].prefix))
         
 
         return entries
