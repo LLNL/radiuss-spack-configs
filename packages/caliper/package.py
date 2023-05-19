@@ -6,8 +6,6 @@
 import os
 import sys
 
-from llnl.util import tty
-
 from spack.package import *
 from spack.pkg.builtin.camp import hip_for_radiuss_projects
 
@@ -21,7 +19,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     homepage = "https://github.com/LLNL/Caliper"
     git = "https://github.com/LLNL/Caliper.git"
-    #git = "https://lc.llnl.gov/gitlab/hooten1/Caliper-uberenv.git"
     url = "https://github.com/LLNL/Caliper/archive/v2.9.0.tar.gz"
     tags = ["e4s", "radiuss"]
 
@@ -87,6 +84,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("+rocm+cuda")
 
     patch("for_aarch64.patch", when="target=aarch64:")
+    patch("sampler-service-missing-libunwind-include-dir.patch", when="@2.9.0 +libunwind +sampler")
 
     def _get_sys_type(self, spec):
         sys_type = spec.architecture
@@ -103,22 +101,17 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super(Caliper, self).initconfig_compiler_entries()
 
-        if "+fortran" in spec and compiler.fc is not None:
+        if "+fortran" in spec:
             entries.append(cmake_cache_option("WITH_FORTRAN", True))
-        else:
-            entries.append(cmake_cache_option("WITH_FORTRAN", False))
-
-        if "+rocm" in spec:
-            hip_for_radiuss_projects(entries, spec, compiler)
+        
 
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
-
+        entries.append(cmake_cache_option("BUILD_TESTING", True))
+        entries.append(cmake_cache_option("BUILD_DOCS", False))
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
-        entries.append(cmake_cache_option("BUILD_TESTING", "On"))
-        entries.append(cmake_cache_option("BUILD_DOCS", "Off"))
 
         return entries
-    
+        
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
@@ -127,19 +120,20 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "+cuda" in spec:
             entries.append(cmake_cache_option("WITH_CUPTI", True))
             entries.append(cmake_cache_option("WITH_NVTX", True))
-        else:
-            entries.append(cmake_cache_option("WITH_CUPTI", False))
-            entries.append(cmake_cache_option("WITH_NVTX", False))
-        
+            entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
+            entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
         if "+rocm" in spec:
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
-        else:
-            entries.append(cmake_cache_option("WITH_ROCTRACER", False))
-            entries.append(cmake_cache_option("WITH_ROCTX", False))
+            hip_for_radiuss_projects(entries, spec, compiler)
+            #entries.append(cmake_cache_option("ROCM_ROOT_DIR", "/usr/"))
 
         return entries
-    
+            
+
+
+
+
     def initconfig_mpi_entries(self):
         spec = self.spec
         compiler = self.compiler
@@ -147,59 +141,54 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+mpi" in spec:
             entries.append(cmake_cache_option("WITH_MPI", True))
-        else:
-            entries.append(cmake_cache_option("WITH_MPI", False))
-
+            entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
+            entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
+        
         return entries
-    
+
     def initconfig_package_entries(self):
         spec = self.spec
         entries = []
-        
-        entries.append(cmake_cache_option("WITH_ADIAK", "+adiak" in spec))
-        entries.append(cmake_cache_option("WITH_GOTCHA", "+gotcha" in spec))
-        entries.append(cmake_cache_option("WITH_PAPI", "+papi" in spec))
-        entries.append(cmake_cache_option("WITH_LIBDW", "+libdw" in spec))
-        entries.append(cmake_cache_option("WITH_LIBPFM", "+libpfm" in spec))
-        entries.append(cmake_cache_option("WITH_SOSFLOW", "+sosflow" in spec))
-        entries.append(cmake_cache_option("WITH_SAMPLER", "+sampler" in spec))
 
-        #If paths arent found, consider adding  to these options
+        if "+adiak" in spec:
+            entries.append(cmake_cache_option("WITH_ADIAK", True))
+        if "+gotcha" in spec:
+            entries.append(cmake_cache_option("WITH_GOTCHA", True))
+        if "+sampler" in spec:
+            entries.append(cmake_cache_option("WITH_SAMPLER", True))
         if "+papi" in spec:
-            #entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
+            entries.append(cmake_cache_option("WITH_PAPI", True))
+            # use pre installed papi
             entries.append(cmake_cache_path("PAPI_PREFIX", "/usr/"))
         if "+libdw" in spec:
+            entries.append(cmake_cache_option("WITH_LIBDW", True))
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
         if "+libpfm" in spec:
+            entries.append(cmake_cache_option("WITH_LIBPFM", True))
             entries.append(cmake_cache_path("LIBPFM_INSTALL", spec["libpfm4"].prefix))
         if "+sosflow" in spec:
+            entries.append(cmake_cache_option("WITH_SOSFLOW", True))
             entries.append(cmake_cache_path("SOS_PREFIX", spec["sosflow"].prefix))
-
-        # WITH_CALLPATH was renamed WITH_LIBUNWIND in 2.5
+        # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
         if "+libunwind" in spec:
             entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
-            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, "On"))
+            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, True))
         else:
-            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, "Off"))
-
-        if "+mpi" in spec:
-            entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
-            entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-
-        if "+cuda" in spec:
-            entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
-            # technically only works with cuda 10.2+, otherwise cupti is in
-            # ${CUDA_TOOLKIT_ROOT_DIR}/extras/CUPTI
-            entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
-
-        if "+rocm" in spec:
-            entries.append(cmake_cache_option("WITH_ROCM", "On"))
-            #entries.append(cmake_cache_path("ROCM_PREFIX", spec["hip"].prefix))
-        
+            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, False))
 
         return entries
-        
+
+    
+    def cmake_args(self):
+
+        args = []
+
+        #if "+rocm" in spec:
+        #    args.append("-DCMAKE_CXX_COMPILER={0}".format(spec["hip"].hipcc))
+        #    args.append("-DROCM_PREFIX=%s" % spec["hsa-rocr-dev"].prefix)
+
+        return args
 
     @run_after("install")
     def cache_test_sources(self):
@@ -207,44 +196,31 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         install test subdirectory for use during `spack test run`."""
         self.cache_extra_test_sources([join_path("examples", "apps")])
 
-    def run_cxx_example_test(self):
-        """Run stand alone test: cxx_example"""
+    def test_cxx_example(self):
+        """build and run cxx-example"""
 
-        test_dir = self.test_suite.current_test_cache_dir.examples.apps
         exe = "cxx-example"
-        source_file = "cxx-example.cpp"
+        source_file = "{0}.cpp".format(exe)
 
-        if not os.path.isfile(join_path(test_dir, source_file)):
-            tty.warn("Skipping caliper test:" "{0} does not exist".format(source_file))
-            return
+        source_path = find_required_file(
+            self.test_suite.current_test_cache_dir, source_file, expected=1, recursive=True
+        )
 
-        if os.path.exists(self.prefix.lib):
-            lib_dir = self.prefix.lib
-        else:
-            lib_dir = self.prefix.lib64
+        lib_dir = self.prefix.lib if os.path.exists(self.prefix.lib) else self.prefix.lib64
 
-        options = [
-            "-L{0}".format(lib_dir),
-            "-I{0}".format(self.prefix.include),
-            "{0}".format(join_path(test_dir, source_file)),
-            "-o",
-            exe,
-            "-std=c++11",
-            "-lcaliper",
-            "-lstdc++",
-        ]
+        cxx = which(os.environ["CXX"])
+        test_dir = os.path.dirname(source_path)
+        with working_dir(test_dir):
+            cxx(
+                "-L{0}".format(lib_dir),
+                "-I{0}".format(self.prefix.include),
+                source_path,
+                "-o",
+                exe,
+                "-std=c++11",
+                "-lcaliper",
+                "-lstdc++",
+            )
 
-        if not self.run_test(
-            exe=os.environ["CXX"],
-            options=options,
-            purpose="test: compile {0} example".format(exe),
-            work_dir=test_dir,
-        ):
-            tty.warn("Skipping caliper test: failed to compile example")
-            return
-
-        if not self.run_test(exe, purpose="test: run {0} example".format(exe), work_dir=test_dir):
-            tty.warn("Skipping caliper test: failed to run example")
-
-    def test(self):
-        self.run_cxx_example_test()
+            cxx_example = which(exe)
+            cxx_example()
