@@ -82,7 +82,7 @@ compilers::
     paths:
       cc: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/icc
       cxx: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/icpc
-      c77: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
+      f77: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
       fc: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
     flags: {}
     operating_system: rhel8
