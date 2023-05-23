@@ -142,7 +142,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "+papi" in spec:
             entries.append(cmake_cache_option("WITH_PAPI", True))
             # use pre installed papi
-            entries.append(cmake_cache_path("PAPI_PREFIX", "/usr/"))
+            entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
         if "+libdw" in spec:
             entries.append(cmake_cache_option("WITH_LIBDW", True))
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
