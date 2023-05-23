@@ -129,18 +129,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         return entries
 
-    def initconfig_mpi_entries(self):
-        spec = self.spec
-        compiler = self.compiler
-        entries = super(Caliper, self).initconfig_mpi_entries()
-
-        if "+mpi" in spec:
-            entries.append(cmake_cache_option("WITH_MPI", True))
-            entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
-            entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-
-        return entries
-
     def initconfig_package_entries(self):
         spec = self.spec
         entries = []
