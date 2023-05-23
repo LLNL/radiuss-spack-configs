@@ -116,7 +116,7 @@ packages::
     buildable: false
     version: [8.0.1]
     externals:
-      - spec: libunwind@8.0.1
+    - spec: libunwind@8.0.1
       prefix: /usr
   papi:
     buildable: false
