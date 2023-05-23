@@ -83,3 +83,9 @@ packages:
     externals:
     - spec: elfutils@0.176
       prefix: /usr
+  papi:
+    buildable: false
+    version: [6.0.0.1]
+    externals:
+    - spec: papi@6.0.0.1
+      prefix: /usr/papi600
