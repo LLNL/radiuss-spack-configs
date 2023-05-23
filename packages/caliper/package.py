@@ -91,11 +91,11 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "SYS_TYPE" in env:
             sys_type = env["SYS_TYPE"]
         return sys_type
-    
+
     def cmake_args(self):
         options = []
         return options
-    
+
     def initconfig_compiler_entries(self):
         spec = self.spec
         compiler = self.compiler
@@ -103,7 +103,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+fortran" in spec:
             entries.append(cmake_cache_option("WITH_FORTRAN", True))
-        
 
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
         entries.append(cmake_cache_option("BUILD_TESTING", True))
@@ -111,7 +110,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
 
         return entries
-        
+
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
@@ -129,10 +128,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             #entries.append(cmake_cache_option("ROCM_ROOT_DIR", "/usr/"))
 
         return entries
-            
-
-
-
 
     def initconfig_mpi_entries(self):
         spec = self.spec
@@ -143,7 +138,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_MPI", True))
             entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
             entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-        
+
         return entries
 
     def initconfig_package_entries(self):
@@ -179,7 +174,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         return entries
 
-    
     def cmake_args(self):
 
         args = []
