@@ -89,11 +89,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         multi=False,
         description="Tests to run",
     )
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
     variant("tools", default=False, description="Enable tools")
     variant("backtrace", default=False, description="Enable backtrace tools")
     variant("dev_benchmarks", default=False, description="Enable Developer Benchmarks")
-    variant("device_alloc", default=True, description="Enable DeviceAllocator")
+    variant("device_alloc", default=False, description="Enable DeviceAllocator")
     variant("werror", default=True, description="Enable warnings as errors")
     variant("asan", default=False, description="Enable ASAN")
     variant("sanitizer_tests", default=False, description="Enable address sanitizer tests")
@@ -105,6 +104,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.14:", when="@2022.03.0:", type="build")
     depends_on("cmake@:3.20", when="@2022.03.0:2022.03 +rocm", type="build")
 
+    depends_on("blt@develop", type="build", when="@develop")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@2022.03.0:")
     depends_on("blt@0.4.1", type="build", when="@6.0.0")
@@ -211,7 +211,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-        # Goal: add +libcpp specific flags
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -221,14 +220,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             cppflags += " "
 
         cflags = cppflags + " ".join(flags["cflags"])
-        if "+libcpp" in spec:
-            cflags += " ".join([cflags,"-DGTEST_HAS_CXXABI_H_=0"])
         if cflags:
             entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
 
         cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if "+libcpp" in spec:
-            cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
 
