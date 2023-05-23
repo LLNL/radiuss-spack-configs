@@ -114,3 +114,9 @@ packages::
     externals:
     - spec: elfutils@0.187
       prefix: /usr
+  papi:
+    buildable: false
+    version: [7.0.0.1]
+    externals:
+    - spec: papi@7.0.0.1
+      prefix: /opt/cray/pe/papi/7.0.0.1
