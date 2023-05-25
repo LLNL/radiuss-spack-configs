@@ -108,3 +108,21 @@ packages::
     externals:
     - spec: python@3.10.8
       prefix: /usr/tce/packages/python/python-3.10.8
+  elfutils:
+    buildable: false
+    version: [0.187]
+    externals:
+    - spec: elfutils@0.187
+      prefix: /usr
+  libunwind:
+    buildable: false
+    version: [8.0.1]
+    externals:
+    - spec: libunwind@8.0.1
+      prefix: /usr
+  papi:
+    buildable: false
+    version: [7.0.0.1]
+    externals:
+    - spec: papi@7.0.0.1
+      prefix: /opt/cray/pe/papi/7.0.0.1
