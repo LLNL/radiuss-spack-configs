@@ -44,7 +44,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
-    variant("adiak", default=False, description="Enable Adiak support")
+    variant("adiak", default=True, description="Enable Adiak support")
     variant("mpi", default=True, description="Enable MPI wrappers")
     # libunwind has some issues on Mac
     variant(
