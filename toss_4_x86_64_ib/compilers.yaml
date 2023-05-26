@@ -162,7 +162,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: oneapi@2023.1
+    spec: oneapi@2023.1.0
     paths:
       cc: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icx
       cxx: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icpx
@@ -175,7 +175,7 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: oneapi@2023.1.gcc.8.5.0
+    spec: oneapi@2023.1.0.gcc.8.5.0
     paths:
       cc: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icx
       cxx: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icpx
