@@ -65,6 +65,19 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
+    spec: gcc@8.5.0
+    paths:
+      cc: /usr/bin/gcc
+      cxx: /usr/bin/g++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
     spec: gcc@10.3.1
     paths:
       cc: /usr/tce/packages/gcc-tce/gcc-10.3.1/bin/gcc
@@ -87,20 +100,21 @@ compilers::
     flags: {}
     operating_system: rhel8
     target: x86_64
-    modules: []
+    modules:
+    - intel-classic/19.0.4
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: intel@19.1.2.gcc.10.3.1
+    spec: intel@19.1.2.gcc.8.5.0
     paths:
       cc: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/icc
       cxx: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/icpc
       f77: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
       fc: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1
-      cxxflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1
-      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1
+      cflags: -gcc-name=/usr/bin/gcc
+      cxxflags: -gcc-name=/usr/bin/g++
+      fflags: -gcc-name=/usr/bin/gcc
     operating_system: rhel8
     target: x86_64
     modules: []
