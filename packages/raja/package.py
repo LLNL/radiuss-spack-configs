@@ -109,6 +109,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules=False)
     version("main", branch="main", submodules=False)
+    version("2022.10.5", tag="v2022.10.5", submodules=False)
     version("2022.10.4", tag="v2022.10.4", submodules=False)
     version("2022.10.3", tag="v2022.10.3", submodules=False)
     version("2022.10.2", tag="v2022.10.2", submodules=False)
@@ -143,14 +144,19 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     variant("openmp", default=True, description="Build OpenMP backend")
     variant("shared", default=True, description="Build shared libs")
+    variant("desul", default=False, description="Build desul atomics backend")
+    variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
+
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
     # TODO: figure out gtest dependency and then set this default True
     # and remove the +tests conflict below.
     variant("tests", default=False, description="Build tests")
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
-    variant("desul", default=False, description="Build desul atomics backend")
-    variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
+
+    ## we don’t use variants to express the failing test, we only add a variant to
+    ## define whether we want to run all the tests (including those known to fail)
+    ## or only the passing ones.
+    variant("run-all-tests", default=False, description="Run all the tests, including those known to fail.")
 
     depends_on("blt")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
@@ -198,7 +204,6 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         return sys_type
 
     @property
-    # TODO: name cache file conditionally to cuda and libcpp variants
     def cache_name(self):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
@@ -217,15 +222,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(Raja, self).initconfig_compiler_entries()
 
-        # Switch to hip as a CPP compiler.
-        # adrienbernede-22-11:
-        #   This was only done in upstream Spack raja package.
-        #   I could not find the equivalent logic in Spack source, so keeping it.
-        if "+rocm" in spec:
-            entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
-
-        # Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS add
-        # +libcpp specific flags
+        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -235,16 +232,17 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             cppflags += " "
 
         cflags = cppflags + " ".join(flags["cflags"])
-        if "+libcpp" in spec:
-            cflags += " ".join([cflags,"-DGTEST_HAS_CXXABI_H_=0"])
         if cflags:
             entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
 
         cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if "+libcpp" in spec:
-            cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
+
+        fflags = " ".join(flags["fflags"])
+        if fflags:
+            entries.append(cmake_cache_string("CMAKE_Fortran_FLAGS", fflags))
+        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
         blt_link_helpers(entries, spec, compiler)
 
@@ -326,6 +324,13 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("ENABLE_TESTS", False))
         else:
             entries.append(cmake_cache_option("ENABLE_TESTS", True))
+            if not "+run-all-tests" in spec:
+                if spec.satisfies("%clang@12.0.0:13.9.999"):
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TESTS_IGNORE", "test-algorithm-sort-OpenMP.exe;test-algorithm-stable-sort-OpenMP.exe"))
+                if spec.satisfies("+cuda %clang@12.0.0:13.9.999"):
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TESTS_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe;test-algorithm-sort-OpenMP.exe;test-algorithm-stable-sort-OpenMP.exe"))
+                if spec.satisfies("+cuda %xl@16.1.1.12"):
+                    entries.append(cmake_cache_string("CTEST_CUSTOM_TESTS_IGNORE", "test-algorithm-sort-Cuda.exe;test-algorithm-stable-sort-Cuda.exe"))
 
         entries.append(cmake_cache_option("RAJA_HOST_CONFIG_LOADED", True))
 

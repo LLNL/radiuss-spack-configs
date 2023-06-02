@@ -58,9 +58,12 @@ def hip_for_radiuss_projects(options, spec, spec_compiler):
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
     hip_link_flags = ""
-    if "%gcc" in spec:
-        gcc_bin = os.path.dirname(spec_compiler.cxx)
-        gcc_prefix = join_path(gcc_bin, "..")
+    if "%gcc" in spec or spec_uses_toolchain(spec):
+        if "%gcc" in spec:
+            gcc_bin = os.path.dirname(spec_compiler.cxx)
+            gcc_prefix = os.path.join(gcc_bin, "..")
+        else:
+            gcc_prefix = spec_uses_toolchain(spec)[0]
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
         options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
     else:
@@ -103,13 +106,22 @@ def blt_link_helpers(options, spec, spec_compiler):
         options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
         "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
-    compilers_using_toolchain = ["pgi", "xl", "icpc"]
+    compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
     if any(compiler in spec_compiler.cxx for compiler in compilers_using_toolchain):
         if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
 
             # Ignore conflicting default gcc toolchain
             options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
             "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
+
+    if "cce" in spec_compiler.cxx:
+        # Here is where to find libs that work for fortran
+        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
+        description = (
+            "Adds a missing rpath for libraries " "associated with the fortran compiler"
+        )
+        linker_flags = "${BLT_EXE_LINKER_FLAGS} -Wl,-rpath," + libdir
+        options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
 
 
 class Camp(CMakePackage, CudaPackage, ROCmPackage):

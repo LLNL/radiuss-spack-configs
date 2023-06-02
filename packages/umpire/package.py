@@ -172,11 +172,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         multi=False,
         description="Tests to run",
     )
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
     variant("tools", default=False, description="Enable tools")
     variant("backtrace", default=False, description="Enable backtrace tools")
     variant("dev_benchmarks", default=False, description="Enable Developer Benchmarks")
-    variant("device_alloc", default=True, description="Enable DeviceAllocator")
+    variant("device_alloc", default=False, description="Enable DeviceAllocator")
     variant("werror", default=True, description="Enable warnings as errors")
     variant("asan", default=False, description="Enable ASAN")
     variant("sanitizer_tests", default=False, description="Enable address sanitizer tests")
@@ -188,6 +187,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.14:", when="@2022.03.0:", type="build")
     depends_on("cmake@:3.20", when="@2022.03.0:2022.03 +rocm", type="build")
 
+    depends_on("blt@develop", type="build", when="@develop")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@2022.03.0:")
     depends_on("blt@0.4.1", type="build", when="@6.0.0")
@@ -226,7 +226,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     # device allocator must be used with more current umpire versions, rocm 5.4.0 and greater,
     # and with either rocm or cuda enabled
     conflicts("+device_alloc", when="@:2022.03.0")
-    conflicts("+device_alloc", when="^rocm@:5.3.99")
+    conflicts("+device_alloc", when="^hip@:5.3.99")
     conflicts("+device_alloc", when="~rocm~cuda")
 
     conflicts("+deviceconst", when="~rocm~cuda")
@@ -274,6 +274,8 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(Umpire, self).initconfig_compiler_entries()
 
+
+
         # adrienbernede-22-11:
         #   This was in upstream Spack raja package, but it’s causing the follwing failure:
         #     CMake Error in src/umpire/CMakeLists.txt:
@@ -290,6 +292,28 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("ENABLE_FORTRAN", False))
 
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
+
+        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
+        flags = spec.compiler_flags
+
+        # use global spack compiler flags
+        cppflags = " ".join(flags["cppflags"])
+        if cppflags:
+            # avoid always ending up with " " with no flags defined
+            cppflags += " "
+
+        cflags = cppflags + " ".join(flags["cflags"])
+        if cflags:
+            entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
+
+        cxxflags = cppflags + " ".join(flags["cxxflags"])
+        if cxxflags:
+            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
+
+        fflags = " ".join(flags["fflags"])
+        if fflags:
+            entries.append(cmake_cache_string("CMAKE_Fortran_FLAGS", fflags))
+        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
         blt_link_helpers(entries, spec, compiler)
 

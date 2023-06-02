@@ -23,30 +23,33 @@ packages:
     - spec: cmake@3.23.1
       prefix: /usr/tce/packages/cmake/cmake-3.23.1
   cuda:
-    version: [12.0.0, 11.7.0, 11.5.0, 11.1.0, 11.0.2, 10.2.89, 10.1.243, 10.1.168, 9.2.148, 8.0]
+    version: [12.0.0, 11.7.0, 11.5.0, 11.2.0, 11.1.0, 11.0.2, 10.2.89, 10.1.243, 10.1.168, 9.2.148, 8.0]
     buildable: false
     externals:
-    - spec: cuda@12.0.0~allow-unsupported-compilers
+    - spec: cuda@12.0.0+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-12.0.0
-    - spec: cuda@11.7.0~allow-unsupported-compilers
+    - spec: cuda@11.7.0+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-11.7.0
-    - spec: cuda@11.5.0~allow-unsupported-compilers
+    - spec: cuda@11.5.0+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-11.5.0
-    - spec: cuda@11.1.0~allow-unsupported-compilers
+    - spec: cuda@11.2.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.2.0
+    - spec: cuda@11.1.0+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-11.1.0
-    - spec: cuda@11.0.2~allow-unsupported-compilers
+    - spec: cuda@11.0.2+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-11.0.2
-    - spec: cuda@10.2.89~allow-unsupported-compilers
+    - spec: cuda@10.2.89+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-10.2.89
-    - spec: cuda@10.1.243~allow-unsupported-compilers
+    - spec: cuda@10.1.243+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-10.1.243
-    - spec: cuda@10.1.168~allow-unsupported-compilers
+    - spec: cuda@10.1.168+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-10.1.168
-    - spec: cuda@9.2.148~allow-unsupported-compilers
+    - spec: cuda@9.2.148+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-9.2.148
-    - spec: cuda@8.0~allow-unsupported-compilers
+    - spec: cuda@8.0+allow-unsupported-compilers
       prefix: /usr/tce/packages/cuda/cuda-8.0
   spectrum-mpi:
+    buildable: false
     externals:
     - spec: spectrum-mpi@10.3.1.03rtm0%pgi@19.10
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-19.10
@@ -68,10 +71,27 @@ packages:
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@beta2019.06.20
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
-    buildable: false
   python:
     buildable: false
     version: [3.8.2]
     externals:
     - spec: python@3.8.2
       prefix: /usr/tce/packages/python/python-3.8.2
+  elfutils:
+    buildable: false
+    version: [0.176]
+    externals:
+    - spec: elfutils@0.176
+      prefix: /usr
+  libunwind:
+    buildable: false
+    version: [8.0.1]
+    externals:
+    - spec: libunwind@8.0.1
+      prefix: /usr
+  papi:
+    buildable: false
+    version: [6.0.0.1]
+    externals:
+    - spec: papi@6.0.0.1
+      prefix: /usr/papi600

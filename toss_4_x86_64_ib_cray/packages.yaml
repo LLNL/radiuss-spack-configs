@@ -25,78 +25,104 @@ packages::
     buildable: false
     externals:
     - spec: cuda@11.4.120
-      prefix: /opt/toss/cudatoolkit/11.4/ 
+      prefix: /opt/toss/cudatoolkit/11.4/
   hip:
-    version: [4.5.2, 5.0.2, 5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
     externals:
-    - spec: hip@4.5.2
-      prefix: /opt/rocm-4.5.2/hip
-    - spec: hip@5.0.2
-      prefix: /opt/rocm-5.0.2/hip
     - spec: hip@5.2.3
       prefix: /opt/rocm-5.2.3/hip
     - spec: hip@5.3.0
       prefix: /opt/rocm-5.3.0/hip
+    - spec: hip@5.4.1
+      prefix: /opt/rocm-5.4.1/hip
+    - spec: hip@5.4.3
+      prefix: /opt/rocm-5.4.3/hip
   llvm-amdgpu:
-    version: [4.5.2, 5.0.2, 5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
     externals:
-    - spec: llvm-amdgpu@4.5.2
-      prefix: /opt/rocm-4.5.2/llvm
-    - spec: llvm-amdgpu@5.0.2
-      prefix: /opt/rocm-5.0.2/llvm
     - spec: llvm-amdgpu@5.2.3
       prefix: /opt/rocm-5.2.3/llvm
     - spec: llvm-amdgpu@5.3.0
       prefix: /opt/rocm-5.3.0/llvm
+    - spec: llvm-amdgpu@5.4.1
+      prefix: /opt/rocm-5.4.1/llvm
+    - spec: llvm-amdgpu@5.4.3
+      prefix: /opt/rocm-5.4.3/llvm
   hsa-rocr-dev:
-    version: [4.5.2, 5.0.2, 5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
     externals:
-    - spec: hsa-rocr-dev@4.5.2
-      prefix: /opt/rocm-4.5.2/
-    - spec: hsa-rocr-dev@5.0.2
-      prefix: /opt/rocm-5.0.2/
     - spec: hsa-rocr-dev@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: hsa-rocr-dev@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: hsa-rocr-dev@5.4.1
+      prefix: /opt/rocm-5.4.1/
+    - spec: hsa-rocr-dev@5.4.3
+      prefix: /opt/rocm-5.4.3/
   rocminfo:
-    version: [4.5.2, 5.0.2, 5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
     externals:
-    - spec: rocminfo@4.5.2
-      prefix: /opt/rocm-4.5.2/
-    - spec: rocminfo@5.0.2
-      prefix: /opt/rocm-5.0.2/
     - spec: rocminfo@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: rocminfo@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocminfo@5.4.1
+      prefix: /opt/rocm-5.4.1/
+    - spec: rocminfo@5.4.3
+      prefix: /opt/rocm-5.4.3/
   rocm-device-libs:
-    version: [4.5.2, 5.0.2, 5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3]
     buildable: false
     externals:
-    - spec: rocm-device-libs@4.5.2
-      prefix: /opt/rocm-4.5.2/
-    - spec: rocm-device-libs@5.0.2
-      prefix: /opt/rocm-5.0.2/
     - spec: rocm-device-libs@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: rocm-device-libs@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocm-device-libs@5.4.1
+      prefix: /opt/rocm-5.4.1/
+    - spec: rocm-device-libs@5.4.3
+      prefix: /opt/rocm-5.4.3/
   rocprim:
-    version: [5.2.3, 5.3.0]
+    version: [5.2.3, 5.3.0, 5.4.3]
     buildable: false
     externals:
     - spec: rocprim@5.2.3
       prefix: /opt/rocm-5.2.3/
     - spec: rocprim@5.3.0
       prefix: /opt/rocm-5.3.0/
+    - spec: rocprim@5.4.3
+      prefix: /opt/rocm-5.4.3/
   cray_mpich:
+    buildable: false
     externals:
     - spec: cray_mpich@8.1.9%gcc@10.2.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich-tce/cray-mpich-8.1.9-gcc-10.2.1/
+  python:
     buildable: false
+    version: [3.10.8]
+    externals:
+    - spec: python@3.10.8
+      prefix: /usr/tce/packages/python/python-3.10.8
+  elfutils:
+    buildable: false
+    version: [0.187]
+    externals:
+    - spec: elfutils@0.187
+      prefix: /usr
+  libunwind:
+    buildable: false
+    version: [8.0.1]
+    externals:
+    - spec: libunwind@8.0.1
+      prefix: /usr
+  papi:
+    buildable: false
+    version: [7.0.0.1]
+    externals:
+    - spec: papi@7.0.0.1
+      prefix: /opt/cray/pe/papi/7.0.0.1
