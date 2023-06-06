@@ -11,9 +11,9 @@ from os import environ as env
 from os.path import join as pjoin
 
 from spack import *
-from spack.pkg.builtin.camp import hip_for_radiuss_projects
-from spack.pkg.builtin.camp import cuda_for_radiuss_projects
-from spack.pkg.builtin.camp import blt_link_helpers
+from .camp import hip_for_radiuss_projects
+from .camp import cuda_for_radiuss_projects
+from .camp import blt_link_helpers
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
