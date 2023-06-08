@@ -59,6 +59,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("sampler", default=is_linux, description="Enable sampling support on Linux")
     variant("sosflow", default=False, description="Enable SOSflow support")
     variant("fortran", default=False, description="Enable Fortran support")
+    variant("tests", default=False, description="Enable tests")
 
     depends_on("adiak@0.1:0", when="@2.2: +adiak")
 
@@ -105,7 +106,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_FORTRAN", True))
 
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS", True))
-        entries.append(cmake_cache_option("BUILD_TESTING", True))
+        entries.append(cmake_cache_option("BUILD_TESTING", "+tests" in spec ))
         entries.append(cmake_cache_option("BUILD_DOCS", False))
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
 
