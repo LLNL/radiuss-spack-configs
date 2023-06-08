@@ -156,7 +156,7 @@ compilers::
       f77: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/ifx
       fc: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/ifx
     flags: {}
-    operating_system: rhel7
+    operating_system: rhel8
     target: x86_64
     modules: []
     environment: {}
@@ -172,7 +172,7 @@ compilers::
       cflags: --gcc-toolchain=/usr
       cxxflags: --gcc-toolchain=/usr
       fflags: -gcc-name=/usr/bin/gcc
-    operating_system: rhel7
+    operating_system: rhel8
     target: x86_64
     modules: []
     environment: {}
