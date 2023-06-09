@@ -162,16 +162,16 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: oneapi@2023.1.0.gcc.8.5.0
+    spec: oneapi@2023.1.0.gcc.10.3.1
     paths:
       cc: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icx
       cxx: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/icpx
       f77: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/ifx
       fc: /opt/intel/oneapi/compiler/2023.1.0/linux/bin/ifx
     flags:
-      cflags: --gcc-toolchain=/usr
-      cxxflags: --gcc-toolchain=/usr
-      fflags: -gcc-name=/usr/bin/gcc
+      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1
+      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1
+      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc
     operating_system: rhel8
     target: x86_64
     modules: []
