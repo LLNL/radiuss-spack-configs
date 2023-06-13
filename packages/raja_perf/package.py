@@ -69,6 +69,13 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         for arch in ROCmPackage.amdgpu_targets:
             depends_on(
                 "caliper +rocm amdgpu_target={0}".format(arch), when="amdgpu_target={0}".format(arch)
+            )
+        conflicts("+openmp", when="@:2022.03")
+
+    with when("@0.12.0: +cuda +caliper"):
+        depends_on("caliper +cuda")
+        for sm_ in CudaPackage.cuda_arch_values:
+            depends_on("caliper +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
 
     conflicts("~openmp", when="+openmp_target", msg="OpenMP target requires OpenMP")
     conflicts("+cuda", when="+openmp_target", msg="Cuda may not be activated when openmp_target is ON")
