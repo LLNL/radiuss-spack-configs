@@ -11,9 +11,9 @@ from os import environ as env
 from os.path import join as pjoin
 
 from spack import *
-from spack.pkg.builtin.camp import hip_for_radiuss_projects
-from spack.pkg.builtin.camp import cuda_for_radiuss_projects
-from spack.pkg.builtin.camp import blt_link_helpers
+from .camp import hip_for_radiuss_projects
+from .camp import cuda_for_radiuss_projects
+from .camp import blt_link_helpers
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -60,14 +60,25 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("rocprim", when="+rocm")
 
-
-
-    conflicts("~openmp", when="+openmp_target", msg="OpenMP target requires OpenMP")
-    conflicts("+cuda", when="+openmp_target", msg="Cuda may not be activated when openmp_target is ON")
-
     depends_on("caliper@master",when="+caliper")
     depends_on("caliper@master +cuda",when="+caliper +cuda")
     depends_on("caliper@master +rocm",when="+caliper +rocm")
+
+    with when("@0.12.0: +rocm +caliper"):
+        depends_on("caliper +rocm")
+        for arch in ROCmPackage.amdgpu_targets:
+            depends_on(
+                "caliper +rocm amdgpu_target={0}".format(arch), when="amdgpu_target={0}".format(arch)
+            )
+        conflicts("+openmp", when="@:2022.03")
+
+    with when("@0.12.0: +cuda +caliper"):
+        depends_on("caliper +cuda")
+        for sm_ in CudaPackage.cuda_arch_values:
+            depends_on("caliper +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
+
+    conflicts("~openmp", when="+openmp_target", msg="OpenMP target requires OpenMP")
+    conflicts("+cuda", when="+openmp_target", msg="Cuda may not be activated when openmp_target is ON")
 
     def _get_sys_type(self, spec):
         sys_type = str(spec.architecture)

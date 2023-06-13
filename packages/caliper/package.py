@@ -7,7 +7,7 @@ import os
 import sys
 
 from spack.package import *
-from spack.pkg.builtin.camp import hip_for_radiuss_projects
+from .camp import hip_for_radiuss_projects
 
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
