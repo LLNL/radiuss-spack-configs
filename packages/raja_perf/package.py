@@ -7,10 +7,7 @@ import os
 import socket
 import re
 
-from os import environ as env
-from os.path import join as pjoin
-
-from spack import *
+from spack.package import *
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
 from .camp import blt_link_helpers
@@ -40,7 +37,6 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("openmp", default=True, description="Build OpenMP backend")
     variant("openmp_target", default=False, description="Build with OpenMP target support")
     variant("shared", default=False, description="Build Shared Libs")
-    variant("libcpp", default=False, description="Uses libc++ instead of libstdc++")
     variant("tests", default="basic", values=("none", "basic", "benchmarks"),
             multi=False, description="Tests to run")
     variant("caliper",default=False, description="Build with support for Caliper based profiling")
@@ -82,27 +78,18 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def _get_sys_type(self, spec):
         sys_type = str(spec.architecture)
-        # if on llnl systems, we can use the SYS_TYPE
         if "SYS_TYPE" in env:
             sys_type = env["SYS_TYPE"]
         return sys_type
 
     @property
-    # TODO: name cache file conditionally to cuda and libcpp variants
     def cache_name(self):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
             hostname = hostname.rstrip("1234567890")
-        var=""
-        if "+cuda" in self.spec:
-            var= "-".join([var,"cuda"])
-        if "+libcpp" in self.spec:
-            var="-".join([var,"libcpp"])
-
         return "{0}-{1}{2}-{3}@{4}-{5}.cmake".format(
             hostname,
             self._get_sys_type(self.spec),
-            var,
             self.spec.compiler.name,
             self.spec.compiler.version,
             self.spec.dag_hash(8)
@@ -114,15 +101,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super(RajaPerf, self).initconfig_compiler_entries()
 
-        # Switch to hip as a CPP compiler.
-        # adrienbernede-22-11:
-        #   This was only done in upstream Spack raja package.
-        #   I could not find the equivalent logic in Spack source, so keeping it.
-        #if "+rocm" in spec:
-        #    entries.insert(0, cmake_cache_path("CMAKE_CXX_COMPILER", spec["hip"].hipcc))
-
-        # Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS add
-        # +libcpp specific flags
+        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
         flags = spec.compiler_flags
 
         # use global spack compiler flags
@@ -132,16 +111,13 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
             cppflags += " "
 
         cflags = cppflags + " ".join(flags["cflags"])
-        if "+libcpp" in spec:
-            cflags += " ".join([cflags,"-DGTEST_HAS_CXXABI_H_=0"])
         if cflags:
             entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
 
         cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if "+libcpp" in spec:
-            cxxflags += " ".join([cxxflags,"-stdlib=libc++ -DGTEST_HAS_CXXABI_H_=0"])
         if cxxflags:
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
+        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
         blt_link_helpers(entries, spec, compiler)
 
