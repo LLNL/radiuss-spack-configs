@@ -87,7 +87,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         hostname = socket.gethostname()
         if "SYS_TYPE" in env:
             hostname = hostname.rstrip("1234567890")
-        return "{0}-{1}{2}-{3}@{4}-{5}.cmake".format(
+        return "{0}-{1}{2}-{3}@{4}.cmake".format(
             hostname,
             self._get_sys_type(self.spec),
             self.spec.compiler.name,
