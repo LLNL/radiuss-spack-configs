@@ -169,12 +169,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: rocmcc@5.5.0
+    spec: rocmcc@5.5.1
     paths:
-      cc: /opt/rocm-5.5.0/llvm/bin/amdclang
-      cxx: /opt/rocm-5.5.0/llvm/bin/amdclang++
-      f77: /opt/rocm-5.5.0/llvm/bin/amdflang
-      fc: /opt/rocm-5.5.0/llvm/bin/amdflang
+      cc: /opt/rocm-5.5.1/llvm/bin/amdclang
+      cxx: /opt/rocm-5.5.1/llvm/bin/amdclang++
+      f77: /opt/rocm-5.5.1/llvm/bin/amdflang
+      fc: /opt/rocm-5.5.1/llvm/bin/amdflang
     flags: {}
     operating_system: rhel8
     target: x86_64
