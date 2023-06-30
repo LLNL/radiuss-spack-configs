@@ -211,28 +211,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("{}ENABLE_C".format(option_prefix), "+c" in spec))
 
-        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-        flags = spec.compiler_flags
-
-        # use global spack compiler flags
-        cppflags = " ".join(flags["cppflags"])
-        if cppflags:
-            # avoid always ending up with " " with no flags defined
-            cppflags += " "
-
-        cflags = cppflags + " ".join(flags["cflags"])
-        if cflags:
-            entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
-
-        cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if cxxflags:
-            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
-
-        fflags = " ".join(flags["fflags"])
-        if fflags:
-            entries.append(cmake_cache_string("CMAKE_Fortran_FLAGS", fflags))
-        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-
         blt_link_helpers(entries, spec, compiler)
 
         #adrienbernede-22-11:

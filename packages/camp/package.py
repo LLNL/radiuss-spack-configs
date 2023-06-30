@@ -87,24 +87,24 @@ def cuda_for_radiuss_projects(options, spec):
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
 def blt_link_helpers(options, spec, spec_compiler):
-
     ### From local package:
-    fortran_compilers = ["gfortran", "xlf"]
-    if any(compiler in spec_compiler.fc for compiler in fortran_compilers) and ("clang" in spec_compiler.cxx):
-        # Pass fortran compiler lib as rpath to find missing libstdc++
-        libdir = os.path.join(os.path.dirname(
-                       os.path.dirname(spec_compiler.fc)), "lib")
-        flags = ""
-        for _libpath in [libdir, libdir + "64"]:
-            if os.path.exists(_libpath):
-                flags += " -Wl,-rpath,{0}".format(_libpath)
-        description = ("Adds a missing libstdc++ rpath")
-        if flags:
-            options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
+    if spec_compiler.fc:
+        fortran_compilers = ["gfortran", "xlf"]
+        if any(compiler in spec_compiler.fc for compiler in fortran_compilers) and ("clang" in spec_compiler.cxx):
+            # Pass fortran compiler lib as rpath to find missing libstdc++
+            libdir = os.path.join(os.path.dirname(
+                           os.path.dirname(spec_compiler.fc)), "lib")
+            flags = ""
+            for _libpath in [libdir, libdir + "64"]:
+                if os.path.exists(_libpath):
+                    flags += " -Wl,-rpath,{0}".format(_libpath)
+            description = ("Adds a missing libstdc++ rpath")
+            if flags:
+                options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
 
-        # Ignore conflicting default gcc toolchain
-        options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-        "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
+            # Ignore conflicting default gcc toolchain
+            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
+            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
     compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
     if any(compiler in spec_compiler.cxx for compiler in compilers_using_toolchain):
