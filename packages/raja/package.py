@@ -63,6 +63,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("shared", default=True, description="Build shared libs")
     variant("desul", default=False, description="Build desul atomics backend")
     variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
+    variant("omptask", default=False, description="Build OpenMP task variants of internal algorithms")
 
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
