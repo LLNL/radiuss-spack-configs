@@ -185,6 +185,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
             hip_repair_options(options, spec)
 
             archs = self.spec.variants["amdgpu_target"].value
+            options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
             if archs != "none":
                 arch_str = ",".join(archs)
                 options.append("-DHIP_HIPCC_FLAGS=--amdgpu-target={0}".format(arch_str))
