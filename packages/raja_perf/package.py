@@ -37,6 +37,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("openmp", default=True, description="Build OpenMP backend")
     variant("openmp_target", default=False, description="Build with OpenMP target support")
     variant("shared", default=False, description="Build Shared Libs")
+    variant("omptask", default=False, description="Build OpenMP task variants of algorithms")
     variant("tests", default="basic", values=("none", "basic", "benchmarks"),
             multi=False, description="Tests to run")
     variant("caliper",default=False, description="Build with support for Caliper based profiling")
@@ -222,6 +223,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS","+shared" in spec))
         entries.append(cmake_cache_option("ENABLE_OPENMP","+openmp" in spec))
+        entries.append(cmake_cache_option("RAJA_ENABLE_OPENMP_TASK", "+omptask" in spec))
 
         entries.append(cmake_cache_option("ENABLE_BENCHMARKS", "tests=benchmarks" in spec))
         entries.append(cmake_cache_option("ENABLE_TESTS", not "tests=none" in spec or self.run_tests))
