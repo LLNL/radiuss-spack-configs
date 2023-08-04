@@ -125,9 +125,9 @@ compilers::
       f77: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
       fc: /usr/tce/packages/intel-classic/intel-classic-19.1.2/bin/ifort
     flags:
-      cflags: -gcc-name=/usr/tce/packages/gcc-10.3.1/bin/gcc
-      cxxflags: -gcc-name=/usr/tce/packages/gcc-10.3.1/bin/g++
-      fflags: -gcc-name=/usr/tce/packages/gcc-10.3.1/bin/gfortran
+      cflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc
+      cxxflags: -gxx-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/g++
+      fflags: -gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc
     operating_system: rhel8
     target: x86_64
     modules: []
