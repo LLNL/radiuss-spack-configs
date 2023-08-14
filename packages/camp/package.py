@@ -120,12 +120,14 @@ def blt_link_helpers(options, spec, spec_compiler):
         )
         # Here is where to find libs that work for fortran
         libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
-        linker_flags = "${BLT_EXE_LINKER_FLAGS} -Wl,-rpath," + libdir
+        linker_flags = "${BLT_EXE_LINKER_FLAGS} -Wl,-rpath,{0}".format(libdir)
 
-        if spec_compiler.version == "16.0.0":
+        version = "{0}".format(spec_compiler.version)
+
+        if version == "16.0.0":
             # Here is another directory added by cce@16.0.0
             libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
-            linker_flags += " -Wl,-rpath," + libdir
+            linker_flags += " -Wl,-rpath,{0}".format(libdir)
 
         options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
 
