@@ -115,12 +115,18 @@ def blt_link_helpers(options, spec, spec_compiler):
             "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
     if "cce" in spec_compiler.cxx:
-        # Here is where to find libs that work for fortran
-        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
         description = (
             "Adds a missing rpath for libraries " "associated with the fortran compiler"
         )
+        # Here is where to find libs that work for fortran
+        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
         linker_flags = "${BLT_EXE_LINKER_FLAGS} -Wl,-rpath," + libdir
+
+        if spec_compiler.version == "16.0.0":
+            # Here is another directory added by cce@16.0.0
+            libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
+            linker_flags += " -Wl,-rpath," + libdir
+
         options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
 
 
