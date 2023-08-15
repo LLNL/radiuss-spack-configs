@@ -90,10 +90,10 @@ def blt_link_helpers(options, spec, compiler):
     ### From local package:
     if compiler.fc:
         fortran_compilers = ["gfortran", "xlf"]
-        if any(compiler in compiler.fc for compiler in fortran_compilers) and ("clang" in compiler.cxx):
+        if any(fortran in compiler.fc for fortran in fortran_compilers) and ("clang" in compiler.cxx):
             # Pass fortran compiler lib as rpath to find missing libstdc++
             libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(compiler.fc)), "lib")
+                           os.path.dirname(fortran)), "lib")
             flags = ""
             for _libpath in [libdir, libdir + "64"]:
                 if os.path.exists(_libpath):
