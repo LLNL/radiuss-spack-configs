@@ -93,7 +93,7 @@ def blt_link_helpers(options, spec, compiler):
         if any(f_comp in compiler.fc for f_comp in fortran_compilers) and ("clang" in compiler.cxx):
             # Pass fortran compiler lib as rpath to find missing libstdc++
             libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(f_comp)), "lib")
+                           os.path.dirname(compiler.fc)), "lib")
             flags = ""
             for _libpath in [libdir, libdir + "64"]:
                 if os.path.exists(_libpath):
