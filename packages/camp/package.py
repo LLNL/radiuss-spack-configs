@@ -127,7 +127,7 @@ def blt_link_helpers(options, spec, compiler):
         if version == "16.0.0":
             # Here is another directory added by cce@16.0.0
             libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
-            linker_flags.append(" -Wl,-rpath,{0}".format(libdir))
+            linker_flags += " -Wl,-rpath,{0}".format(libdir)
 
         options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
 
