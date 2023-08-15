@@ -36,7 +36,7 @@ def hip_repair_cache(options, spec):
         )
     )
 
-def hip_for_radiuss_projects(options, spec, spec_compiler):
+def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
     rocm_root = hip_root + "/.."
@@ -60,7 +60,7 @@ def hip_for_radiuss_projects(options, spec, spec_compiler):
     hip_link_flags = ""
     if "%gcc" in spec or spec_uses_toolchain(spec):
         if "%gcc" in spec:
-            gcc_bin = os.path.dirname(spec_compiler.cxx)
+            gcc_bin = os.path.dirname(compiler.cxx)
             gcc_prefix = os.path.join(gcc_bin, "..")
         else:
             gcc_prefix = spec_uses_toolchain(spec)[0]
@@ -86,14 +86,14 @@ def cuda_for_radiuss_projects(options, spec):
         cuda_flags.append("-Xcompiler -mno-float128")
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
-def blt_link_helpers(options, spec, spec_compiler):
+def blt_link_helpers(options, spec, compiler):
     ### From local package:
-    if spec_compiler.fc:
+    if compiler.fc:
         fortran_compilers = ["gfortran", "xlf"]
-        if any(compiler in spec_compiler.fc for compiler in fortran_compilers) and ("clang" in spec_compiler.cxx):
+        if any(compiler in compiler.fc for compiler in fortran_compilers) and ("clang" in compiler.cxx):
             # Pass fortran compiler lib as rpath to find missing libstdc++
             libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(spec_compiler.fc)), "lib")
+                           os.path.dirname(compiler.fc)), "lib")
             flags = ""
             for _libpath in [libdir, libdir + "64"]:
                 if os.path.exists(_libpath):
@@ -107,22 +107,22 @@ def blt_link_helpers(options, spec, spec_compiler):
             "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
     compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
-    if any(compiler in spec_compiler.cxx for compiler in compilers_using_toolchain):
+    if any(compiler in compiler.cxx for compiler in compilers_using_toolchain):
         if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
 
             # Ignore conflicting default gcc toolchain
             options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
             "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
 
-    if "cce" in spec_compiler.cxx:
+    if "cce" in compiler.cxx:
         description = (
             "Adds a missing rpath for libraries " "associated with the fortran compiler"
         )
         # Here is where to find libs that work for fortran
-        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(spec_compiler.version)
         linker_flags = "${BLT_EXE_LINKER_FLAGS} -Wl,-rpath,{0}".format(libdir)
+        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(compiler.version)
 
-        version = "{0}".format(spec_compiler.version)
+        version = "{0}".format(compiler.version)
 
         if version == "16.0.0":
             # Here is another directory added by cce@16.0.0
