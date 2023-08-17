@@ -170,9 +170,9 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_SOSFLOW", True))
             entries.append(cmake_cache_path("SOS_PREFIX", spec["sosflow"].prefix))
         if "+kokkos" in spec:
-            entries.append(cmake_cache_option("WITH_KOKKOS", True)
+            entries.append(cmake_cache_option("WITH_KOKKOS", True))
         if "+variorum" in spec:
-            entries.append(cmake_cache_option("WITH_VARIORUM", True)
+            entries.append(cmake_cache_option("WITH_VARIORUM", True))
             entries.append(cmake_cache_path("VARIORUM_PREFIX", spec["variorum"].prefix))
         # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
