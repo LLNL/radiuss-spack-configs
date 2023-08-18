@@ -142,7 +142,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/camp.git"
     url = "https://github.com/LLNL/camp/archive/v0.1.0.tar.gz"
 
-    maintainers = ["trws"]
+    maintainers("trws")
 
     version("main", branch="main", submodules="False")
     version("2023.06.0", tag="v2023.06.0", submodules=False)
@@ -162,6 +162,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("cub", when="+cuda")
 
     depends_on("blt")
+
+    conflicts("^blt@:0.3.6", when="+rocm")
 
     def cmake_args(self):
         spec = self.spec

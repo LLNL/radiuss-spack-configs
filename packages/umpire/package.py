@@ -24,7 +24,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/Umpire.git"
     tags = ["radiuss", "e4s"]
 
-    maintainers = ["davidbeckingsale"]
+    maintainers("davidbeckingsale")
 
     version("develop", branch="develop", submodules=False)
     version("main", branch="main", submodules=False)
@@ -107,11 +107,13 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@:3.20", when="@2022.03.0:2022.03 +rocm", type="build")
 
     depends_on("blt@develop", type="build", when="@develop")
+    depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@2022.03.0:")
     depends_on("blt@0.4.1", type="build", when="@6.0.0")
     depends_on("blt@0.4.0:", type="build", when="@4.1.3:5.0.1")
     depends_on("blt@0.3.6:", type="build", when="@:4.1.2")
+    conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp", when="@5.0.0:")
     depends_on("camp@0.2.2:0.2.3", when="@6.0.0")
@@ -119,9 +121,11 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp@2023.06", when="@2023.06")
     depends_on("camp@2022.03.2:", when="@2022.03.0:")
     depends_on("camp@2022.10.0:", when="@2022.10.0:")
+    depends_on("camp@2023.06.0:", when="@2023.06.0:")
     depends_on("camp@main", when="@main")
     depends_on("camp@main", when="@develop")
     depends_on("camp+openmp", when="+openmp")
+    depends_on("camp~cuda", when="~cuda")
 
     depends_on("sqlite", when="+sqlite_experimental")
     depends_on("mpi", when="+mpi")
@@ -192,7 +196,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
-        entries = super(Umpire, self).initconfig_compiler_entries()
+        entries = super().initconfig_compiler_entries()
 
 
 
@@ -224,7 +228,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
-        entries = super(Umpire, self).initconfig_hardware_entries()
+        entries = super().initconfig_hardware_entries()
 
         option_prefix = "UMPIRE_" if spec.satisfies("@2022.03.0:") else ""
 
