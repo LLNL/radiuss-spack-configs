@@ -21,6 +21,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules="True")
     version("main",  branch="main",  submodules="True")
+    version("2023.06.0", tag="v2023.06.0", submodules="True")
     version("2022.10.0", tag="v2022.10.0", submodules="True")
     version("0.12.0", tag="v0.12.0", submodules="True")
     version("0.11.0", tag="v0.11.0", submodules="True")
@@ -43,6 +44,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("caliper",default=False, description="Build with support for Caliper based profiling")
 
     depends_on("blt")
+    depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@0.12.0:")
     depends_on("blt@0.4.1:", type="build", when="@0.11.0:")
