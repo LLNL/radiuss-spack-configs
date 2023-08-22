@@ -59,9 +59,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("rocprim", when="+rocm")
 
-    depends_on("caliper@master",when="+caliper")
-    depends_on("caliper@master +cuda",when="+caliper +cuda")
-    depends_on("caliper@master +rocm",when="+caliper +rocm")
+    depends_on("caliper@2.9.0:",when="+caliper")
+    depends_on("caliper@2.9.0: +cuda",when="+caliper +cuda")
+    depends_on("caliper@2.9.0: +rocm",when="+caliper +rocm")
 
     with when("@0.12.0: +rocm +caliper"):
         depends_on("caliper +rocm")
