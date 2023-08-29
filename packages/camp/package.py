@@ -20,30 +20,12 @@ def spec_uses_gccname(spec):
     using_gcc_name = list(filter(gcc_name_regex.match, spec.compiler_flags["cxxflags"]))
     return using_gcc_name
 
-def hip_repair_options(options, spec):
-    # there is only one dir like this, but the version component is unknown
-    options.append(
-        "-DHIP_CLANG_INCLUDE_PATH="
-        + glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0]
-    )
-
-def hip_repair_cache(options, spec):
-    # there is only one dir like this, but the version component is unknown
-    options.append(
-        cmake_cache_path(
-            "HIP_CLANG_INCLUDE_PATH",
-            glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0],
-        )
-    )
-
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
     rocm_root = hip_root + "/.."
     options.append(cmake_cache_path("HIP_ROOT_DIR", hip_root))
     options.append(cmake_cache_path("ROCM_ROOT_DIR", rocm_root))
-
-    hip_repair_cache(options, spec)
 
     archs = spec.variants["amdgpu_target"].value
     if archs != "none":
@@ -190,13 +172,10 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
                 "-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix)
             ])
 
-            hip_repair_options(options, spec)
-
             archs = self.spec.variants["amdgpu_target"].value
-            options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
-            if archs != "none":
-                arch_str = ",".join(archs)
-                options.append("-DHIP_HIPCC_FLAGS=--amdgpu-target={0}".format(arch_str))
+            if archs[0] != "none":
+                arch_str = ";".join(archs)
+                options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(arch_str))
         else:
             options.append("-DENABLE_HIP=OFF")
 
