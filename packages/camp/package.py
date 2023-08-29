@@ -22,9 +22,7 @@ def spec_uses_gccname(spec):
 
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
-    hip_root = spec["hip"].prefix
-    rocm_root = hip_root + "/.."
-    options.append(cmake_cache_path("HIP_ROOT_DIR", hip_root))
+    rocm_root = spec["hip"].prefix + "/.."
     options.append(cmake_cache_path("ROCM_ROOT_DIR", rocm_root))
 
     archs = spec.variants["amdgpu_target"].value
