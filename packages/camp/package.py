@@ -49,9 +49,6 @@ def hip_for_radiuss_projects(options, spec, compiler):
     if archs != "none":
         arch_str = ",".join(archs)
         options.append(
-            cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-        )
-        options.append(
             cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
         )
 
