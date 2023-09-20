@@ -158,7 +158,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("+cuda", when="+rocm")
     conflicts("+tools", when="+rocm")
     conflicts("+rocm", when="+openmp_target", msg="Cant support both rocm and openmp device backends at once")
-    conflicts("~mpi", when="+ipc_shmem", msg="Shared Memory Allocator requires MPI")
     conflicts("+ipc_shmem", when="@:5.0.1")
 
     conflicts("+sqlite_experimental", when="@:6.0.0")
