@@ -148,9 +148,9 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
+        entries = super(Caliper, self).initconfig_mpi_entries()
 
-        entries = super(Umpire, self).initconfig_mpi_entries()
-        entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
+        entries.append(cmake_cache_option("WITH_MPI", "+mpi" in spec))
 
         return entries
 
