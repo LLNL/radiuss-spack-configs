@@ -12,18 +12,10 @@
 User Guide
 ##########
 
-Many RADIUSS projects are packaged with `Spack`_. Packaging the software
-streamlines its installation on a variety of systems, like the ones present at
-the LLNL.  The primary goal of RADIUSS Spack Configs is to provide a
-centralized location for the Spack configuration files needed to build RADIUSS
-software with their dependencies or Livermore Computing (LC) systems.
-
-For the packaging to be effective, we need to regularly test that our software
-stack builds on our systems, both for generic builds, but also more targeted
-ones. RADIUSS Spack Configs associated to `Uberenv`_ provides a build
-infrastructure usable in CI to integrate packaging into the developers
-workflow. Spack then becomes a tool that helps developers easily manage their
-dependencies, while packaging is maintained earlier in the development process.
+The RADIUSS Spack Configs projects provides a *coherent set of Spack
+configuration files* targetting Livermore Computing systems. The goal is to
+enable any Spack user to quickly reproduce the exact same configuration RADIUSS
+projects are vetted with.
 
 RADIUSS Spack Configs can be used to provide the `RADIUSS Shared CI`_
 infrastructure with a build and test process and a proposed list of Spack
