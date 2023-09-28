@@ -21,8 +21,8 @@ software with their dependencies or Livermore Computing (LC) systems.
 For the packaging to be effective, we need to regularly test that our software
 stack builds on our systems, both for generic builds, but also more targeted
 ones. RADIUSS Spack Configs associated to `Uberenv`_ provides a build
-infrastructure usable in CI to integrate packaging into the developpers
-workflow. Spack then becomes a tool that helps developpers easily manage their
+infrastructure usable in CI to integrate packaging into the developers
+workflow. Spack then becomes a tool that helps developers easily manage their
 dependencies, while packaging is maintained earlier in the development process.
 
 RADIUSS Spack Configs can be used to provide the `RADIUSS Shared CI`_
