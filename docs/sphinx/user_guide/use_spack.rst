@@ -12,7 +12,7 @@
 Use Spack to install dependencies and configure the project build
 *****************************************************************
 
-.. figure:: images/SharedCI_ProjectStructure.png
+.. figure:: images/Shared-Build-Infrastructure.png
    :scale: 18 %
 
    The Shared Build Infrastructure turns a specified target into installed
@@ -180,22 +180,22 @@ while only using CMake and a traditional developer workflow.
 CMake projects: Spack CachedCMakePackage
 ========================================
 
-CMake is strongly recommended to use the RADIUSS CI workflow, mostly
-because of this step. With CMake, we generate a cache file describing the
-configuration necessary to build the code for a project. This is supported in 
-Spack as soon as your package inherits from ``CachedCMakePackage``.
+CMake is strongly recommended to use the RADIUSS CI workflow, mostly because of
+this step. With CMake, we generate a cache file describing the configuration
+necessary to build the code for a project. This is supported in Spack as soon
+as your package inherits from ``CachedCMakePackage``.
 
-When your package is ported, stopping an installation after the 
-``initconfig`` phase will prevent Spack from building your project after
-the CMake configuration file is generated.
+When your package is ported, stopping an installation after the ``initconfig``
+phase will prevent Spack from building your project after the CMake
+configuration file is generated.
 
 Non-CMake projects: Custom implementation
 =========================================
 
-The only example of a non-CMake project that has adopted this workflow is 
-`MFEM`_.  Although it is using a Makefile build system in its Spack packages, 
-MFEM is generating a configuration file that can be used just like a CMake 
-configuration file. We adapted the implementation of the package to mimic the 
+The only example of a non-CMake project that has adopted this workflow is
+`MFEM`_.  Although it is using a Makefile build system in its Spack packages,
+MFEM is generating a configuration file that can be used just like a CMake
+configuration file. We adapted the implementation of the package to mimic the
 mechanism available in CMake-based packages. You may use that as an example.
 
 .. _RADIUSS Spack Configs: https://github.com/LLNL/radiuss-spack-configs
