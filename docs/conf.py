@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'Radiuss Shared CI'
-copyright = u'2021, Adrien M. Bernede'
+project = u'Radiuss Spack Configs'
+copyright = u'2022-23, Adrien M. Bernede'
 author = u'Adrien M. Bernede'
 
 # The full version, including alpha/beta/rc tags
-release = u'0.1'
+release = u'1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -86,7 +86,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'RAD_Shared_CI'
+htmlhelp_basename = 'RAD_Spack_Configs'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -113,7 +113,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'RADIUSS_Shared_CI.tex', u'RADIUSS Shared CI Documentation',
+    (master_doc, 'RADIUSS_Spack_Configs.tex', u'RADIUSS Spack Configs Documentation',
      u'Adrien M. Bernede', 'manual'),
 ]
 
@@ -123,7 +123,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'RADIUSS_Shared_CI', u'RADIUSS Shared CI Documentation',
+    (master_doc, 'RADIUSS_Spack_Configs', u'RADIUSS Spack Configs Documentation',
      [author], 1)
 ]
 
@@ -134,7 +134,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'RADIUSS_Shared_CI', u'RADIUSS Shared CI Documentation',
+    (master_doc, 'RADIUSS_Spack_Configs', u'RADIUSS Spack Configs Documentation',
      author, 'Adrien M. Bernede', 'Rapid Application Development via an Institutional Universal Software Stack',
      'Miscellaneous'),
 ]

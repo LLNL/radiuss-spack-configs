@@ -4,9 +4,9 @@
 .. ## SPDX-License-Identifier: (MIT)
 .. ##
 
-#################
-RADIUSS Shared CI
-#################
+#####################
+RADIUSS Spack Configs
+#####################
 
 The RADIUSS Spack Configs projects provides a *coherent set of Spack
 configuration files* targetting Livermore Computing systems. The goal is to
