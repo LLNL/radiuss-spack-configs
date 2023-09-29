@@ -29,13 +29,13 @@ Overview
 ========
 
 RADIUSS Spack Configs User Documentation
-=======================================
+========================================
 
 The steps necessary to leverage RADIUSS Spack Configs are documented in the
 :doc:`RADIUSS Spack Configs User Guide <sphinx/user_guide/index>`.
 
 RADIUSS Spack Configs Developer Documentation
-============================================
+=============================================
 
 TODO: In the  :doc:`RADIUSS Spack Configs Developer Guide <sphinx/dev_guide/index>`,
 we discuss the layout of the RADIUSS Spack Configs repository and how to
@@ -66,11 +66,11 @@ dependencies, while packaging is maintained earlier in the development process.
 
    sphinx/user_guide/index
 
-.. toctree::
-   :hidden:
-   :caption: Developer Documentation
-
-   sphinx/dev_guide/index
+.. # .. toctree::
+.. #    :hidden:
+.. #    :caption: Developer Documentation
+.. #
+.. #    sphinx/dev_guide/index
 
 .. _RADIUSS Spack Configs: https://radiuss-spack-configs.readthedocs.io/en/latest/index.html
 .. _RADIUSS Shared CI: https://radiuss-shared-ci.readthedocs.io/en/latest/index.html

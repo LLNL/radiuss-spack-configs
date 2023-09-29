@@ -8,12 +8,12 @@
 .. _build_and_test-label:
 
 
-******************************************************
+**************************************************
 Build and test your code using your usual workflow
-******************************************************
+**************************************************
 
-.. figure:: images/SharedCI_ProjectStructure.png
-   :scale: 18 %
+.. figure:: images/Shared-Build-Infrastructure.png
+   :scale: 36 %
    :align: center
 
    We need the project to be buildable from the CMake cached configuration

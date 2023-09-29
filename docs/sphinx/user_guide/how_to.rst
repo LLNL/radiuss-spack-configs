@@ -8,9 +8,9 @@
 
 .. _user_how_to-label:
 
-***********
+*********
 How To...
-***********
+*********
 
 This section describes how to perform various maintenance tasks when using
 RADIUSS Spack Configs. This includes considerations about using it as part of
@@ -18,9 +18,9 @@ the RADIUSS Build Infrastructure and the RADIUSS Shared CI Infrastructure.
 
 .. _update_spack_uberenv_rsc:
 
-=====================================================================
+===============================================
 Update Spack, Uberenv, or RADIUSS Spack Configs
-=====================================================================
+===============================================
 
 The RADIUSS Build infrustructure relies on three components to work properly:
 `Spack`_, `Uberenv`_ and `radiuss-spack-configs`_. The dependency scheme
@@ -188,16 +188,16 @@ This is a job override. The flip side is that you will have to manually check
 for changes in the original shared job when updating RADIUSS Spack Configs.
 
 
-===================================================
+==========================================
 Project specific variants and dependencies
-====================================================
+==========================================
 
 Projects often have build variants they want to test, but it does not make
 sense to include them in the shared configurations since they may not apply to
 other projects. Also, we want to keep the default Spack specs simple.
 
 Example cases
-==============
+=============
 
 For example, in Umpire there is ``+fortran`` and ``+openmp`` for RAJA. Those
 variants cannot be shared via the RADIUSS Shared CI project because they are
