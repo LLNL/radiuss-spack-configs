@@ -34,12 +34,12 @@ RADIUSS Spack Configs User Documentation
 The steps necessary to leverage RADIUSS Spack Configs are documented in the
 :doc:`RADIUSS Spack Configs User Guide <sphinx/user_guide/index>`.
 
-RADIUSS Spack Configs Developer Documentation
-=============================================
-
-TODO: In the  :doc:`RADIUSS Spack Configs Developer Guide <sphinx/dev_guide/index>`,
-we discuss the layout of the RADIUSS Spack Configs repository and how to
-contribute to it.
+.. # RADIUSS Spack Configs Developer Documentation
+.. # =============================================
+.. #
+.. # TODO: In the  :doc:`RADIUSS Spack Configs Developer Guide <sphinx/dev_guide/index>`,
+.. # we discuss the layout of the RADIUSS Spack Configs repository and how to
+.. # contribute to it.
 
 
 =========================
