@@ -27,6 +27,7 @@ The RADIUSS Build infrustructure relies on three components to work properly:
 between those components is as follows:
 
 .. figure:: images/build-infrastructure-components.png
+   :scale: 36 %
    :align: center
 
    The dependency graphs helps anticipating the impact of a change. E.g., a

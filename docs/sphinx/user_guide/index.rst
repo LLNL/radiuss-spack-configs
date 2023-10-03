@@ -24,7 +24,7 @@ Caliper and other projects to ensure, in their CI, that they keep running
 correctly with toolchains of interest.
 
 .. figure:: images/Shared-Build-Infrastructure.png
-   :scale: 18 %
+   :scale: 36 %
    :align: center
 
    RADIUSS Spack Configs provides Spack configuration files tuned for Livermore
