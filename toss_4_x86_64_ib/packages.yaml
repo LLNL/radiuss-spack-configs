@@ -3,7 +3,7 @@ packages::
     # This defaults us to machine specific flags of ivybridge which allows
     # us to run on broadwell as well
     target: [ivybridge]
-    compiler: [gcc, intel, pgi, clang]
+    compiler: [gcc, intel, pgi, clang, rocmcc, oneapi]
     providers:
       mpi: [mvapich2]
   cmake:
@@ -135,9 +135,27 @@ packages::
   mvapich2:
     buildable: false
     externals:
-    - spec: mvapich2@2.3.6%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm
-      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.6-gcc-10.3.1
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-19.1.2
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-2021.6.0
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2022.1.0
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-10.3.1
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-11.2.1
+    - spec: mvapich2@2.3.7%gcc@10.3.1~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
   python:
     buildable: false
     version: [3.10.8]
