@@ -202,7 +202,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_mpi_entries(self):
         spec = self.spec
 
-        entries = super(Umpire, self).initconfig_mpi_entries()
+        entries = super(RajaPerf, self).initconfig_mpi_entries()
         entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
 
         return entries
