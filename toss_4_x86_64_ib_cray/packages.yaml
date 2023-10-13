@@ -127,15 +127,15 @@ packages::
   cray-mpich:
     buildable: false
     externals:
-    - spec: cray-mpich@8.1.26%cce@15.0.1
+    - spec: cray-mpich@8.1.26%cce@15.0.1 process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.26-cce-15.0.1-magic
-    - spec: cray-mpich@8.1.26%cce@16.0.0
+    - spec: cray-mpich@8.1.26%cce@16.0.0 process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.26-cce-16.0.0-magic
-    - spec: cray-mpich@8.1.25%gcc@12.1.1
+    - spec: cray-mpich@8.1.25%gcc@12.1.1 process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.26-gcc-12.1.1-magic
-    - spec: cray-mpich@8.1.25%rocmcc@5.5.1
+    - spec: cray-mpich@8.1.25%rocmcc@5.5.1 process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.26-rocmcc-5.5.1-magic
-    - spec: cray-mpich@8.1.25%rocmcc@5.6.0
+    - spec: cray-mpich@8.1.25%rocmcc@5.6.0 process_managers=slurm
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.26-rocmcc-5.6.0-magic
   python:
     buildable: false
