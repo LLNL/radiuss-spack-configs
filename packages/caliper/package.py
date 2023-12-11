@@ -160,6 +160,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+adiak" in spec:
             entries.append(cmake_cache_option("WITH_ADIAK", True))
+            entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix))
         if "+gotcha" in spec:
             entries.append(cmake_cache_option("WITH_GOTCHA", True))
         if "+sampler" in spec:
