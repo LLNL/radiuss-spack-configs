@@ -129,6 +129,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("sqlite", when="+sqlite_experimental")
     depends_on("mpi", when="+mpi")
+    depends_on("fmt@9.1:10", when="@develop")
 
     with when("@5.0.0:"):
         with when("+cuda"):
