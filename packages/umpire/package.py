@@ -276,6 +276,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         if spec.satisfies("@5.0.0:"):
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
+        entries.append(cmake_cache_path("fmt_DIR", spec["fmt"].prefix))
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))
