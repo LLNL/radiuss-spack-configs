@@ -205,6 +205,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries = super(RajaPerf, self).initconfig_mpi_entries()
         entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
 
+        if spec["mpi"].satisfies("spectrum-mpi");
+            entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
+
         return entries
 
     def initconfig_package_entries(self):
