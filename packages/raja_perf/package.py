@@ -8,11 +8,10 @@ import socket
 import re
 
 from spack.package import *
+from .camp import mpi_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
 from .camp import blt_link_helpers
-
-import llnl.util.tty as tty
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -203,57 +202,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
+        entries = []
 
-        if not spec.satisfies("^mpi"):
-            return []
-
-        entries = [
-            "#------------------{0}".format("-" * 60),
-            "# MPI",
-            "#------------------{0}\n".format("-" * 60),
-        ]
-
-        entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
-
-        entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
-        entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-        entries.append(cmake_cache_path("MPI_Fortran_COMPILER", spec["mpi"].mpifc))
-
-        # Check for slurm
-        using_slurm = False
-        slurm_checks = ["+slurm", "schedulers=slurm", "process_managers=slurm"]
-        if any(spec["mpi"].satisfies(variant) for variant in slurm_checks):
-            using_slurm = True
-
-        # Determine MPIEXEC
-        if using_slurm:
-            if spec["mpi"].external:
-                # Heuristic until we have dependents on externals
-                mpiexec = "/usr/bin/srun"
-            else:
-                mpiexec = os.path.join(spec["slurm"].prefix.bin, "srun")
-        else:
-            mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpirun")
-            if not os.path.exists(mpiexec):
-                mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
-
-        if not os.path.exists(mpiexec):
-            msg = "Unable to determine MPIEXEC, %s tests may fail" % self.name
-            entries.append("# {0}\n".format(msg))
-            tty.warn(msg)
-        else:
-            # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
-            # vs the older versions which expect MPIEXEC
-            if self.spec["cmake"].satisfies("@3.10:"):
-                entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
-            else:
-                entries.append(cmake_cache_path("MPIEXEC", mpiexec))
-
-        # Determine MPIEXEC_NUMPROC_FLAG
-        if using_slurm or spec["mpi"].satisfies("spectrum-mpi"):
-            entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
-        else:
-            entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-np"))
+        mpi_for_radiuss_projects(entries, specs)
 
         return entries
 
