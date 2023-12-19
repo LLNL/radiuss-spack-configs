@@ -204,7 +204,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         entries = []
 
-        mpi_for_radiuss_projects(entries, specs)
+        mpi_for_radiuss_projects(entries, spec)
 
         return entries
 
