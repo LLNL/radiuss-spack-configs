@@ -236,13 +236,13 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
                 mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
 
         if not os.path.exists(mpiexec):
-            msg = "Unable to determine MPIEXEC, %s tests may fail" % self.pkg.name
+            msg = "Unable to determine MPIEXEC, %s tests may fail" % self.name
             entries.append("# {0}\n".format(msg))
             tty.warn(msg)
         else:
             # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
             # vs the older versions which expect MPIEXEC
-            if self.pkg.spec["cmake"].satisfies("@3.10:"):
+            if self.spec["cmake"].satisfies("@3.10:"):
                 entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
             else:
                 entries.append(cmake_cache_path("MPIEXEC", mpiexec))
