@@ -77,13 +77,13 @@ def mpi_for_radiuss_projects(options, spec):
             mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
 
     if not os.path.exists(mpiexec):
-        msg = "Unable to determine MPIEXEC, %s tests may fail" % self.name
+        msg = "Unable to determine MPIEXEC, tests may fail"
         entries.append("# {0}\n".format(msg))
         tty.warn(msg)
     else:
         # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
         # vs the older versions which expect MPIEXEC
-        if self.spec["cmake"].satisfies("@3.10:"):
+        if spec["cmake"].satisfies("@3.10:"):
             entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
         else:
             entries.append(cmake_cache_path("MPIEXEC", mpiexec))
