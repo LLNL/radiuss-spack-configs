@@ -8,6 +8,7 @@ import socket
 import re
 
 from spack.package import *
+from .camp import mpi_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
 from .camp import blt_link_helpers
@@ -201,9 +202,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
+        entries = []
 
-        entries = super(RajaPerf, self).initconfig_mpi_entries()
-        entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
+        mpi_for_radiuss_projects(entries, spec)
 
         return entries
 
