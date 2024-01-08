@@ -129,6 +129,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("sqlite", when="+sqlite_experimental")
     depends_on("mpi", when="+mpi")
+    depends_on("fmt@9.1:10", when="@develop")
 
     with when("@5.0.0:"):
         with when("+cuda"):
@@ -275,6 +276,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         if spec.satisfies("@5.0.0:"):
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
+        entries.append(cmake_cache_path("fmt_DIR", spec["fmt"].prefix))
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))
