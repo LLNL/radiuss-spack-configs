@@ -91,6 +91,8 @@ class Fmt(CMakePackage):
         when="@10.0.0:10.1.1",
     )
 
+    patch("clang_12_0_1_ibm_gcc_8_3_1_cuda_10_1_243.patch")
+
     def cmake_args(self):
         spec = self.spec
         args = []
