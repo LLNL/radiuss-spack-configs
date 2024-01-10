@@ -180,9 +180,7 @@ def blt_link_helpers(options, spec, compiler):
         libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(compiler.version)
         linker_flags = "${{BLT_EXE_LINKER_FLAGS}} -Wl,-rpath,{0}".format(libdir)
 
-        version = "{0}".format(compiler.version)
-
-        if version == "16.0":
+        if compiler.version == Version("16.0")
             # Here is another directory added by cce@16.0.0 and cce@16.0.1
             libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
             linker_flags += " -Wl,-rpath,{0}".format(libdir)
