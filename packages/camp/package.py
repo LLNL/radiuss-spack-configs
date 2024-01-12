@@ -257,9 +257,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
             options.append("-DGPU_TARGETS={0}".format(archs))
             options.append("-DAMDGPU_TARGETS={0}".format(archs))
-            if archs != "none":
-                arch_str = ",".join(archs)
-                options.append("-DHIP_HIPCC_FLAGS=--amdgpu-target={0}".format(arch_str))
         else:
             options.append("-DENABLE_HIP=OFF")
 
