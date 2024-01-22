@@ -129,7 +129,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("sqlite", when="+sqlite_experimental")
     depends_on("mpi", when="+mpi")
+
     depends_on("fmt@9.1:", when="@develop")
+    # For some reason, we need c++ 17 explicitly only with intel
+    depends_on("fmt@9.1: cxxstd=17", when="@develop %intel@19.1")
 
     with when("@5.0.0:"):
         with when("+cuda"):
@@ -276,7 +279,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         if spec.satisfies("@5.0.0:"):
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
-        entries.append(cmake_cache_path("fmt_DIR", spec["fmt"].prefix))
+        # Dependency to "fmt" is conditionnal to "@develop", symmetrically:
+        if spec.satisfies("@develop"):
+            entries.append(cmake_cache_path("fmt_DIR", spec["fmt"].prefix))
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))

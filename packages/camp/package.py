@@ -104,14 +104,11 @@ def hip_for_radiuss_projects(options, spec, compiler):
     hip_repair_cache(options, spec)
 
     archs = spec.variants["amdgpu_target"].value
-    if archs != "none":
-        arch_str = ",".join(archs)
-        options.append(
-            cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-        )
-        options.append(
-            cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-        )
+    if archs[0] != "none":
+        arch_str = ";".join(archs)
+        options.append(cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str))
+        options.append(cmake_cache_string("AMDGPU_TARGETS", arch_str))
+        options.append(cmake_cache_string("GPU_TARGETS", arch_str))
 
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
@@ -182,8 +179,8 @@ def blt_link_helpers(options, spec, compiler):
 
         version = "{0}".format(compiler.version)
 
-        if version == "16.0.0":
-            # Here is another directory added by cce@16.0.0
+        if version == "16.0.0" or version == "16.0.1":
+            # Here is another directory added by cce@16.0.0 and cce@16.0.1
             libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
             linker_flags += " -Wl,-rpath,{0}".format(libdir)
 
@@ -255,9 +252,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
             archs = self.spec.variants["amdgpu_target"].value
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
-            if archs != "none":
-                arch_str = ",".join(archs)
-                options.append("-DHIP_HIPCC_FLAGS=--amdgpu-target={0}".format(arch_str))
+            options.append("-DGPU_TARGETS={0}".format(archs))
+            options.append("-DAMDGPU_TARGETS={0}".format(archs))
         else:
             options.append("-DENABLE_HIP=OFF")
 
