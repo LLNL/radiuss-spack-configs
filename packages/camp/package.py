@@ -9,6 +9,8 @@ import re
 
 from spack.package import *
 
+import llnl.util.tty as tty
+
 
 def spec_uses_toolchain(spec):
     gcc_toolchain_regex = re.compile(".*gcc-toolchain.*")
@@ -36,6 +38,62 @@ def hip_repair_cache(options, spec):
         )
     )
 
+def mpi_for_radiuss_projects(options, spec):
+    # Machines with cray-mpich have a slurm wrapper arround flux, to use it we
+    # duplicate the MPI handling from CachedCMakePackage. This change will be
+    # applied directly in the CachedCMakePackage when pushed to upstream Spack.
+    if not spec.satisfies("^mpi"):
+        return []
+
+    entries = [
+        "#------------------{0}".format("-" * 60),
+        "# MPI",
+        "#------------------{0}\n".format("-" * 60),
+    ]
+
+    entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
+
+    entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
+    entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
+    entries.append(cmake_cache_path("MPI_Fortran_COMPILER", spec["mpi"].mpifc))
+
+    # Check for slurm
+    using_slurm = False
+    # RADIUSS Spack Configs change:
+    slurm_checks = ["+slurm", "schedulers=slurm", "process_managers=slurm", "cray-mpich"]
+    if any(spec["mpi"].satisfies(variant) for variant in slurm_checks):
+        using_slurm = True
+
+    # Determine MPIEXEC
+    if using_slurm:
+        if spec["mpi"].external:
+            # Heuristic until we have dependents on externals
+            mpiexec = "/usr/bin/srun"
+        else:
+            mpiexec = os.path.join(spec["slurm"].prefix.bin, "srun")
+    else:
+        mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpirun")
+        if not os.path.exists(mpiexec):
+            mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
+
+    if not os.path.exists(mpiexec):
+        msg = "Unable to determine MPIEXEC, tests may fail"
+        entries.append("# {0}\n".format(msg))
+        tty.warn(msg)
+    else:
+        # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
+        # vs the older versions which expect MPIEXEC
+        if spec["cmake"].satisfies("@3.10:"):
+            entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
+        else:
+            entries.append(cmake_cache_path("MPIEXEC", mpiexec))
+
+    # Determine MPIEXEC_NUMPROC_FLAG
+    if using_slurm:
+        entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
+    else:
+        entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-np"))
+
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
@@ -46,14 +104,11 @@ def hip_for_radiuss_projects(options, spec, compiler):
     hip_repair_cache(options, spec)
 
     archs = spec.variants["amdgpu_target"].value
-    if archs != "none":
-        arch_str = ",".join(archs)
-        options.append(
-            cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-        )
-        options.append(
-            cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-        )
+    if archs[0] != "none":
+        arch_str = ";".join(archs)
+        options.append(cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str))
+        options.append(cmake_cache_string("AMDGPU_TARGETS", arch_str))
+        options.append(cmake_cache_string("GPU_TARGETS", arch_str))
 
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
@@ -124,8 +179,8 @@ def blt_link_helpers(options, spec, compiler):
 
         version = "{0}".format(compiler.version)
 
-        if version == "16.0.0":
-            # Here is another directory added by cce@16.0.0
+        if version == "16.0.0" or version == "16.0.1":
+            # Here is another directory added by cce@16.0.0 and cce@16.0.1
             libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
             linker_flags += " -Wl,-rpath,{0}".format(libdir)
 
@@ -197,9 +252,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
             archs = self.spec.variants["amdgpu_target"].value
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
-            if archs != "none":
-                arch_str = ",".join(archs)
-                options.append("-DHIP_HIPCC_FLAGS=--amdgpu-target={0}".format(arch_str))
+            options.append("-DGPU_TARGETS={0}".format(archs))
+            options.append("-DAMDGPU_TARGETS={0}".format(archs))
         else:
             options.append("-DENABLE_HIP=OFF")
 
