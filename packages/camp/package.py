@@ -104,14 +104,11 @@ def hip_for_radiuss_projects(options, spec, compiler):
     hip_repair_cache(options, spec)
 
     archs = spec.variants["amdgpu_target"].value
-    if archs != "none":
-        arch_str = ",".join(archs)
-        options.append(
-            cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-        )
-        options.append(
-            cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str)
-        )
+    if archs[0] != "none":
+        arch_str = ";".join(archs)
+        options.append(cmake_cache_string("CMAKE_HIP_ARCHITECTURES", arch_str))
+        options.append(cmake_cache_string("AMDGPU_TARGETS", arch_str))
+        options.append(cmake_cache_string("GPU_TARGETS", arch_str))
 
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
