@@ -347,12 +347,12 @@ can do so with the ``--upstream=`` option:
 Choose a Spack reference (commit or branch)
 ===========================================
 
-Uberenv needs to know which version of Spack to clone locally. The Spack 
+Uberenv needs to know which version of Spack to clone locally. The Spack
 version used by a project can be found in the ``.uberenv_config.json`` file
 in the top-level project directory.
 
-In general, using the latest Spack release should be the default strategy. 
-But things can quickly get complicated. Among the considerations for choosing 
+In general, using the latest Spack release should be the default strategy.
+But things can quickly get complicated. Among the considerations for choosing
 a Spack version are:
 
 * Need for a newer Spack feature / fix.
@@ -362,7 +362,7 @@ a Spack version are:
 
 * Coherency with other projects.
 
-Let's consider the example of Umpire/RAJA/CHAI. Those projects work together 
+Let's consider the example of Umpire/RAJA/CHAI. Those projects work together
 and have synchronized releases. They all use Uberenv for their CI.
 
 For those projects we try to:
@@ -373,6 +373,18 @@ For those projects we try to:
   (for now).
 
 * Limit local patching of Spack packages.
+
+.. note::
+  A typical requirement is to update Spack to a version recent enough to
+  feature the highest desired version of HIP toolchain. This is because Spack
+  may mix external tools from different versions if they are not in the scope
+  of supported versions defined, e.g., by the hip package. In other words, if
+  the hip package defines versions up to 5.7.1 while the version 6.0.0 tools
+  are defined as externals in the packages.yaml then Spack may pick up some of
+  the 6.0.0 tools even when asked to build with rocm@5.7.1. An attempt to
+  mitigate this issue can be found here:
+  https://github.com/spack/spack/pull/41700
+
 
 Limiting local patching of Spack packages
 =========================================
@@ -391,7 +403,7 @@ Typical use cases for a local package patch include:
 
 In any case, those local changes should be pushed to upstream Spack as soon as
 possible. Typically, a project upstreams changes to its Spack package after
-a project release is done. This allows the new release tag/version to be 
+a project release is done. This allows the new release tag/version to be
 included in the Spack package update.
 
 Spack reference during the release process
