@@ -13,9 +13,8 @@ import llnl.util.tty as tty
 
 
 def spec_uses_toolchain(spec):
-    flags_list = spec.compiler_flags["cxxflags"].split(' ')
+    flags_list = spec.compiler_flags["cxxflags"]
     matching_flags = [ match for match in flags_list if '--gcc-toolchain=' in match ]
-    print(matching_flags)
     return matching_flags
 
 def spec_uses_gccname(spec):
@@ -120,7 +119,6 @@ def hip_for_radiuss_projects(options, spec, compiler):
             gcc_prefix = os.path.join(gcc_bin, "..")
         else:
             # Extract the toolchain path from first toolchain flag
-            print(spec_uses_toolchain(spec)[0])
             gcc_prefix = spec_uses_toolchain(spec)[0].split('=')[1]
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
         options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
