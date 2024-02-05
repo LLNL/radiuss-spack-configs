@@ -13,9 +13,9 @@ import llnl.util.tty as tty
 
 
 def spec_uses_toolchain(spec):
-    gcc_toolchain_regex = re.compile(".*gcc-toolchain.*")
-    using_toolchain = list(filter(gcc_toolchain_regex.match, spec.compiler_flags["cxxflags"]))
-    return using_toolchain
+    flags_list = spec.compiler_flags["cxxflags"].split(' ')
+    matching_flags = [ match for match in flags_list if '--gcc-toolchain=' in match ]
+    return matching_flags
 
 def spec_uses_gccname(spec):
     gcc_name_regex = re.compile(".*gcc-name.*")
@@ -118,7 +118,8 @@ def hip_for_radiuss_projects(options, spec, compiler):
             gcc_bin = os.path.dirname(compiler.cxx)
             gcc_prefix = os.path.join(gcc_bin, "..")
         else:
-            gcc_prefix = spec_uses_toolchain(spec)[0]
+            # Extract the toolchain path from first toolchain flag
+            gcc_prefix = spec_uses_toolchain(spec)[0].split('=')[1]
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
         options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
     else:
@@ -145,8 +146,7 @@ def blt_link_helpers(options, spec, compiler):
 
     link_flags = ""
     if spec_uses_toolchain(spec):
-        gcc_prefix = spec_uses_toolchain(spec)[0]
-        link_flags = "--gcc-toolchain={0}".format(gcc_prefix)
+        link_flags += "{0}".format(spec_uses_toolchain(spec)[0])
 
     ### From local package:
     if compiler.fc:
@@ -159,8 +159,9 @@ def blt_link_helpers(options, spec, compiler):
                 if os.path.exists(_libpath):
                     link_flags += " -Wl,-rpath,{0}".format(_libpath)
             description = ("Adds a missing libstdc++ rpath")
-            if link_flags:
-                options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", link_flags, description))
+
+    if link_flags:
+        options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", link_flags, description))
 
 #            # Ignore conflicting default gcc toolchain
 #            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
