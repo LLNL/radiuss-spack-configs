@@ -161,6 +161,7 @@ def blt_link_helpers(options, spec, compiler):
             description = ("Adds a missing libstdc++ rpath")
 
     if link_flags:
+        link_flags = "${{BLT_EXE_LINKER_FLAGS}} " + link_flags
         options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", link_flags, description))
 
 #            # Ignore conflicting default gcc toolchain
