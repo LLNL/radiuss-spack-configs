@@ -144,12 +144,6 @@ def cuda_for_radiuss_projects(options, spec):
 
 def blt_link_helpers(options, spec, compiler):
 
-    if spec_uses_toolchain(spec):
-        link_flags = "${{CMAKE_EXE_LINKER_FLAGS}} {0}".format(spec_uses_toolchain(spec)[0])
-        comment = ("Pass gcc toolchain to linker")
-        forced = True
-        options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", link_flags, comment, forced))
-
     # LC Specific
     if compiler.fc:
         link_flags = ""
