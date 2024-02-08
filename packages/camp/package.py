@@ -137,7 +137,7 @@ def cuda_for_radiuss_projects(options, spec):
         options.append(
             cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
     if spec_uses_toolchain(spec):
-        cuda_flags.append("-Xcompiler {0}".format(spec_uses_toolchain(spec)[0]))
+        cuda_flags.append("-Xcompiler {0} -Xlinker {0}".format(spec_uses_toolchain(spec)[0]))
     if (spec.satisfies("%gcc@8.1: target=ppc64le")):
         cuda_flags.append("-Xcompiler -mno-float128")
 
