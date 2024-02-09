@@ -128,7 +128,7 @@ def hip_for_radiuss_projects(options, spec, compiler):
 def cuda_for_radiuss_projects(options, spec):
     # Here is what is typically needed for radiuss projects when building with cuda
 
-    cuda_flags = []
+    cuda_flags = ["${CMAKE_CUDA_FLAGS}"]
     if not spec.satisfies("cuda_arch=none"):
         cuda_arch = spec.variants["cuda_arch"].value
         cuda_flags.append("-arch sm_{0}".format(cuda_arch[0]))
@@ -137,16 +137,28 @@ def cuda_for_radiuss_projects(options, spec):
         options.append(
             cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
     if spec_uses_toolchain(spec):
-        cuda_flags.append("-Xcompiler {0} -Xlinker {0}".format(spec_uses_toolchain(spec)[0]))
+        cuda_flags.append("-Xcompiler {0}".format(spec_uses_toolchain(spec)[0]))
     if (spec.satisfies("%gcc@8.1: target=ppc64le")):
         cuda_flags.append("-Xcompiler -mno-float128")
 
-    #comment = ("Cuda flags typically set for radiuss projects")
-    #forced = True
-    #options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags), comment, forced))
-    options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
+    comment = ("Cuda flags typically set for radiuss projects")
+    forced = True
+    options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags), comment, forced))
 
 def blt_link_helpers(options, spec, compiler):
+
+    if spec_uses_toolchain(spec):
+        link_flags = "${CMAKE_EXE_LINKER_FLAGS}"
+        if compiler.fc and "gfortran" in compiler.fc:
+            # Scenario: mixed toolchain where C/C++ compiler needs gcc-toolchain
+            # and fortran compiler is gfortran.
+            # -> gfortran would not recognize the --gcc-toolchain flag
+            link_flags += "$<$<NOT:$<LINK_LANGUAGE:FORTRAN>>:{0}>".format(spec_uses_toolchain(spec)[0])
+        else:
+            link_flags += "{0}".format(spec_uses_toolchain(spec)[0])
+        comment = ("Pass gcc toolchain to linker")
+        forced = True
+        options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", link_flags, comment, forced))
 
     # LC Specific
     if compiler.fc:
