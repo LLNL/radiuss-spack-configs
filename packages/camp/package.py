@@ -147,18 +147,18 @@ def cuda_for_radiuss_projects(options, spec):
 
 def blt_link_helpers(options, spec, compiler):
 
-    if spec_uses_toolchain(spec):
-        link_flags = "${CMAKE_EXE_LINKER_FLAGS}"
-        if compiler.fc and "gfortran" in compiler.fc:
-            # Scenario: mixed toolchain where C/C++ compiler needs gcc-toolchain
-            # and fortran compiler is gfortran.
-            # -> gfortran would not recognize the --gcc-toolchain flag
-            link_flags += "$<$<NOT:$<LINK_LANGUAGE:FORTRAN>>:{0}>".format(spec_uses_toolchain(spec)[0])
-        else:
-            link_flags += "{0}".format(spec_uses_toolchain(spec)[0])
-        comment = ("Pass gcc toolchain to linker")
-        forced = True
-        options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", link_flags, comment, forced))
+    #if spec_uses_toolchain(spec):
+    #    link_flags = "${CMAKE_EXE_LINKER_FLAGS}"
+    #    if compiler.fc and "gfortran" in compiler.fc:
+    #        # Scenario: mixed toolchain where C/C++ compiler needs gcc-toolchain
+    #        # and fortran compiler is gfortran.
+    #        # -> gfortran would not recognize the --gcc-toolchain flag
+    #        link_flags += " $<$<NOT:$<LINK_LANGUAGE:FORTRAN>>:{0}>".format(spec_uses_toolchain(spec)[0])
+    #    else:
+    #        link_flags += " {0}".format(spec_uses_toolchain(spec)[0])
+    #    comment = ("Pass gcc toolchain to linker")
+    #    forced = True
+    #    options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", link_flags, comment, forced))
 
     # LC Specific
     if compiler.fc:
