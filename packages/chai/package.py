@@ -26,7 +26,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     maintainers("davidbeckingsale")
 
     version("develop", branch="develop", submodules=False)
-    version("main", branch="main", submodules=False)
     version("2023.06.0", tag="v2023.06.0", submodules=False)
     version("2022.10.0", tag="v2022.10.0", submodules=False)
     version("2022.03.0", tag="v2022.03.0", submodules=False)
@@ -61,8 +60,8 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.9:", type="build", when="+cuda")
     depends_on("cmake@3.14:", type="build", when="@2022.03.0:")
 
-    depends_on("blt@develop", type="build", when="@develop")
-    depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
+    #depends_on("blt@develop", type="build", when="@develop")
+    depends_on("blt@0.5.3", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@2022.03.0:")
     depends_on("blt@0.4.1:", type="build", when="@2.4.0:")
@@ -76,7 +75,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("umpire@2022.03.0:", when="@2022.03.0:")
     depends_on("umpire@6.0.0", when="@2.4.0")
     depends_on("umpire@4.1.2", when="@2.2.0:2.3.0")
-    depends_on("umpire@main", when="@main")
 
     with when("+cuda"):
         depends_on("umpire+cuda")
@@ -99,7 +97,6 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("raja@2022.03.0:", when="@2022.03.0:")
         depends_on("raja@2022.10.0:", when="@2022.10.0:")
         depends_on("raja@2023.06.0:", when="@2023.06.0:")
-        depends_on("raja@main", when="@main")
 
         with when("+cuda"):
             depends_on("raja+cuda")
