@@ -78,6 +78,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("run-all-tests", default=False, description="Run all the tests, including those known to fail.")
 
     depends_on("blt", type="build")
+    depends_on("blt@develop", type="build", when="@develop")
     depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@0.14.1:")
