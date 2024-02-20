@@ -100,7 +100,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("raja@2022.03.0:", when="@2022.03.0:")
         depends_on("raja@2022.10.0:", when="@2022.10.0:")
         depends_on("raja@2023.06.0:", when="@2023.06.0:")
-        depends_on("raja@develop", when="@develop")
+        depends_on("raja@2024.02.0:", when="@develop")
         depends_on("raja@main", when="@main")
 
         with when("+cuda"):
