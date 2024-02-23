@@ -71,7 +71,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("umpire")
-    depends_on("umpire@develop", when="@develop")
+    depends_on("umpire@2024.02.0:", when="@develop")
     depends_on("umpire@2023.06.0:", when="@2023.06.0:")
     depends_on("umpire@2022.10.0:", when="@2022.10.0:")
     depends_on("umpire@2022.03.0:", when="@2022.03.0:")
