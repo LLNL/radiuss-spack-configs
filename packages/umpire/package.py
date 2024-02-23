@@ -283,7 +283,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         if spec.satisfies("@5.0.0:"):
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
         # Dependency to "fmt" is conditionnal to "@develop", symmetrically:
-        if spec.satisfies("@develop"):
+        if spec.satisfies("@2024.02.0:"):
             entries.append(cmake_cache_path("fmt_DIR", spec["fmt"].prefix))
 
         # Build options
