@@ -79,6 +79,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("run-all-tests", default=False, description="Run all the tests, including those known to fail.")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.6.1:", type="build", when="@2024.02.0:")
     depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
     depends_on("blt@0.5.0:", type="build", when="@0.14.1:")
@@ -87,6 +88,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("blt@0.3.6:", type="build", when="@:0.12.0")
     conflicts("^blt@:0.3.6", when="+rocm")
 
+    depends_on("camp@2024.02.0:", type="build", when="@2024.02.0:")
     depends_on("camp@2023.06.0:", type="build", when="@2023.06.0:")
     depends_on("camp@2022.10.1:", type="build", when="@2022.10.3:")
     depends_on("camp@2022.10.0:", type="build", when="@2022.10.0:")
