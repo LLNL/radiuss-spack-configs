@@ -79,9 +79,10 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("blt", type="build")
     depends_on("blt@develop", type="build", when="@develop")
-    depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
-    depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
-    depends_on("blt@0.5.0:", type="build", when="@0.14.1:")
+    depends_on("blt@0.6.0:", type="build", when="@2023.06.99:")
+    depends_on("blt@0.5.3", type="build", when="@2023.06.0:2023.06.1")
+    depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10.0")
+    depends_on("blt@0.5.0:0.5.3", type="build", when="@0.14.1:2022.10.4")
     depends_on("blt@0.4.1", type="build", when="@0.14.0")
     depends_on("blt@0.4.0:", type="build", when="@0.13.0")
     depends_on("blt@0.3.6:", type="build", when="@:0.12.0")
