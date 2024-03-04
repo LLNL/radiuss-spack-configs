@@ -23,6 +23,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     maintainers("davidbeckingsale")
 
+    license("BSD-3-Clause")
+
     version("develop", branch="develop", submodules=False)
     version("main", branch="main", submodules=False)
     version("2024.02.0", tag="v2024.02.0", submodules=False)

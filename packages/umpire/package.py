@@ -26,6 +26,8 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     maintainers("davidbeckingsale")
 
+    license("MIT")
+
     version("develop", branch="develop", submodules=False)
     version("2024.02.0", tag="v2024.02.0", submodules=False)
     version("2023.06.0", tag="v2023.06.0", submodules=False)

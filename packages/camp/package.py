@@ -199,6 +199,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
     maintainers("trws")
 
+    license("BSD-3-Clause")
+
     version("main", branch="main", submodules="False")
     version("2024.02.0", tag="v2024.02.0", submodules=False)
     version("2023.06.0", tag="v2023.06.0", submodules=False)

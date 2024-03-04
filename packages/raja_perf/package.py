@@ -20,6 +20,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     homepage = "http://software.llnl.gov/RAJAPerf/"
     git      = "https://github.com/LLNL/RAJAPerf.git"
 
+    license("BSD-3-Clause")
+
     version("develop", branch="develop", submodules="True")
     version("main",  branch="main",  submodules="True")
     version("2023.06.0", tag="v2023.06.0", submodules="True")
