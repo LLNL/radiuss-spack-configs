@@ -28,6 +28,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     license("BSD-3-Clause")
 
     version("develop", branch="develop", submodules=False)
+    version("2024.02.0", tag="v2024.02.0", submodules=False)
     version("2023.06.0", tag="v2023.06.0", submodules=False)
     version("2022.10.0", tag="v2022.10.0", submodules=False)
     version("2022.03.0", tag="v2022.03.0", submodules=False)
@@ -72,7 +73,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("umpire")
-    depends_on("umpire@2024.02.0:", when="@develop")
+    depends_on("umpire@2024.02.0:", when="@2024.02.0:")
     depends_on("umpire@2023.06.0", when="@2023.06.0")
     depends_on("umpire@2022.10.0:2023.06.0", when="@2022.10.0")
     depends_on("umpire@2022.03.0:2023.06.0", when="@2022.03.0")
@@ -94,7 +95,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     with when("+raja"):
         depends_on("raja~openmp", when="~openmp")
         depends_on("raja+openmp", when="+openmp")
-        depends_on("raja@2024.02.0:", when="@develop")
+        depends_on("raja@2024.02.0:", when="@2024.02.0:")
         depends_on("raja@2023.06.0", when="@2023.06.0")
         depends_on("raja@2022.10.0:2023.06.0", when="@2022.10.0")
         depends_on("raja@2022.03.0:2023.06.0", when="@2022.03.0")
