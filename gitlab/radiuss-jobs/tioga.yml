@@ -7,10 +7,10 @@
 
 rocmcc_5_7_1_hip:
   variables:
-    SPEC: "${PROJECT_TIOGA_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@5.7.1 ^hip@5.7.1 ${PROJECT_TIOGA_DEPS}"
+    SPEC: "${PROJECT_TIOGA_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=5.7.1 ^hip@5.7.1 ${PROJECT_TIOGA_DEPS}"
   extends: .job_on_tioga
 
 cce_16_0_1:
   variables:
-    SPEC: "${PROJECT_TIOGA_VARIANTS} %cce@16.0.1 ${PROJECT_TIOGA_DEPS}"
+    SPEC: "${PROJECT_TIOGA_VARIANTS} %cce@=16.0.1 ${PROJECT_TIOGA_DEPS}"
   extends: .job_on_tioga
