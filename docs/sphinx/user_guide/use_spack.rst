@@ -92,8 +92,16 @@ Main steps
     Create the ``.uberenv_config.json`` file in a directory that is a parent of
     the ``uberenv`` directory. Projects typically place the file in the
     top-level directory of its repository. Set your project package name, and
-    other parameters like Spack reference commit/tag (we suggest the latest
-    release tag).
+    other parameters like Spack reference commit/tag.
+
+    .. note::
+       We recommend using the `Spack`_ reference mentionned in `RADIUSS Spack
+       Configs`_ closest parent tag. In the `RADIUSS Spack Configs`_ history,
+       look for the tag that is the closest parent of the checkout commit. It
+       is made of the latest supported release version of `RAJA`_ and `Umpire`_
+       together with the `Spack`_ reference used to vet `RADIUSS Spack
+       Configs`_. Newer or older `Spack`_ references may not work out of the
+       box.
 
 #. Add RADIUSS Spack Configs submodule.
 
