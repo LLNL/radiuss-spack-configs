@@ -246,3 +246,16 @@ compilers::
     modules: []
     environment: {}
     extra_rpaths: []
+- compiler:
+    spec: rocmcc@6.0.2
+    paths:
+      cc: /opt/rocm-6.0.2/llvm/bin/amdclang
+      cxx: /opt/rocm-6.0.2/llvm/bin/amdclang++
+      f77: /opt/rocm-6.0.2/llvm/bin/amdflang
+      fc: /opt/rocm-6.0.2/llvm/bin/amdflang
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
