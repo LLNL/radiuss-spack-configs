@@ -96,12 +96,11 @@ Main steps
 
     .. note::
        We recommend using the `Spack`_ reference mentionned in `RADIUSS Spack
-       Configs`_ closest parent tag. In the `RADIUSS Spack Configs`_ history,
-       look for the tag that is the closest parent of the checkout commit. It
-       is made of the latest supported release version of `RAJA`_ and `Umpire`_
-       together with the `Spack`_ reference used to vet `RADIUSS Spack
-       Configs`_. Newer or older `Spack`_ references may not work out of the
-       box.
+       Configs`_ closest parent tag. In the RADIUSS Spack Configs history, look
+       for the tag that is the closest parent of the checkout commit. It is
+       made of the latest supported release version of `RAJA`_ and `Umpire`_
+       together with the Spack reference used to vet RADIUSS Spack Configs.
+       Newer or older Spack references may not work out of the box.
 
 #. Add RADIUSS Spack Configs submodule.
 
@@ -210,3 +209,5 @@ mechanism available in CMake-based packages. You may use that as an example.
 .. _Uberenv: https://github.com/LLNL/uberenv
 .. _Spack: https://github.com/spack/spack
 .. _MFEM: https://github.com/mfem/mfem
+.. _RAJA: https://github.com/LLNL/RAJA
+.. _Umpire: https://github.com/LLNL/Umpire
