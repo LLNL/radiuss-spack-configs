@@ -17,9 +17,9 @@ spack:
     # created by Spack that need to be porperly
     # isolated. Therefore, setting the
     # "user_cache_path" properly isstill mandatory.
-    build_cache::
+    build_stage::
       - $user_cache_path/stage
-    test_cache: $user_cache_path/test
+    test_stage: $user_cache_path/test
     misc_cache: $user_cache_path/misc
     flags:
       keep_werror: 'all'
