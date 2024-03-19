@@ -233,12 +233,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
         options.append("-DBLT_SOURCE_DIR={0}".format(spec["blt"].prefix))
 
         if "+cuda" in spec:
-            cudatoolkitdir = spec["cuda"].prefix
             options.extend([
                 "-DENABLE_CUDA=ON",
-                "-DCUDAToolkit_ROOT={0}".format(cudatoolkitdir),
-                "-DCMAKE_CUDA_COMPILER={0}".format("${CUDAToolkit_ROOT}/bin/nvcc"),
-                "-DCMAKE_CUDA_HOST_COMPILER={0}".format("${CMAKE_CXX_COMPILER}"),
                 "-DCUDA_TOOLKIT_ROOT_DIR=%s" % (spec["cuda"].prefix)
             ])
 
