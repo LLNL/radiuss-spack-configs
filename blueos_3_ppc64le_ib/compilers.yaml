@@ -364,19 +364,6 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@=beta2019.06.20
-    paths:
-      cc: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlc
-      cxx: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlc++
-      f77: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlf2003_r
-      fc: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlf2003_r
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
     spec: xl@=16.1.1.10
     paths:
       cc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlc_r

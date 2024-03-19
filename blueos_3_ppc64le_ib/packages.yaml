@@ -57,20 +57,62 @@ packages:
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-19.10
     - spec: spectrum-mpi@10.3.1.03rtm0%pgi@20.4
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-20.4
-    - spec: spectrum-mpi@10.3.1.03rtm0%gcc@8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@21.11
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-21.11
+    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@22.7
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-22.7
+    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@22.11
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-22.11
+    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@23.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-23.1
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@4.9.3
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-4.9.3
+    - spec: spectrum-mpi@10.3.1.03rtm0%gcc@8.3.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@3.9.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-3.9.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@4.0.0
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-4.0.0
     - spec: spectrum-mpi@10.3.1.03rtm0%clang@9.0.0
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-9.0.0
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@10.0.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-10.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@11.0.0
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-11.0.0
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@12.0.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-12.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@13.0.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-13.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@14.0.5
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-14.0.5
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@15.0.6
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-15.0.6
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@16.0.6
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6
     - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.9.0.0
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-2019.10.03
     - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.10.0.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-10.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.7
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2020.03.18
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.11.0.0
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-11.0.0
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.12.0.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-12.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.13.0.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-13.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.14.0.5
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-14.0.5
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.15.0.6
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-15.0.6
+    - spec: spectrum-mpi@10.3.1.03rtm0%clang@ibm.16.0.6
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.10
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.11
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.12.22
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.12
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2022.08.19
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@16.1.1.14
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@beta2019.06.20
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
   python:
