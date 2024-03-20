@@ -20,6 +20,10 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     homepage = "https://github.com/LLNL/CARE"
     git      = "https://github.com/LLNL/CARE.git"
 
+    maintainers("adayton1")
+
+    license("BSD-3-Clause")
+
     version('develop', branch='develop', submodules='True')
     version('master', branch='master', submodules='True')
     version('0.12.0', tag='v0.12.0', submodules='True')
