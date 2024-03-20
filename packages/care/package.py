@@ -22,6 +22,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version('develop', branch='develop', submodules='True')
     version('master', branch='master', submodules='True')
+    version('0.12.0', tag='v0.12.0', submodules='True')
     version('0.10.0', tag='v0.10.0', submodules='True')
     version('0.3.0', tag='v0.3.0', submodules='True')
     version('0.2.0', tag='v0.2.0', submodules='True')
@@ -38,26 +39,26 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant('loop_fuser', default=False, description='Enable loop fusion capability')
 
     depends_on('cmake@3.21:', type='build', when='+rocm')
-    depends_on('cmake@3.18:', type='build', when='@develop')
+    depends_on('cmake@3.18:', type='build', when='@0.12.0:')
     depends_on('cmake@3.14:', type='build', when='@0.10.0:')
 
-    depends_on('blt@0.6.1:', type='build', when='@develop')
+    depends_on('blt@0.6.1:', type='build', when='@0.12.0:')
     depends_on('blt@0.5.2:', type='build', when='@0.10.0:')
     depends_on('blt@0.4.1:', type='build', when='@0.3.1:')
     depends_on('blt@:0.3.6', type='build', when='@:0.3.0')
 
     depends_on('umpire')
     depends_on('umpire+mpi', when='+mpi')
-    depends_on('umpire@2024.02.0:', when='@develop')
+    depends_on('umpire@2024.02.0:', when='@0.12.0:')
     depends_on('umpire@2022.10.0:', when='@0.10.0:')
 
     depends_on('raja')
-    depends_on('raja@2024.02.0:', when='@develop')
+    depends_on('raja@2024.02.0:', when='@0.12.0:')
     depends_on('raja@2022.10.5:', when='@0.10.0:')
 
     # TODO: Add an enable_pick variant
     depends_on('chai+raja+enable_pick')
-    depends_on('chai@2024.02.0:', when='@develop')
+    depends_on('chai@2024.02.0:', when='@0.12.0:')
     depends_on('chai@2022.10.0:', when='@0.10.0:')
 
 
