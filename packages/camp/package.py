@@ -141,51 +141,6 @@ def cuda_for_radiuss_projects(options, spec):
         cuda_flags.append("-Xcompiler -mno-float128")
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
-def blt_link_helpers(options, spec, compiler):
-    ### From local package:
-    if compiler.fc:
-        fortran_compilers = ["gfortran", "xlf"]
-        if any(f_comp in compiler.fc for f_comp in fortran_compilers) and ("clang" in compiler.cxx):
-            # Pass fortran compiler lib as rpath to find missing libstdc++
-            libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(compiler.fc)), "lib")
-            flags = ""
-            for _libpath in [libdir, libdir + "64"]:
-                if os.path.exists(_libpath):
-                    flags += " -Wl,-rpath,{0}".format(_libpath)
-            description = ("Adds a missing libstdc++ rpath")
-            if flags:
-                options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
-
-#            # Ignore conflicting default gcc toolchain
-#            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-#            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-#
-#    compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
-#    if any(tc_comp in compiler.cxx for tc_comp in compilers_using_toolchain):
-#        if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
-#
-#            # Ignore conflicting default gcc toolchain
-#            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-#            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-
-    if "cce" in compiler.cxx:
-        description = (
-            "Adds a missing rpath for libraries " "associated with the fortran compiler"
-        )
-        # Here is where to find libs that work for fortran
-        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(compiler.version)
-        linker_flags = "${{BLT_EXE_LINKER_FLAGS}} -Wl,-rpath,{0}".format(libdir)
-
-        version = "{0}".format(compiler.version)
-
-        if version == "16.0.0" or version == "16.0.1":
-            # Here is another directory added by cce@16.0.0 and cce@16.0.1
-            libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
-            linker_flags += " -Wl,-rpath,{0}".format(libdir)
-
-        options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
-
 
 class Camp(CMakePackage, CudaPackage, ROCmPackage):
     """
@@ -201,9 +156,19 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
     license("BSD-3-Clause")
 
-    version("main", branch="main", submodules="False")
-    version("2024.02.0", tag="v2024.02.0", submodules=False)
-    version("2023.06.0", tag="v2023.06.0", submodules=False)
+    version("main", branch="main", submodules=False)
+    version(
+        "2024.02.0",
+        tag="v2024.02.0",
+        commit="03c80a6c6ab4f97e76a52639563daec71435a277",
+        submodules=False,
+    )
+    version(
+        "2023.06.0",
+        tag="v2023.06.0",
+        commit="ac34c25b722a06b138bc045d38bfa5e8fa3ec9c5",
+        submodules=False,
+    )
     version("2022.10.1", sha256="2d12f1a46f5a6d01880fc075cfbd332e2cf296816a7c1aa12d4ee5644d386f02")
     version("2022.10.0", sha256="3561c3ef00bbcb61fe3183c53d49b110e54910f47e7fc689ad9ccce57e55d6b8")
     version("2022.03.2", sha256="bc4aaeacfe8f2912e28f7a36fc731ab9e481bee15f2c6daf0cb208eed3f201eb")
@@ -223,6 +188,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("blt@0.6.0:", type="build", when="@2024.02.0:")
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
 
+    patch("libstdc++-13-missing-header.patch", when="@:2022.10")
+
     conflicts("^blt@:0.3.6", when="+rocm")
 
     def cmake_args(self):
@@ -232,11 +199,9 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
         options.append("-DBLT_SOURCE_DIR={0}".format(spec["blt"].prefix))
 
+        options.append(self.define_from_variant("ENABLE_CUDA", "cuda"))
         if "+cuda" in spec:
-            options.extend([
-                "-DENABLE_CUDA=ON",
-                "-DCUDA_TOOLKIT_ROOT_DIR=%s" % (spec["cuda"].prefix)
-            ])
+            options.append("-DCUDA_TOOLKIT_ROOT_DIR={0}".format(spec["cuda"].prefix))
 
             if not spec.satisfies("cuda_arch=none"):
                 cuda_arch = spec.variants["cuda_arch"].value
@@ -244,23 +209,16 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
                 options.append("-DCUDA_ARCH=sm_{0}".format(cuda_arch[0]))
                 flag = "-arch sm_{0}".format(cuda_arch[0])
                 options.append("-DCMAKE_CUDA_FLAGS:STRING={0}".format(flag))
-        else:
-            options.append("-DENABLE_CUDA=OFF")
 
+        options.append(self.define_from_variant("ENABLE_HIP", "rocm"))
         if "+rocm" in spec:
-            options.extend([
-                "-DENABLE_HIP=ON",
-                "-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix)
-            ])
-
+            options.append("-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix))
             hip_repair_options(options, spec)
 
             archs = self.spec.variants["amdgpu_target"].value
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
             options.append("-DGPU_TARGETS={0}".format(archs))
             options.append("-DAMDGPU_TARGETS={0}".format(archs))
-        else:
-            options.append("-DENABLE_HIP=OFF")
 
         options.append(self.define_from_variant("ENABLE_OPENMP", "openmp"))
         options.append(self.define_from_variant("ENABLE_TESTS", "tests"))

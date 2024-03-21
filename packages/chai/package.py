@@ -3,14 +3,13 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-import os
 import socket
-import re
 
 from spack.package import *
+
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
-from .camp import blt_link_helpers
+from .blt import llnl_link_helpers
 
 
 
@@ -175,7 +174,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_Fortran_FLAGS", fflags))
         #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
-        blt_link_helpers(entries, spec, compiler)
+        llnl_link_helpers(entries, spec, compiler)
 
         return entries
 
@@ -183,6 +182,10 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         compiler = self.compiler
         entries = super().initconfig_hardware_entries()
+
+        entries.append("#------------------{0}".format("-" * 30))
+        entries.append("# Package custom hardware settings")
+        entries.append("#------------------{0}\n".format("-" * 30))
 
         if "+cuda" in spec:
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
@@ -209,8 +212,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append("# TPLs")
         entries.append("#------------------{0}\n".format("-" * 60))
 
-        entries.append(cmake_cache_path(
-            "BLT_SOURCE_DIR", spec["blt"].prefix))
+        entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         if "+raja" in spec:
             entries.append(cmake_cache_option(
                 "{}ENABLE_RAJA_PLUGIN".format(option_prefix), True))
@@ -224,28 +226,19 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append("# Build Options")
         entries.append("#------------------{0}\n".format("-" * 60))
 
-        # Build options
-        entries.append(cmake_cache_string(
-            "CMAKE_BUILD_TYPE", spec.variants["build_type"].value))
-        entries.append(cmake_cache_option(
-            "BUILD_SHARED_LIBS", "+shared" in spec))
+        entries.append(cmake_cache_string("CMAKE_BUILD_TYPE", spec.variants["build_type"].value))
+        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", "+shared" in spec))
 
         # Generic options that have a prefixed equivalent in CHAI CMake
-        entries.append(cmake_cache_option(
-            "ENABLE_OPENMP", "+openmp" in spec))
-        entries.append(cmake_cache_option(
-            "ENABLE_EXAMPLES", "+examples" in spec))
-        entries.append(cmake_cache_option(
-            "ENABLE_DOCS", False))
+        entries.append(cmake_cache_option("ENABLE_OPENMP", "+openmp" in spec))
+        entries.append(cmake_cache_option("ENABLE_EXAMPLES", "+examples" in spec))
+        entries.append(cmake_cache_option("ENABLE_DOCS", False))
         if "tests=benchmarks" in spec:
             # BLT requires ENABLE_TESTS=True to enable benchmarks
-            entries.append(cmake_cache_option(
-                "ENABLE_BENCHMARKS", True))
-            entries.append(cmake_cache_option(
-                "ENABLE_TESTS", True))
+            entries.append(cmake_cache_option("ENABLE_BENCHMARKS", True))
+            entries.append(cmake_cache_option("ENABLE_TESTS", True))
         else:
-            entries.append(cmake_cache_option(
-                "ENABLE_TESTS", "tests=none" not in spec))
+            entries.append(cmake_cache_option("ENABLE_TESTS", "tests=none" not in spec))
 
         # Prefixed options that used to be name without one
         entries.append(cmake_cache_option(
@@ -254,5 +247,5 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         return entries
 
     def cmake_args(self):
-        options = []
-        return options
+        return []
+
