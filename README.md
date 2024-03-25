@@ -18,9 +18,10 @@ Please read [CONTRIBUTING.md](https://github.com/LLNL/radiuss-spack-configs/CONT
 
 ## Versioning
 
-version: 1.0.0
-
-TODO: Not even sure how to handle versioning here.
+### Tags nomenclature:
+Tags reflect the RAJA and Umpire latest release RADIUSS Spack Configs supports, together with the Spack reference that was used for vetting.
+We issue a tag as soon as one of the two parameter changes for the vetting of the main branch.
+We recommend using the same Spack as newer or older versions may not be compatible out of the box.
 
 ## Authors
 

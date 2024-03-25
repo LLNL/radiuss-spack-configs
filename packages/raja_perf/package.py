@@ -11,7 +11,7 @@ from spack.package import *
 from .camp import mpi_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
-from .camp import blt_link_helpers
+from .blt import llnl_link_helpers
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -19,6 +19,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     homepage = "http://software.llnl.gov/RAJAPerf/"
     git      = "https://github.com/LLNL/RAJAPerf.git"
+
+    license("BSD-3-Clause")
 
     version("develop", branch="develop", submodules="True")
     version("main",  branch="main",  submodules="True")
@@ -126,7 +128,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
         #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
-        blt_link_helpers(entries, spec, compiler)
+        llnl_link_helpers(entries, spec, compiler)
 
         # adrienbernede-23-01
         # Maybe we want to share this in the above blt_link_helpers function.

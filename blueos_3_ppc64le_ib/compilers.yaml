@@ -1,6 +1,6 @@
 compilers:
 - compiler:
-    spec: clang@3.9.1
+    spec: clang@=3.9.1
     paths:
       cc: /usr/tcetmp/packages/clang/clang-3.9.1/bin/clang
       cxx: /usr/tcetmp/packages/clang/clang-3.9.1/bin/clang++
@@ -13,7 +13,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@4.0.0
+    spec: clang@=4.0.0
     paths:
       cc: /usr/tcetmp/packages/clang/clang-4.0.0/bin/clang
       cxx: /usr/tcetmp/packages/clang/clang-4.0.0/bin/clang++
@@ -26,7 +26,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@9.0.0
+    spec: clang@=9.0.0
     paths:
       cc: /usr/tce/packages/clang/clang-9.0.0/bin/clang
       cxx: /usr/tce/packages/clang/clang-9.0.0/bin/clang++
@@ -39,7 +39,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@10.0.1
+    spec: clang@=10.0.1
     paths:
       cc: /usr/tce/packages/clang/clang-10.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-10.0.1/bin/clang++
@@ -52,7 +52,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@11.0.0
+    spec: clang@=11.0.0
     paths:
       cc: /usr/tce/packages/clang/clang-11.0.0/bin/clang
       cxx: /usr/tce/packages/clang/clang-11.0.0/bin/clang++
@@ -65,7 +65,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@12.0.1
+    spec: clang@=12.0.1
     paths:
       cc: /usr/tce/packages/clang/clang-12.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-12.0.1/bin/clang++
@@ -78,23 +78,20 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@12.0.1.gcc.8.3.1
+    spec: clang@=12.0.1.gcc.8.3.1
     paths:
-      cc: /usr/tce/packages/clang/clang-12.0.1/bin/clang
-      cxx: /usr/tce/packages/clang/clang-12.0.1/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/clang/clang-12.0.1-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-12.0.1-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.1
+    spec: clang@=13.0.1
     paths:
       cc: /usr/tce/packages/clang/clang-13.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-13.0.1/bin/clang++
@@ -107,23 +104,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.1.gcc.8.3.1
-    paths:
-      cc: /usr/tce/packages/clang/clang-13.0.1/bin/clang
-      cxx: /usr/tce/packages/clang/clang-13.0.1/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: clang@14.0.5
+    spec: clang@=14.0.5
     paths:
       cc: /usr/tce/packages/clang/clang-14.0.5/bin/clang
       cxx: /usr/tce/packages/clang/clang-14.0.5/bin/clang++
@@ -136,23 +117,20 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@14.0.5.gcc.8.3.1
+    spec: clang@=14.0.5.gcc.8.3.1
     paths:
-      cc: /usr/tce/packages/clang/clang-14.0.5/bin/clang
-      cxx: /usr/tce/packages/clang/clang-14.0.5/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/clang/clang-14.0.5-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-14.0.5-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@15.0.6
+    spec: clang@=15.0.6
     paths:
       cc: /usr/tce/packages/clang/clang-15.0.6/bin/clang
       cxx: /usr/tce/packages/clang/clang-15.0.6/bin/clang++
@@ -165,7 +143,33 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@9.0.0.ibm
+    spec: clang@=16.0.6
+    paths:
+      cc: /usr/tce/packages/clang/clang-16.0.6/bin/clang
+      cxx: /usr/tce/packages/clang/clang-16.0.6/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=16.0.6.gcc.8.3.1
+    paths:
+      cc: /usr/tce/packages/clang/clang-16.0.6-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-16.0.6-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=9.0.0.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-2019.10.03/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-2019.10.03/bin/clang++
@@ -178,7 +182,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@10.0.1.ibm
+    spec: clang@=10.0.1.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-10.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-10.0.1/bin/clang++
@@ -191,7 +195,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@11.0.0.ibm
+    spec: clang@=11.0.0.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-11.0.0/bin/clang++
@@ -204,7 +208,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@12.0.1.ibm
+    spec: clang@=12.0.1.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-12.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-12.0.1/bin/clang++
@@ -217,23 +221,20 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@12.0.1.ibm.gcc.8.3.1
+    spec: clang@=12.0.1.ibm.gcc.8.3.1
     paths:
-      cc: /usr/tce/packages/clang/clang-ibm-12.0.1/bin/clang
-      cxx: /usr/tce/packages/clang/clang-ibm-12.0.1/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/clang/clang-ibm-12.0.1-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-ibm-12.0.1-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.1.ibm
+    spec: clang@=13.0.1.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-13.0.1/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-13.0.1/bin/clang++
@@ -246,22 +247,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@13.0.1.ibm.gcc.8.3.1
-    paths:
-      cc: /usr/tce/packages/clang/clang-ibm-13.0.1/bin/clang
-      cxx: /usr/tce/packages/clang/clang-ibm-13.0.1/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: clang@14.0.5.ibm
+    spec: clang@=14.0.5.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang++
@@ -274,23 +260,20 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@14.0.5.ibm.gcc.8.3.1
+    spec: clang@=14.0.5.ibm.gcc.8.3.1
     paths:
-      cc: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang
-      cxx: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/clang/clang-ibm-14.0.5-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-ibm-14.0.5-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@15.0.6.ibm
+    spec: clang@=15.0.6.ibm
     paths:
       cc: /usr/tce/packages/clang/clang-ibm-15.0.6/bin/clang
       cxx: /usr/tce/packages/clang/clang-ibm-15.0.6/bin/clang++
@@ -303,23 +286,33 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@15.0.6.ibm.gcc.8.3.1
+    spec: clang@=16.0.6.ibm
     paths:
-      cc: /usr/tce/packages/clang/clang-ibm-15.0.6/bin/clang
-      cxx: /usr/tce/packages/clang/clang-ibm-15.0.6/bin/clang++
-      fc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/clang/clang-ibm-16.0.6/bin/clang
+      cxx: /usr/tce/packages/clang/clang-ibm-16.0.6/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@coral2018.08.08
+    spec: clang@=16.0.6.ibm.gcc.8.3.1
+    paths:
+      cc: /usr/tce/packages/clang/clang-ibm-16.0.6-gcc-8.3.1/bin/clang
+      cxx: /usr/tce/packages/clang/clang-ibm-16.0.6-gcc-8.3.1/bin/clang++
+      fc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=coral2018.08.08
     paths:
       cc: /usr/tce/packages/clang/clang-coral-2018.08.08/bin/clang
       cxx: /usr/tce/packages/clang/clang-coral-2018.08.08/bin/clang++
@@ -332,7 +325,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: clang@default
+    spec: clang@=default
     paths:
       cc: clang
       cxx: clang++
@@ -345,7 +338,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@default
+    spec: gcc@=default
     paths:
       cc: gcc
       cxx: g++
@@ -358,7 +351,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@4.9.3
+    spec: gcc@=4.9.3
     paths:
       cc: /usr/tce/packages/gcc/gcc-4.9.3/bin/gcc
       cxx: /usr/tce/packages/gcc/gcc-4.9.3/bin/g++
@@ -371,7 +364,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@8.3.1
+    spec: gcc@=8.3.1
     paths:
       cc: /usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
       cxx: /usr/tce/packages/gcc/gcc-8.3.1/bin/g++
@@ -384,7 +377,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@default
+    spec: xl@=default
     paths:
       cc: xlc
       cxx: xlc++
@@ -397,20 +390,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@beta2019.06.20
-    paths:
-      cc: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlc
-      cxx: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlc++
-      f77: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlf2003_r
-      fc: /usr/tce/packages/xl/xl-beta-2019.06.20/bin/xlf2003_r
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: xl@16.1.1.10
+    spec: xl@=16.1.1.10
     paths:
       cc: /usr/tce/packages/xl/xl-2021.09.22/bin/xlc_r
       cxx: /usr/tce/packages/xl/xl-2021.09.22/bin/xlC_r
@@ -423,7 +403,20 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@16.1.1.11
+    spec: xl@=16.1.1.10.gcc.8.3.1
+    paths:
+      cc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlc_r
+      cxx: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlC_r
+      fc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: xl@=16.1.1.11
     paths:
       cc: /usr/tce/packages/xl/xl-2021.12.22/bin/xlc_r
       cxx: /usr/tce/packages/xl/xl-2021.12.22/bin/xlC_r
@@ -436,7 +429,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@16.1.1.12
+    spec: xl@=16.1.1.12
     paths:
       cc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlc_r
       cxx: /usr/tce/packages/xl/xl-2022.08.19/bin/xlC_r
@@ -449,28 +442,12 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@16.1.1.12.gcc.8.3.1
+    spec: xl@=16.1.1.12.gcc.8.3.1
     paths:
-      cc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2022.08.19/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2022.08.19/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: xl@16.1.1.14
-    paths:
-      cc: /usr/tce/packages/xl/xl-2023.03.13/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2023.03.13/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2023.03.13/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2023.03.13/bin/xlf_r
+      cc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlc_r
+      cxx: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlC_r
+      fc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf_r
     flags: {}
     operating_system: rhel7
     target: ppc64le
@@ -478,23 +455,33 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@16.1.1.14.gcc.8.3.1
+    spec: xl@=16.1.1.14
     paths:
-      cc: /usr/tce/packages/xl/xl-2023.03.13/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2023.03.13/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2023.03.13/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2023.03.13/bin/xlf_r
-    flags:
-      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
-      fflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-8.3.1
+      cc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlc_r
+      cxx: /usr/tce/packages/xl/xl-2023.06.28/bin/xlC_r
+      fc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf_r
+    flags: {}
     operating_system: rhel7
     target: ppc64le
     modules: []
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@default
+    spec: xl@=16.1.1.14.gcc.8.3.1
+    paths:
+      cc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlc_r
+      cxx: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlC_r
+      fc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf2003_r
+      f77: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf_r
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: pgi@=default
     paths:
       cc: pgcc
       cxx: pgc++
@@ -507,7 +494,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@19.10
+    spec: pgi@=19.10
     paths:
       cc: /usr/tce/packages/pgi/pgi-19.10/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-19.10/bin/pgc++
@@ -520,7 +507,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@20.4
+    spec: pgi@=20.4
     paths:
       cc: /usr/tce/packages/pgi/pgi-20.4/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-20.4/bin/pgc++
@@ -533,7 +520,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@21.11
+    spec: pgi@=21.11
     paths:
       cc: /usr/tce/packages/pgi/pgi-21.11/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-21.11/bin/pgc++
@@ -546,7 +533,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@22.7
+    spec: pgi@=22.7
     paths:
       cc: /usr/tce/packages/pgi/pgi-22.7/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-22.7/bin/pgc++
@@ -559,7 +546,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@22.11
+    spec: pgi@=22.11
     paths:
       cc: /usr/tce/packages/pgi/pgi-22.11/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-22.11/bin/pgc++
@@ -572,7 +559,7 @@ compilers:
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@23.1
+    spec: pgi@=23.1
     paths:
       cc: /usr/tce/packages/pgi/pgi-23.1/bin/pgcc
       cxx: /usr/tce/packages/pgi/pgi-23.1/bin/pgc++
