@@ -130,10 +130,10 @@ def cuda_for_radiuss_projects(options, spec):
     cuda_flags = []
     archs = spec.variants["cuda_arch"].value
     if archs[0] != "none":
-        entries.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", ";".join(archs)))
+        options.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", ";".join(archs)))
         # Additional definitions that may not be needed anymore
         cuda_flags = cuda_flags(archs)
-        entries.append(cmake_cache_string("CUDA_ARCH", " ".join(cuda_flags)))
+        options.append(cmake_cache_string("CUDA_ARCH", " ".join(cuda_flags)))
     if spec_uses_toolchain(spec):
         cuda_flags.append("-Xcompiler {}".format(spec_uses_toolchain(spec)[0]))
     if (spec.satisfies("%gcc@8.1: target=ppc64le")):
