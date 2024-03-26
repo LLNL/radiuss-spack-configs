@@ -128,13 +128,12 @@ def cuda_for_radiuss_projects(options, spec):
     # Here is what is typically needed for radiuss projects when building with cuda
 
     cuda_flags = []
-    if not spec.satisfies("cuda_arch=none"):
-        cuda_arch = spec.variants["cuda_arch"].value
-        cuda_flags.append("-arch sm_{0}".format(cuda_arch[0]))
-        options.append(
-            cmake_cache_string("CUDA_ARCH", "sm_{0}".format(cuda_arch[0])))
-        options.append(
-            cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
+    archs = spec.variants["cuda_arch"].value
+    if archs[0] != "none":
+        entries.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", ";".join(archs)))
+        # Additional definitions that may not be needed anymore
+        cuda_flags = cuda_flags(archs)
+        entries.append(cmake_cache_string("CUDA_ARCH", " ".join(cuda_flags)))
     if spec_uses_toolchain(spec):
         cuda_flags.append("-Xcompiler {}".format(spec_uses_toolchain(spec)[0]))
     if (spec.satisfies("%gcc@8.1: target=ppc64le")):
@@ -185,7 +184,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("cub", when="+cuda")
 
     depends_on("blt", type="build")
-    depends_on("blt@0.6.0:", type="build", when="@2024.02.0:")
+    depends_on("blt@0.6.1:", type="build", when="@2024.02.0:")
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
 
     patch("libstdc++-13-missing-header.patch", when="@:2022.10")
