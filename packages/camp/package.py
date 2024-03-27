@@ -127,17 +127,19 @@ def hip_for_radiuss_projects(options, spec, compiler):
 def cuda_for_radiuss_projects(options, spec):
     # Here is what is typically needed for radiuss projects when building with cuda
 
+    # CUDA_FLAGS
     cuda_flags = []
-    archs = spec.variants["cuda_arch"].value
-    if archs[0] != "none":
-        options.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", ";".join(archs)))
-        # Additional definitions that may not be needed anymore
-        cuda_flags = cuda_flags(archs)
-        options.append(cmake_cache_string("CUDA_ARCH", " ".join(cuda_flags)))
+
+    if not spec.satisfies("cuda_arch=none"):
+        cuda_archs = ";".join(spec.variants["cuda_arch"].value)
+        options.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", cuda_archs))
+
     if spec_uses_toolchain(spec):
         cuda_flags.append("-Xcompiler {}".format(spec_uses_toolchain(spec)[0]))
-    if (spec.satisfies("%gcc@8.1: target=ppc64le")):
+
+    if spec.satisfies("%gcc@8.1: target=ppc64le"):
         cuda_flags.append("-Xcompiler -mno-float128")
+
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
 
