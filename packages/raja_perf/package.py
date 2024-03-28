@@ -109,7 +109,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
-        entries = super(RajaPerf, self).initconfig_compiler_entries()
+        entries = super().initconfig_compiler_entries()
 
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
         flags = spec.compiler_flags
@@ -142,7 +142,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
-        entries = super(RajaPerf, self).initconfig_hardware_entries()
+        entries = super().initconfig_hardware_entries()
 
         entries.append(cmake_cache_option("ENABLE_OPENMP", "+openmp" in spec))
 
@@ -205,11 +205,11 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
-        entries = super(RajaPerf, self).initconfig_mpi_entries()
+        entries = super().initconfig_mpi_entries()
 
         entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
         if "+mpi" in spec:
-            mpi_for_radiuss_projects(entries, spec)
+            mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
 

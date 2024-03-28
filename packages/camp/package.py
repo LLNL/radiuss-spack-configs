@@ -87,16 +87,19 @@ def cuda_for_radiuss_projects(options, spec):
 
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
-def mpi_for_radiuss_projects(options, spec):
+def mpi_for_radiuss_projects(options, spec, env):
 
     if spec["mpi"].name == "spectrum-mpi" and spec.satisfies("^blt"):
         options.append(cmake_cache_string("BLT_MPI_COMMAND_APPEND", "mpibind"))
 
+    sys_type = spec.architecture
+    if "SYS_TYPE" in env:
+        sys_type = env["SYS_TYPE"]
     # Replace /usr/bin/srun path with srun flux wrapper path on TOSS 4
     # TODO: Remove this logic by adding `using_flux` case in
     #  spack/lib/spack/spack/build_systems/cached_cmake.py:196 and remove hard-coded
     #  path to srun in same file.
-    if "toss_4" in self._get_sys_type(spec):
+    if "toss_4" in sys_type:
         srun_wrapper = which_string("srun")
         mpi_exec_index = [
             index for index, entry in enumerate(options) if "MPIEXEC_EXECUTABLE" in entry

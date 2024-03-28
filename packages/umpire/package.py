@@ -369,11 +369,11 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
-        entries = super(Umpire, self).initconfig_mpi_entries()
+        entries = super().initconfig_mpi_entries()
 
         entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
         if "+mpi" in spec:
-            mpi_for_radiuss_projects(entries, spec)
+            mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
 
