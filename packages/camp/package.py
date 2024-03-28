@@ -8,6 +8,7 @@ import glob
 import re
 
 from spack.package import *
+from spack.util.executable import which_string
 
 import llnl.util.tty as tty
 
@@ -85,6 +86,24 @@ def cuda_for_radiuss_projects(options, spec):
         cuda_flags.append("-Xcompiler -mno-float128")
 
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
+
+def mpi_for_radiuss_projects(options, spec):
+
+    if spec["mpi"].name == "spectrum-mpi" and spec.satisfies("^blt"):
+        options.append(cmake_cache_string("BLT_MPI_COMMAND_APPEND", "mpibind"))
+
+    # Replace /usr/bin/srun path with srun flux wrapper path on TOSS 4
+    # TODO: Remove this logic by adding `using_flux` case in
+    #  spack/lib/spack/spack/build_systems/cached_cmake.py:196 and remove hard-coded
+    #  path to srun in same file.
+    if "toss_4" in self._get_sys_type(spec):
+        srun_wrapper = which_string("srun")
+        mpi_exec_index = [
+            index for index, entry in enumerate(options) if "MPIEXEC_EXECUTABLE" in entry
+        ]
+        if len(mpi_exec_index) > 0:
+            del options[mpi_exec_index[0]]
+        options.append(cmake_cache_path("MPIEXEC_EXECUTABLE", srun_wrapper))
 
 
 class Camp(CMakePackage, CudaPackage, ROCmPackage):
