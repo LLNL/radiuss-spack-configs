@@ -7,9 +7,9 @@ import os
 import sys
 
 from spack.package import *
-from spack.util.executable import which_string
 
 from .camp import hip_for_radiuss_projects
+from .camp import mpi_for_radiuss_projects
 
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -142,7 +142,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_compiler_entries(self):
         spec = self.spec
         compiler = self.compiler
-        entries = super(Caliper, self).initconfig_compiler_entries()
+        entries = super().initconfig_compiler_entries()
 
         if "+fortran" in spec:
             entries.append(cmake_cache_option("WITH_FORTRAN", True))
@@ -157,7 +157,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
-        entries = super(Caliper, self).initconfig_hardware_entries()
+        entries = super().initconfig_hardware_entries()
 
         if "+cuda" in spec:
             entries.append(cmake_cache_option("WITH_CUPTI", True))
@@ -174,21 +174,11 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
-        entries = super(Caliper, self).initconfig_mpi_entries()
+        entries = super().initconfig_mpi_entries()
 
         entries.append(cmake_cache_option("WITH_MPI", "+mpi" in spec))
         if "+mpi" in spec:
-            # Replace /usr/bin/srun path with srun flux wrapper path on TOSS 4
-            # TODO: Remove this logic by adding `using_flux` case in
-            #  spack/lib/spack/spack/build_systems/cached_cmake.py:196 and remove hard-coded
-            #  path to srun in same file.
-            if "toss_4" in self._get_sys_type(spec):
-                srun_wrapper = which_string("srun")
-                mpi_exec_index = [
-                    index for index, entry in enumerate(entries) if "MPIEXEC_EXECUTABLE" in entry
-                ]
-                del entries[mpi_exec_index[0]]
-                entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", srun_wrapper))
+            mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
 
