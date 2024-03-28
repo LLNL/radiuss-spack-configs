@@ -7,6 +7,8 @@ import os
 import sys
 
 from spack.package import *
+from spack.util.executable import which_string
+
 from .camp import hip_for_radiuss_projects
 
 
