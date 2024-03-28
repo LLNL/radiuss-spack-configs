@@ -38,61 +38,6 @@ def hip_repair_cache(options, spec):
         )
     )
 
-def mpi_for_radiuss_projects(options, spec):
-    # Machines with cray-mpich have a slurm wrapper arround flux, to use it we
-    # duplicate the MPI handling from CachedCMakePackage. This change will be
-    # applied directly in the CachedCMakePackage when pushed to upstream Spack.
-    if spec.satisfies("^mpi"):
-
-        options.append("#------------------{0}".format("-" * 60))
-        options.append("# MPI")
-        options.append("#------------------{0}\n".format("-" * 60))
-
-        options.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
-
-        options.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
-        options.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-        options.append(cmake_cache_path("MPI_Fortran_COMPILER", spec["mpi"].mpifc))
-
-        # Check for slurm
-        using_slurm = False
-        # RADIUSS Spack Configs change:
-        slurm_checks = ["+slurm", "schedulers=slurm", "process_managers=slurm", "cray-mpich"]
-        if any(spec["mpi"].satisfies(variant) for variant in slurm_checks):
-            using_slurm = True
-
-        # Determine MPIEXEC
-        if using_slurm:
-            if spec["mpi"].external:
-                # Heuristic until we have dependents on externals
-                mpiexec = "/usr/bin/srun"
-            else:
-                mpiexec = os.path.join(spec["slurm"].prefix.bin, "srun")
-        elif hasattr(spec["mpi"].package, "mpiexec"):
-            mpiexec = spec["mpi"].package.mpiexec
-        else:
-            mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpirun")
-            if not os.path.exists(mpiexec):
-                mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
-
-        if not os.path.exists(mpiexec):
-            msg = "Unable to determine MPIEXEC, tests may fail"
-            options.append("# {0}\n".format(msg))
-            tty.warn(msg)
-        else:
-            # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
-            # vs the older versions which expect MPIEXEC
-            if spec["cmake"].satisfies("@3.10:"):
-                options.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
-            else:
-                options.append(cmake_cache_path("MPIEXEC", mpiexec))
-
-        # Determine MPIEXEC_NUMPROC_FLAG
-        if using_slurm:
-            options.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
-        else:
-            options.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-np"))
-
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
     hip_root = spec["hip"].prefix
