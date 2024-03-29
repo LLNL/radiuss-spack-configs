@@ -104,9 +104,15 @@ def mpi_for_radiuss_projects(options, spec, env):
         mpi_exec_index = [
             index for index, entry in enumerate(options) if "MPIEXEC_EXECUTABLE" in entry
         ]
+        mpi_exec_flag_index = [
+            index for index, entry in enumerate(options) if "MPIEXEC_NUMPROC_FLAG" in entry
+        ]
         if len(mpi_exec_index) > 0:
             del options[mpi_exec_index[0]]
+        if len(mpi_exec_flag_index) > 0:
+            del options[mpi_exec_flag_index[0]]
         options.append(cmake_cache_path("MPIEXEC_EXECUTABLE", srun_wrapper))
+        options.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
 
 
 class Camp(CMakePackage, CudaPackage, ROCmPackage):
