@@ -104,6 +104,19 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
+    spec: rocmcc@=5.7.1
+    paths:
+      cc: /opt/rocm-5.7.1/llvm/bin/amdclang
+      cxx: /opt/rocm-5.7.1/llvm/bin/amdclang++
+      f77: /opt/rocm-5.7.1/llvm/bin/amdflang
+      fc: /opt/rocm-5.7.1/llvm/bin/amdflang
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
     spec: pgi@=20.4
     paths:
       cc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgcc
@@ -251,6 +264,21 @@ compilers::
     paths:
       cc: /usr/tce/packages/clang/clang-14.0.6/bin/clang
       cxx: /usr/tce/packages/clang/clang-14.0.6/bin/clang++
+      f77: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
+    flags:
+      cflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1
+      cxxflags: --gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=19.0.0.gcc.10.3.1
+    paths:
+      cc: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang
+      cxx: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang++
       f77: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
       fc: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
     flags:
