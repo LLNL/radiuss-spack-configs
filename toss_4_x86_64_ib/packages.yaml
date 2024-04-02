@@ -46,6 +46,8 @@ packages::
       prefix: /opt/rocm-5.6.1/hip
     - spec: hip@5.7.0
       prefix: /opt/rocm-5.7.0/hip
+    - spec: hip@5.7.1
+      prefix: /opt/rocm-5.7.1/hip
   llvm-amdgpu:
     version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
     buildable: false
