@@ -216,6 +216,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     # TODO: figure out gtest dependency and then set this default True.
     variant("tests", default=False, description="Build tests")
     variant("openmp", default=False, description="Build with OpenMP support")
+    variant("sycl", default=False, description="Build with Sycl support")
 
     depends_on("cub", when="+cuda")
 
@@ -247,7 +248,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
         else:
             options.append("-DENABLE_CUDA=OFF")
 
-        if "+rocm" in spec:
+        if "+rocm" in spec and not "+sycl" in spec:
             options.extend([
                 "-DENABLE_HIP=ON",
                 "-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix)
@@ -262,7 +263,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
         else:
             options.append("-DENABLE_HIP=OFF")
 
-        options.append(self.define_from_variant("ENABLE_OPENMP", "openmp"))
         options.append(self.define_from_variant("ENABLE_TESTS", "tests"))
+        options.append(self.define_from_variant("ENABLE_OPENMP", "openmp"))
+        options.append(self.define_from_variant("ENABLE_SYCL", "sycl"))
 
         return options

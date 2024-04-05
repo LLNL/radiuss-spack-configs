@@ -68,6 +68,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("desul", default=False, description="Build desul atomics backend")
     variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
     variant("omptask", default=False, description="Build OpenMP task variants of internal algorithms")
+    variant("sycl", default=False, description="Build sycl backend")
 
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
@@ -91,6 +92,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp+openmp", when="+openmp")
+    depends_on("camp+sycl", when="+sycl")
     depends_on("camp@main", when="@develop")
     depends_on("camp@main", when="@main")
     depends_on("camp@2024.02.0:", type="build", when="@2024.02.0:")
@@ -164,7 +166,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
-        if "+rocm" in spec:
+        if "+rocm" in spec and not "+sycl" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
             hip_for_radiuss_projects(entries, spec, compiler)
         else:
@@ -202,7 +204,18 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("RAJA_ENABLE_OPENMP_TASK", "+omptask" in spec))
 
-        entries.append(cmake_cache_string("BLT_CXX_STD","c++14"))
+        entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", "+sycl" in spec))
+
+        if "+sycl" in spec:
+            entries.append(cmake_cache_string("BLT_CXX_STD","c++17"))
+            compiler=self.compiler
+            sycl_lib_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib")
+            sycl_lib64_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib64")
+            entries.append(cmake_cache_string("SYCL_LIB_PATH", sycl_lib_path))
+            entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}".format(sycl_lib_path)))
+            entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}".format(sycl_lib64_path)))
+        else:
+            entries.append(cmake_cache_string("BLT_CXX_STD","c++14"))
 
         if "+desul" in spec:
             if "+cuda" in spec:
