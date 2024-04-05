@@ -208,12 +208,10 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if "+sycl" in spec:
             entries.append(cmake_cache_string("BLT_CXX_STD","c++17"))
-            compiler=self.compiler
-            sycl_lib_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib")
-            sycl_lib64_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib64")
-            entries.append(cmake_cache_string("SYCL_LIB_PATH", sycl_lib_path))
-            entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}".format(sycl_lib_path)))
-            entries.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}".format(sycl_lib64_path)))
+            # compiler=self.compiler
+            # sycl_lib_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib")
+            # entries.append(cmake_cache_string("SYCL_LIB_PATH", sycl_lib_path))
+
         else:
             entries.append(cmake_cache_string("BLT_CXX_STD","c++14"))
 
