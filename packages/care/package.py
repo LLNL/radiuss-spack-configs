@@ -7,9 +7,9 @@ import socket
 
 from spack.package import *
 
-from .camp import blt_link_helpers
 from .camp import cuda_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
+from .blt import llnl_link_helpers
 
 
 class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -153,7 +153,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
-        blt_link_helpers(entries, spec, compiler)
+        llnl_link_helpers(entries, spec, compiler)
 
         return entries
 
