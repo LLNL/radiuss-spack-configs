@@ -8,10 +8,11 @@ import socket
 import re
 
 from spack.package import *
-from .camp import mpi_for_radiuss_projects
+
 from .camp import hip_for_radiuss_projects
 from .camp import cuda_for_radiuss_projects
-from .camp import blt_link_helpers
+from .camp import mpi_for_radiuss_projects
+from .blt import llnl_link_helpers
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -108,7 +109,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
-        entries = super(RajaPerf, self).initconfig_compiler_entries()
+        entries = super().initconfig_compiler_entries()
 
         #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
         flags = spec.compiler_flags
@@ -128,7 +129,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
         #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 
-        blt_link_helpers(entries, spec, compiler)
+        llnl_link_helpers(entries, spec, compiler)
 
         # adrienbernede-23-01
         # Maybe we want to share this in the above blt_link_helpers function.
@@ -141,7 +142,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_hardware_entries(self):
         spec = self.spec
         compiler = self.compiler
-        entries = super(RajaPerf, self).initconfig_hardware_entries()
+        entries = super().initconfig_hardware_entries()
 
         entries.append(cmake_cache_option("ENABLE_OPENMP", "+openmp" in spec))
 
@@ -204,9 +205,11 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_mpi_entries(self):
         spec = self.spec
-        entries = []
+        entries = super().initconfig_mpi_entries()
 
-        mpi_for_radiuss_projects(entries, spec)
+        entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
+        if "+mpi" in spec:
+            mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
 
