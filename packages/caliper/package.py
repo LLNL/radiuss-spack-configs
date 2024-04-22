@@ -222,14 +222,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         return entries
 
     def cmake_args(self):
-
-        args = []
-
-        #if "+rocm" in spec:
-        #    args.append("-DCMAKE_CXX_COMPILER={0}".format(spec["hip"].hipcc))
-        #    args.append("-DROCM_PREFIX=%s" % spec["hsa-rocr-dev"].prefix)
-
-        return args
+        return []
 
     @run_after("install")
     def cache_test_sources(self):
