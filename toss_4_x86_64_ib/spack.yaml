@@ -29,7 +29,7 @@ spack:
   mirrors::
     gitlab_ci:
       url: $CI_REGISTRY
-      access-pair:
+      access_pair:
       - $CI_REGISTRY_USER
       - $CI_JOB_TOKEN
       signed: false
