@@ -26,6 +26,14 @@ spack:
 
     view: false
 
+  mirrors::
+    gitlab_ci:
+      url: $CI_REGISTRY
+      signed: false
+      autopush: true
+      oci-username: $CI_REGISTRY_USER
+      oci-password: $SPACK_TOKEN
+
   compilers::
   - compiler:
       spec: rocmcc@=5.0.2
