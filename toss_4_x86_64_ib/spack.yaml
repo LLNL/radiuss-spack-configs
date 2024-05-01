@@ -26,13 +26,13 @@ spack:
 
     view: false
 
-  mirrors::
-    gitlab_ci:
-      url: oci://$CI_REGISTRY
-      access_pair:
-      - $CI_REGISTRY_USER
-      - $CI_JOB_TOKEN
-      signed: false
+  #mirrors::
+  #  gitlab_ci:
+  #    url: oci://$CI_REGISTRY
+  #    access_pair:
+  #    - $CI_REGISTRY_USER
+  #    - $CI_JOB_TOKEN
+  #    signed: false
 
   compilers::
   - compiler:
