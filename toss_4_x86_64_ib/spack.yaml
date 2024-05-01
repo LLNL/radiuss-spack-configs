@@ -32,7 +32,6 @@ spack:
       access_pair:
       - $CI_REGISTRY_USER
       - $CI_JOB_TOKEN
-      autopush: true
       signed: false
 
   compilers::
