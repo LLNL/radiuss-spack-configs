@@ -28,7 +28,7 @@ spack:
 
   mirrors::
     gitlab_ci:
-      url: $CI_REGISTRY
+      url: oci://$CI_REGISTRY
       access_pair:
       - $CI_REGISTRY_USER
       - $CI_JOB_TOKEN
