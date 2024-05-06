@@ -28,7 +28,7 @@ spack:
 
   mirrors::
     gitlab_ci:
-      url: $OCI_REGISTRY
+      url: "oci://czregistry.llnl.gov:5050/radiuss"
       access_pair:
       - $CI_REGISTRY_USER
       - $SPACK_TOKEN
