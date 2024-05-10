@@ -68,6 +68,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("desul", default=False, description="Build desul atomics backend")
     variant("vectorization", default=True, description="Build SIMD/SIMT intrinsics support")
     variant("omptask", default=False, description="Build OpenMP task variants of internal algorithms")
+    variant("omptarget", default=False, description="Build OpenMP on target device support")
     variant("sycl", default=False, description="Build sycl backend")
 
     variant("examples", default=True, description="Build examples.")
@@ -92,6 +93,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp+openmp", when="+openmp")
+    depends_on("camp+omptarget", when="+omptarget")
     depends_on("camp+sycl", when="+sycl")
     depends_on("camp@main", when="@develop")
     depends_on("camp@main", when="@main")
@@ -204,20 +206,22 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("RAJA_ENABLE_OPENMP_TASK", "+omptask" in spec))
 
+        entries.append(cmake_cache_option("RAJA_ENABLE_TARGET_OPENMP", "+omptarget" in spec))
+
         entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", "+sycl" in spec))
 
         if "+sycl" in spec:
             entries.append(cmake_cache_string("BLT_CXX_STD","c++17"))
-            # compiler=self.compiler
-            # sycl_lib_path = os.path.join(os.path.dirname(compiler.cxx), "..", "lib")
-            # entries.append(cmake_cache_string("SYCL_LIB_PATH", sycl_lib_path))
-
         else:
             entries.append(cmake_cache_string("BLT_CXX_STD","c++14"))
 
         if "+desul" in spec:
             if "+cuda" in spec:
                 entries.append(cmake_cache_string("CMAKE_CUDA_STANDARD", "14"))
+
+        if "+omptarget" in spec: 
+            entries.append(cmake_cache_string("BLT_OPENMP_COMPILE_FLAGS", "-fopenmp;-fopenmp-targets=nvptx64-nvidia-cuda"))
+            entries.append(cmake_cache_string("BLT_OPENMP_LINK_FLAGS", "-fopenmp;-fopenmp-targets=nvptx64-nvidia-cuda"))
 
         entries.append(
             cmake_cache_option("{}ENABLE_EXAMPLES".format(option_prefix), "+examples" in spec)
