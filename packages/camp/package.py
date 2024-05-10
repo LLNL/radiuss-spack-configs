@@ -8,6 +8,7 @@ import glob
 import re
 
 from spack.package import *
+from spack.util.executable import which_string
 
 import llnl.util.tty as tty
 
@@ -37,62 +38,6 @@ def hip_repair_cache(options, spec):
             glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0],
         )
     )
-
-def mpi_for_radiuss_projects(options, spec):
-    # Machines with cray-mpich have a slurm wrapper arround flux, to use it we
-    # duplicate the MPI handling from CachedCMakePackage. This change will be
-    # applied directly in the CachedCMakePackage when pushed to upstream Spack.
-    if not spec.satisfies("^mpi"):
-        return []
-
-    entries = [
-        "#------------------{0}".format("-" * 60),
-        "# MPI",
-        "#------------------{0}\n".format("-" * 60),
-    ]
-
-    entries.append(cmake_cache_option("ENABLE_MPI", "+mpi" in spec))
-
-    entries.append(cmake_cache_path("MPI_C_COMPILER", spec["mpi"].mpicc))
-    entries.append(cmake_cache_path("MPI_CXX_COMPILER", spec["mpi"].mpicxx))
-    entries.append(cmake_cache_path("MPI_Fortran_COMPILER", spec["mpi"].mpifc))
-
-    # Check for slurm
-    using_slurm = False
-    # RADIUSS Spack Configs change:
-    slurm_checks = ["+slurm", "schedulers=slurm", "process_managers=slurm", "cray-mpich"]
-    if any(spec["mpi"].satisfies(variant) for variant in slurm_checks):
-        using_slurm = True
-
-    # Determine MPIEXEC
-    if using_slurm:
-        if spec["mpi"].external:
-            # Heuristic until we have dependents on externals
-            mpiexec = "/usr/bin/srun"
-        else:
-            mpiexec = os.path.join(spec["slurm"].prefix.bin, "srun")
-    else:
-        mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpirun")
-        if not os.path.exists(mpiexec):
-            mpiexec = os.path.join(spec["mpi"].prefix.bin, "mpiexec")
-
-    if not os.path.exists(mpiexec):
-        msg = "Unable to determine MPIEXEC, tests may fail"
-        entries.append("# {0}\n".format(msg))
-        tty.warn(msg)
-    else:
-        # starting with cmake 3.10, FindMPI expects MPIEXEC_EXECUTABLE
-        # vs the older versions which expect MPIEXEC
-        if spec["cmake"].satisfies("@3.10:"):
-            entries.append(cmake_cache_path("MPIEXEC_EXECUTABLE", mpiexec))
-        else:
-            entries.append(cmake_cache_path("MPIEXEC", mpiexec))
-
-    # Determine MPIEXEC_NUMPROC_FLAG
-    if using_slurm:
-        entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
-    else:
-        entries.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-np"))
 
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
@@ -127,64 +72,47 @@ def hip_for_radiuss_projects(options, spec, compiler):
 def cuda_for_radiuss_projects(options, spec):
     # Here is what is typically needed for radiuss projects when building with cuda
 
+    # CUDA_FLAGS
     cuda_flags = []
+
     if not spec.satisfies("cuda_arch=none"):
-        cuda_arch = spec.variants["cuda_arch"].value
-        cuda_flags.append("-arch sm_{0}".format(cuda_arch[0]))
-        options.append(
-            cmake_cache_string("CUDA_ARCH", "sm_{0}".format(cuda_arch[0])))
-        options.append(
-            cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", "{0}".format(cuda_arch[0])))
+        cuda_archs = ";".join(spec.variants["cuda_arch"].value)
+        options.append(cmake_cache_string("CMAKE_CUDA_ARCHITECTURES", cuda_archs))
+
     if spec_uses_toolchain(spec):
         cuda_flags.append("-Xcompiler {}".format(spec_uses_toolchain(spec)[0]))
-    if (spec.satisfies("%gcc@8.1: target=ppc64le")):
+
+    if spec.satisfies("%gcc@8.1: target=ppc64le"):
         cuda_flags.append("-Xcompiler -mno-float128")
+
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
 
-def blt_link_helpers(options, spec, compiler):
-    ### From local package:
-    if compiler.fc:
-        fortran_compilers = ["gfortran", "xlf"]
-        if any(f_comp in compiler.fc for f_comp in fortran_compilers) and ("clang" in compiler.cxx):
-            # Pass fortran compiler lib as rpath to find missing libstdc++
-            libdir = os.path.join(os.path.dirname(
-                           os.path.dirname(compiler.fc)), "lib")
-            flags = ""
-            for _libpath in [libdir, libdir + "64"]:
-                if os.path.exists(_libpath):
-                    flags += " -Wl,-rpath,{0}".format(_libpath)
-            description = ("Adds a missing libstdc++ rpath")
-            if flags:
-                options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
+def mpi_for_radiuss_projects(options, spec, env):
 
-            # Ignore conflicting default gcc toolchain
-            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
+    if spec["mpi"].name == "spectrum-mpi" and spec.satisfies("^blt"):
+        options.append(cmake_cache_string("BLT_MPI_COMMAND_APPEND", "mpibind"))
 
-    compilers_using_toolchain = ["pgc++", "xlc++", "xlC_r", "icpc", "clang++", "icpx"]
-    if any(tc_comp in compiler.cxx for tc_comp in compilers_using_toolchain):
-        if spec_uses_toolchain(spec) or spec_uses_gccname(spec):
-
-            # Ignore conflicting default gcc toolchain
-            options.append(cmake_cache_string("BLT_CMAKE_IMPLICIT_LINK_DIRECTORIES_EXCLUDE",
-            "/usr/tce/packages/gcc/gcc-4.9.3/lib64;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64/gcc/powerpc64le-unknown-linux-gnu/4.9.3;/usr/tce/packages/gcc/gcc-4.9.3/gnu/lib64;/usr/tce/packages/gcc/gcc-4.9.3/lib64/gcc/x86_64-unknown-linux-gnu/4.9.3"))
-
-    if "cce" in compiler.cxx:
-        description = (
-            "Adds a missing rpath for libraries " "associated with the fortran compiler"
-        )
-        # Here is where to find libs that work for fortran
-        libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(compiler.version)
-        linker_flags = "${{BLT_EXE_LINKER_FLAGS}} -Wl,-rpath,{0}".format(libdir)
-
-        version = "{0}".format(compiler.version)
-
-        if version == "16.0.0" or version == "16.0.1":
-            # Here is another directory added by cce@16.0.0 and cce@16.0.1
-            libdir = os.path.join(libdir,"x86_64-unknown-linux-gnu")
-            linker_flags += " -Wl,-rpath,{0}".format(libdir)
-
-        options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", linker_flags, description))
+    sys_type = spec.architecture
+    if "SYS_TYPE" in env:
+        sys_type = env["SYS_TYPE"]
+    # Replace /usr/bin/srun path with srun flux wrapper path on TOSS 4
+    # TODO: Remove this logic by adding `using_flux` case in
+    #  spack/lib/spack/spack/build_systems/cached_cmake.py:196 and remove hard-coded
+    #  path to srun in same file.
+    if "toss_4" in sys_type:
+        srun_wrapper = which_string("srun")
+        mpi_exec_index = [
+            index for index, entry in enumerate(options) if "MPIEXEC_EXECUTABLE" in entry
+        ]
+        mpi_exec_flag_index = [
+            index for index, entry in enumerate(options) if "MPIEXEC_NUMPROC_FLAG" in entry
+        ]
+        if len(mpi_exec_index) > 0:
+            del options[mpi_exec_index[0]]
+        if len(mpi_exec_flag_index) > 0:
+            del options[mpi_exec_flag_index[0]]
+        options.append(cmake_cache_path("MPIEXEC_EXECUTABLE", srun_wrapper))
+        options.append(cmake_cache_string("MPIEXEC_NUMPROC_FLAG", "-n"))
 
 
 class Camp(CMakePackage, CudaPackage, ROCmPackage):
@@ -201,9 +129,19 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
     license("BSD-3-Clause")
 
-    version("main", branch="main", submodules="False")
-    version("2024.02.0", tag="v2024.02.0", submodules=False)
-    version("2023.06.0", tag="v2023.06.0", submodules=False)
+    version("main", branch="main", submodules=False)
+    version(
+        "2024.02.0",
+        tag="v2024.02.0",
+        commit="03c80a6c6ab4f97e76a52639563daec71435a277",
+        submodules=False,
+    )
+    version(
+        "2023.06.0",
+        tag="v2023.06.0",
+        commit="ac34c25b722a06b138bc045d38bfa5e8fa3ec9c5",
+        submodules=False,
+    )
     version("2022.10.1", sha256="2d12f1a46f5a6d01880fc075cfbd332e2cf296816a7c1aa12d4ee5644d386f02")
     version("2022.10.0", sha256="3561c3ef00bbcb61fe3183c53d49b110e54910f47e7fc689ad9ccce57e55d6b8")
     version("2022.03.2", sha256="bc4aaeacfe8f2912e28f7a36fc731ab9e481bee15f2c6daf0cb208eed3f201eb")
@@ -222,8 +160,10 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("cub", when="+cuda")
 
     depends_on("blt", type="build")
-    depends_on("blt@0.6.0:", type="build", when="@2024.02.0:")
+    depends_on("blt@0.6.1:", type="build", when="@2024.02.0:")
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
+
+    patch("libstdc++-13-missing-header.patch", when="@:2022.10")
 
     conflicts("^blt@:0.3.6", when="+rocm")
 
@@ -234,11 +174,9 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
         options.append("-DBLT_SOURCE_DIR={0}".format(spec["blt"].prefix))
 
+        options.append(self.define_from_variant("ENABLE_CUDA", "cuda"))
         if "+cuda" in spec:
-            options.extend([
-                "-DENABLE_CUDA=ON",
-                "-DCUDA_TOOLKIT_ROOT_DIR=%s" % (spec["cuda"].prefix)
-            ])
+            options.append("-DCUDA_TOOLKIT_ROOT_DIR={0}".format(spec["cuda"].prefix))
 
             if not spec.satisfies("cuda_arch=none"):
                 cuda_arch = spec.variants["cuda_arch"].value
@@ -246,8 +184,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
                 options.append("-DCUDA_ARCH=sm_{0}".format(cuda_arch[0]))
                 flag = "-arch sm_{0}".format(cuda_arch[0])
                 options.append("-DCMAKE_CUDA_FLAGS:STRING={0}".format(flag))
-        else:
-            options.append("-DENABLE_CUDA=OFF")
 
         if "+rocm" in spec and not "+sycl" in spec:
             options.extend([
@@ -261,8 +197,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
             options.append("-DGPU_TARGETS={0}".format(archs))
             options.append("-DAMDGPU_TARGETS={0}".format(archs))
-        else:
-            options.append("-DENABLE_HIP=OFF")
 
         if "+omptarget" in spec: 
             options.append(cmake_cache_string("RAJA_DATA_ALIGN", 64))
