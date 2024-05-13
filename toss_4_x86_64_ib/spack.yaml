@@ -27,13 +27,13 @@ spack:
 
     view: false
 
-  #mirrors::
-  #  gitlab_ci:
-  #    url: "oci://czregistry.llnl.gov:5050/radiuss"
-  #    access_pair:
-  #    - $CI_REGISTRY_USER
-  #    - $SPACK_TOKEN
-  #    signed: false
+  mirrors::
+    gitlab_ci:
+      url: $OCI_REGISTRY_URL
+      access_pair:
+      - $CI_REGISTRY_USER
+      - $CI_JOB_TOKEN
+      signed: false
 
   compilers::
   - compiler:
