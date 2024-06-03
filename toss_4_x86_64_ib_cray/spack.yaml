@@ -469,7 +469,7 @@ spack:
         prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-rocmcc-5.7.0-magic
       - spec: cray-mpich@8.1.28%rocmcc@5.7.1
         prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-rocmcc-5.7.1-magic
-      - spec: cray-mpich@8.1.28%rocmcc@6.1.0
+      - spec: cray-mpich@8.1.29%rocmcc@6.1.0
         prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.29-rocmcc-6.1.0-magic
     python:
       buildable: false
