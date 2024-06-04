@@ -217,7 +217,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "+vtune" in spec:
             entries.append(cmake_cache_option("WITH_VTUNE", True))
             itt_dir = join_path(spec["intel-oneapi-vtune"].prefix, "vtune", "latest")
-            entries.append(cmake_cache_path("ITT_PREFIX", itt_dir)
+            entries.append(cmake_cache_path("ITT_PREFIX", itt_dir))
+
         # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
         if "+libunwind" in spec:
