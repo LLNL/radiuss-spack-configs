@@ -3,6 +3,7 @@ spack:
   config:
     install_tree:
       root: $spack/..
+      padded_length: 128
       projections:
         all: "{compiler.name}-{compiler.version}/{name}-{version}-{hash}"
     # Note: unlike projects using RADIUSS Spack
