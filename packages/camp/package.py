@@ -166,6 +166,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     patch("libstdc++-13-missing-header.patch", when="@:2022.10")
 
     conflicts("^blt@:0.3.6", when="+rocm")
+    conflicts("+rocm", when="+sycl")
 
     def cmake_args(self):
         spec = self.spec
@@ -185,7 +186,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
                 flag = "-arch sm_{0}".format(cuda_arch[0])
                 options.append("-DCMAKE_CUDA_FLAGS:STRING={0}".format(flag))
 
-        if "+rocm" in spec and not "+sycl" in spec:
+        if "+rocm" in spec:
             options.extend([
                 "-DENABLE_HIP=ON",
                 "-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix)
@@ -198,7 +199,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
             options.append("-DGPU_TARGETS={0}".format(archs))
             options.append("-DAMDGPU_TARGETS={0}".format(archs))
 
-        if "+omptarget" in spec: 
+        if "+omptarget" in spec:
             options.append(cmake_cache_string("RAJA_DATA_ALIGN", 64))
 
         options.append(self.define_from_variant("ENABLE_TESTS", "tests"))

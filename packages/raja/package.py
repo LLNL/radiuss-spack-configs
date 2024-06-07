@@ -226,6 +226,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         for sm_ in CudaPackage.cuda_arch_values:
             depends_on("camp +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
 
+    conflicts("+rocm", when="+sycl")
+
     def _get_sys_type(self, spec):
         sys_type = spec.architecture
         if "SYS_TYPE" in env:
@@ -277,7 +279,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
-        if "+rocm" in spec and not "+sycl" in spec:
+        if "+rocm" in spec:
             entries.append(cmake_cache_option("ENABLE_HIP", True))
             hipcc_flags = []
             if self.spec.satisfies("@0.14.0:"):
