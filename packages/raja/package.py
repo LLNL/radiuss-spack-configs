@@ -226,7 +226,13 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         for sm_ in CudaPackage.cuda_arch_values:
             depends_on("camp +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
 
-    conflicts("+rocm", when="+sycl")
+    conflicts("+omptarget +rocm")
+    conflicts("+sycl +omptarget")
+    conflicts("+sycl +rocm")
+    conflicts("+sycl",
+              when="@:2024.02.99",
+              msg="Support for SYCL was introduced in RAJA after 2024.02 release, "
+                  "please use a newer release.")
 
     def _get_sys_type(self, spec):
         sys_type = spec.architecture
