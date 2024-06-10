@@ -144,7 +144,15 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     patch("libstdc++-13-missing-header.patch", when="@:2022.10")
 
     conflicts("^blt@:0.3.6", when="+rocm")
-    conflicts("+rocm", when="+sycl")
+
+    conflicts("+omptarget +rocm")
+    conflicts("+sycl +omptarget")
+    conflicts("+sycl +rocm")
+    conflicts("+sycl",
+              when="@:2024.02.99",
+              msg="Support for SYCL was introduced in RAJA after 2024.02 release, "
+                  "please use a newer release.")
+
 
     def cmake_args(self):
         spec = self.spec
