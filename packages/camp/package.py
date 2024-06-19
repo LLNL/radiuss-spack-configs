@@ -4,7 +4,6 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 import os
-    depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
 import glob
 import re
 
@@ -104,7 +103,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/camp.git"
     url = "https://github.com/LLNL/camp/archive/v0.1.0.tar.gz"
 
-    maintainers("trws","adrienbernede")
+    maintainers("trws", "adrienbernede")
 
     license("BSD-3-Clause")
 
@@ -148,6 +147,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
 
     patch("libstdc++-13-missing-header.patch", when="@:2022.10")
+
+    patch("camp-rocm6.patch", when="@0.2.3 +rocm ^hip@6:")
 
     conflicts("^blt@:0.3.6", when="+rocm")
 
