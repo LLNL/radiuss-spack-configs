@@ -304,7 +304,7 @@ spack:
       environment: {}
       extra_rpaths: []
   - compiler:
-      spec: clang@=19.0.0.sycl.gcc.10.3.1
+      spec: clang@=19.0.0
       paths:
         cc: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang
         cxx: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang++
