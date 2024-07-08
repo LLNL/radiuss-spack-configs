@@ -208,7 +208,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp@main", when="@develop")
     depends_on("camp@main", when="@main")
-    depends_on("camp@2024.07.0:", type="build", when="@feature/burmark1/multireduce")
+    depends_on("camp@2024.07.0:", type="build", when="@2024.02.2:")
     depends_on("camp@2024.02.1:", type="build", when="@2024.02.1:")
     depends_on("camp@2024.02.0:", type="build", when="@2024.02.0:")
     depends_on("camp@2023.06.0", type="build", when="@2023.06.0:2023.06.1")
