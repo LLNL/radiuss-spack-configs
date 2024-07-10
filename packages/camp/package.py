@@ -110,7 +110,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     version("main", branch="main", submodules=False)
     version(
         "2024.02.1",
-        tag="v2024.02.",
+        tag="v2024.02.1",
         commit="79c320fa09db987923b56884afdc9f82f4b70fc4",
         submodules=False,
     )
