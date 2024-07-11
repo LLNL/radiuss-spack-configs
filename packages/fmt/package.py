@@ -18,7 +18,7 @@ class Fmt(CMakePackage):
 
     license("MIT")
 
-    #version("11.0.0", sha256="583ce480ef07fad76ef86e1e2a639fc231c3daa86c4aa6bcba524ce908f30699")
+    version("11.0.0", sha256="583ce480ef07fad76ef86e1e2a639fc231c3daa86c4aa6bcba524ce908f30699")
     version("10.2.1", sha256="312151a2d13c8327f5c9c586ac6cf7cddc1658e8f53edae0ec56509c8fa516c9")
     version("10.2.0", sha256="8a942861a94f8461a280f823041cde8f620a6d8b0e0aacc98c15bb5a9dd92399")
     version("10.1.1", sha256="b84e58a310c9b50196cda48d5678d5fa0849bca19e5fdba6b684f0ee93ed9d1b")
@@ -97,10 +97,10 @@ class Fmt(CMakePackage):
 
     # Fix 'variable "buffer" may not be initialized' compiler error
     patch(
-        "fmt-no-variable-initialize_10.0.0.patch", when="@10.0.0:10.2.1%clang@12.0.1.ibm.gcc.8.3.1"
+        "fmt-no-variable-initialize_10.0.0.patch", when="@10.0.0:11.0.0%clang@12.0.1.ibm.gcc.8.3.1"
     )
     patch(
-        "fmt-no-variable-initialize_10.0.0.patch", when="@10.0.0:10.2.1%clang@14.0.5.ibm.gcc.8.3.1"
+        "fmt-no-variable-initialize_10.0.0.patch", when="@10.0.0:11.0.0%clang@14.0.5.ibm.gcc.8.3.1"
     )
 
     def cmake_args(self):
