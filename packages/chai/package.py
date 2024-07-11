@@ -150,7 +150,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("umpire+cuda")
         for sm_ in CudaPackage.cuda_arch_values:
             depends_on("umpire+cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
-        with when("@2024.02.0:")
+        with when("@2024.02.0:"):
             depends_on("umpire~fmt_header_only")
 
     with when("+rocm"):
