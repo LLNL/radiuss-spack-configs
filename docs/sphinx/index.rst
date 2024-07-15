@@ -64,7 +64,7 @@ dependencies, while packaging is maintained earlier in the development process.
    :hidden:
    :caption: User Documentation
 
-   sphinx/user_guide/index
+   user_guide/index
 
 .. # .. toctree::
 .. #    :hidden:
