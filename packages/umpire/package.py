@@ -463,7 +463,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("ENABLE_IPC_SHARED_MEMORY", "+ipc_shmem" in spec))
 
         if "~fmt_header_only" in spec:
-            entries.append(cmake_cache_string("UMPIRE_FMT_HEADER", "fmt::fmt"))
+            entries.append(cmake_cache_string("UMPIRE_FMT_TARGET", "fmt::fmt"))
 
         return entries
 
