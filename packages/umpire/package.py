@@ -24,11 +24,17 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/Umpire.git"
     tags = ["radiuss", "e4s"]
 
-    maintainers("davidbeckingsale")
+    maintainers("davidbeckingsale", "adrienbernede")
 
     license("MIT")
 
     version("develop", branch="develop", submodules=False)
+    version(
+        "2024.02.1",
+        tag="v2024.02.1",
+        commit="3058d562fc707650e904f9321b1ee9bcebad3ae2",
+        submodules=False,
+    )
     version(
         "2024.02.0",
         tag="v2024.02.0",
@@ -208,6 +214,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("werror", default=True, description="Enable warnings as errors")
     variant("asan", default=False, description="Enable ASAN")
     variant("sanitizer_tests", default=False, description="Enable address sanitizer tests")
+    variant("fmt_header_only", default=True, description="Link to header-only fmt target")
 
     depends_on("cmake@3.23:", when="@2022.10.0: +rocm", type="build")
     depends_on("cmake@3.20:", when="@2022.10.0:", type="build")
@@ -454,6 +461,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
             )
         else:
             entries.append(cmake_cache_option("ENABLE_IPC_SHARED_MEMORY", "+ipc_shmem" in spec))
+
+        if "~fmt_header_only" in spec:
+            entries.append(cmake_cache_string("UMPIRE_FMT_TARGET", "fmt::fmt"))
 
         return entries
 
