@@ -146,6 +146,19 @@ spack:
       environment: {}
       extra_rpaths: []
   - compiler:
+      spec: rocmcc@=6.0.2
+      paths:
+        cc: /opt/rocm-6.0.2/llvm/bin/amdclang
+        cxx: /opt/rocm-6.0.2/llvm/bin/amdclang++
+        f77: /opt/rocm-6.0.2/llvm/bin/amdflang
+        fc: /opt/rocm-6.0.2/llvm/bin/amdflang
+      flags: {}
+      operating_system: rhel8
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+  - compiler:
       spec: pgi@=20.4
       paths:
         cc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgcc
@@ -355,7 +368,7 @@ spack:
       - spec: cuda@10.1.168
         prefix: /usr/tce/packages/cuda/cuda-10.1.168
     hip:
-      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: hip@5.0.2
@@ -372,10 +385,12 @@ spack:
         prefix: /opt/rocm-5.5.1/hip
       - spec: hip@5.6.1
         prefix: /opt/rocm-5.6.1/hip
-      - spec: hip@5.7.0
-        prefix: /opt/rocm-5.7.0/hip
+      - spec: hip@5.7.1
+        prefix: /opt/rocm-5.7.1/hip
+      - spec: hip@6.0.2
+        prefix: /opt/rocm-6.0.2/hip
     llvm-amdgpu:
-      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: llvm-amdgpu@5.0.2
@@ -392,10 +407,12 @@ spack:
         prefix: /opt/rocm-5.5.1/llvm
       - spec: llvm-amdgpu@5.6.1
         prefix: /opt/rocm-5.6.1/llvm
-      - spec: llvm-amdgpu@5.7.0
-        prefix: /opt/rocm-5.7.0/llvm
+      - spec: llvm-amdgpu@5.7.1
+        prefix: /opt/rocm-5.7.1/llvm
+      - spec: llvm-amdgpu@6.0.2
+        prefix: /opt/rocm-6.0.2/llvm
     hsa-rocr-dev:
-      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: hsa-rocr-dev@5.0.2
@@ -412,10 +429,12 @@ spack:
         prefix: /opt/rocm-5.5.1/
       - spec: hsa-rocr-dev@5.6.1
         prefix: /opt/rocm-5.6.1/
-      - spec: hsa-rocr-dev@5.7.0
-        prefix: /opt/rocm-5.7.0/
+      - spec: hsa-rocr-dev@5.7.1
+        prefix: /opt/rocm-5.7.1/
+      - spec: hsa-rocr-dev@6.0.2
+        prefix: /opt/rocm-6.0.2/
     rocminfo:
-      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: rocminfo@5.0.2
@@ -432,10 +451,12 @@ spack:
         prefix: /opt/rocm-5.5.1/
       - spec: rocminfo@5.6.1
         prefix: /opt/rocm-5.6.1/
-      - spec: rocminfo@5.7.0
-        prefix: /opt/rocm-5.7.0/
+      - spec: rocminfo@5.7.1
+        prefix: /opt/rocm-5.7.1/
+      - spec: rocminfo@6.0.2
+        prefix: /opt/rocm-6.0.2/
     rocm-device-libs:
-      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.0.2, 5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: rocm-device-libs@5.0.2
@@ -452,10 +473,12 @@ spack:
         prefix: /opt/rocm-5.5.1/
       - spec: rocm-device-libs@5.6.1
         prefix: /opt/rocm-5.6.1/
-      - spec: rocm-device-libs@5.7.0
-        prefix: /opt/rocm-5.7.0/
+      - spec: rocm-device-libs@5.7.1
+        prefix: /opt/rocm-5.7.1/
+      - spec: rocm-device-libs@6.0.2
+        prefix: /opt/rocm-6.0.2/
     rocprim:
-      version: [5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.0]
+      version: [5.1.1, 5.2.3, 5.4.3, 5.5.0, 5.5.1, 5.6.1, 5.7.1, 6.0.2]
       buildable: false
       externals:
       - spec: rocprim@5.1.1
@@ -470,8 +493,10 @@ spack:
         prefix: /opt/rocm-5.5.1/
       - spec: rocprim@5.6.1
         prefix: /opt/rocm-5.6.1/
-      - spec: rocprim@5.7.0
-        prefix: /opt/rocm-5.7.0/
+      - spec: rocprim@5.7.1
+        prefix: /opt/rocm-5.7.1/
+      - spec: rocprim@6.0.2
+        prefix: /opt/rocm-6.0.2/
     mvapich2:
       buildable: false
       externals:

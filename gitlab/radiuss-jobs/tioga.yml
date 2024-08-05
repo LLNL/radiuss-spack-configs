@@ -5,12 +5,12 @@
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
-rocmcc_6_1_1_hip:
+rocmcc_6_1_2_hip:
   variables:
-    SPEC: "${PROJECT_TIOGA_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.1.1 ^hip@6.1.1 ${PROJECT_TIOGA_DEPS}"
+    SPEC: "${PROJECT_TIOGA_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.1.2 ^hip@6.1.2 ${PROJECT_TIOGA_DEPS}"
   extends: .job_on_tioga
 
-cce_16_0_1:
+cce_18_0_0:
   variables:
-    SPEC: "${PROJECT_TIOGA_VARIANTS} %cce@=16.0.1 ${PROJECT_TIOGA_DEPS}"
+    SPEC: "${PROJECT_TIOGA_VARIANTS} %cce@=18.0.0 ${PROJECT_TIOGA_DEPS}"
   extends: .job_on_tioga
