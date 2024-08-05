@@ -30,6 +30,12 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules=False)
     version(
+        "2024.07.0",
+        tag="v2024.07.0",
+        commit="abd729f40064175e999a83d11d6b073dac4c01d2",
+        submodules=False,
+    )
+    version(
         "2024.02.1",
         tag="v2024.02.1",
         commit="3058d562fc707650e904f9321b1ee9bcebad3ae2",
@@ -224,6 +230,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.8:", type="build")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
     depends_on("blt@0.6.1:", type="build", when="@2024.02.0:")
     depends_on("blt@0.5.3", type="build", when="@2023.06.0")
     depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10.0")
@@ -237,6 +244,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
     depends_on("camp@main", when="@develop")
+    depends_on("camp@2024.07.0:", when="@2024.07.0:")
     depends_on("camp@2024.02.0:", when="@2024.02.0:")
     depends_on("camp@2023.06.0", when="@2023.06.0")
     depends_on("camp@2022.10.0:2023.06.0", when="@2022.10.0")
