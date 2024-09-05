@@ -78,6 +78,10 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         "1.7.0", tag="v1.7.0", commit="898277c93d884d4e7ca1ffcf3bbea81d22364f26", deprecated=True
     )
 
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build")  # generated
+
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
     variant("adiak", default=True, description="Enable Adiak support")
@@ -147,11 +151,11 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_compiler_entries()
 
-        if "+fortran" in spec:
+        if spec.satisfies("+fortran"):
             entries.append(cmake_cache_option("WITH_FORTRAN", True))
 
-        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", "+shared" in spec ))
-        entries.append(cmake_cache_option("BUILD_TESTING", "+tests" in spec ))
+        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", spec.satisfies("+shared") ))
+        entries.append(cmake_cache_option("BUILD_TESTING", spec.satisfies("+tests") ))
         entries.append(cmake_cache_option("BUILD_DOCS", False))
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
 
@@ -162,12 +166,12 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_hardware_entries()
 
-        if "+cuda" in spec:
+        if spec.satisfies("+cuda"):
             entries.append(cmake_cache_option("WITH_CUPTI", True))
             entries.append(cmake_cache_option("WITH_NVTX", True))
             entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
-        if "+rocm" in spec:
+        if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
             hip_for_radiuss_projects(entries, spec, compiler)
@@ -179,8 +183,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         entries = super().initconfig_mpi_entries()
 
-        entries.append(cmake_cache_option("WITH_MPI", "+mpi" in spec))
-        if "+mpi" in spec:
+        entries.append(cmake_cache_option("WITH_MPI", spec.satisfies("+mpi")))
+        if spec.satisfies("+mpi"):
             mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
@@ -189,39 +193,39 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         entries = []
 
-        if "+adiak" in spec:
+        if spec.satisfies("+adiak"):
             entries.append(cmake_cache_option("WITH_ADIAK", True))
             entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix))
-        if "+gotcha" in spec:
+        if spec.satisfies("+gotcha"):
             entries.append(cmake_cache_option("WITH_GOTCHA", True))
-        if "+sampler" in spec:
+        if spec.satisfies("+sampler"):
             entries.append(cmake_cache_option("WITH_SAMPLER", True))
-        if "+papi" in spec:
+        if spec.satisfies("+papi"):
             entries.append(cmake_cache_option("WITH_PAPI", True))
             # use pre installed papi
             entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
-        if "+libdw" in spec:
+        if spec.satisfies("+libdw"):
             entries.append(cmake_cache_option("WITH_LIBDW", True))
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
-        if "+libpfm" in spec:
+        if spec.satisfies("+libpfm"):
             entries.append(cmake_cache_option("WITH_LIBPFM", True))
             entries.append(cmake_cache_path("LIBPFM_INSTALL", spec["libpfm4"].prefix))
-        if "+sosflow" in spec:
+        if spec.satisfies("+sosflow"):
             entries.append(cmake_cache_option("WITH_SOSFLOW", True))
             entries.append(cmake_cache_path("SOS_PREFIX", spec["sosflow"].prefix))
-        if "+kokkos" in spec:
+        if spec.satisfies("+kokkos"):
             entries.append(cmake_cache_option("WITH_KOKKOS", True))
-        if "+variorum" in spec:
+        if spec.satisfies("+variorum"):
             entries.append(cmake_cache_option("WITH_VARIORUM", True))
             entries.append(cmake_cache_path("VARIORUM_PREFIX", spec["variorum"].prefix))
-        if "+vtune" in spec:
+        if spec.satisfies("+vtune"):
             entries.append(cmake_cache_option("WITH_VTUNE", True))
             itt_dir = join_path(spec["intel-oneapi-vtune"].prefix, "vtune", "latest")
             entries.append(cmake_cache_path("ITT_PREFIX", itt_dir))
 
         # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
-        if "+libunwind" in spec:
+        if spec.satisfies("+libunwind"):
             entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
             entries.append(cmake_cache_option("WITH_%s" % callpath_flag, True))
         else:
