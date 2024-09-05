@@ -229,7 +229,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_hardware_entries()
 
-        entries.append(cmake_cache_option("ENABLE_OPENMP", spec.satisfies"+openmp")))
+        entries.append(cmake_cache_option("ENABLE_OPENMP", spec.satisfies("+openmp")))
 
         if spec.satisfies("+cuda"):
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
