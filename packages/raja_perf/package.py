@@ -25,6 +25,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules="True")
     version("main",  branch="main",  submodules="True")
+    version("2024.07.0", tag="v2024.07.0", submodules="True")
     version("2023.06.0", tag="v2023.06.0", submodules="True")
     version("2022.10.0", tag="v2022.10.0", submodules="True")
     version("0.12.0", tag="v0.12.0", submodules="True")
@@ -41,7 +42,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     variant("mpi", default=False, description="Enable MPI support")
     variant("openmp", default=True, description="Build OpenMP backend")
-    variant("openmp_target", default=False, description="Build with OpenMP target support")
+    variant("omptarget", default=False, description="Build with OpenMP target support")
     variant("shared", default=False, description="Build Shared Libs")
     variant("omptask", default=False, description="Build OpenMP task variants of algorithms")
     variant("tests", default="basic", values=("none", "basic", "benchmarks"),
