@@ -152,9 +152,16 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("chai+rocm")
 
         for arch_ in ROCmPackage.amdgpu_targets:
-            depends_on('umpire+rocm amdgpu_target={0}'.format(arch_), when='amdgpu_target={0}'.format(arch_))
-            depends_on('raja+rocm amdgpu_target={0}'.format(arch_), when='amdgpu_target={0}'.format(arch_))
-            depends_on('chai+rocm amdgpu_target={0}'.format(arch_), when='amdgpu_target={0}'.format(arch_))
+            depends_on(
+                "umpire+rocm amdgpu_target={0}".format(arch_),
+                when="amdgpu_target={0}".format(arch_),
+            )
+            depends_on(
+                "raja+rocm amdgpu_target={0}".format(arch_), when="amdgpu_target={0}".format(arch_)
+            )
+            depends_on(
+                "chai+rocm amdgpu_target={0}".format(arch_), when="amdgpu_target={0}".format(arch_)
+            )
 
 
     def _get_sys_type(self, spec):
@@ -296,7 +303,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
             "CARE_ENABLE_LOOP_FUSER", spec.satisfies("+loop_fuser")))
 
         return entries
-    
+
 
     def cmake_args(self):
         options = []

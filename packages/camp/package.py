@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -165,11 +165,12 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     conflicts("+omptarget +rocm")
     conflicts("+sycl +omptarget")
     conflicts("+sycl +rocm")
-    conflicts("+sycl",
-              when="@:2024.02.99",
-              msg="Support for SYCL was introduced in RAJA after 2024.02 release, "
-                  "please use a newer release.")
-
+    conflicts(
+        "+sycl",
+        when="@:2024.02.99",
+        msg="Support for SYCL was introduced in RAJA after 2024.02 release, "
+        "please use a newer release.",
+    )
 
     def cmake_args(self):
         spec = self.spec
