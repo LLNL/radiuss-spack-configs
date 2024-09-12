@@ -162,15 +162,22 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_hardware_entries()
 
-        if "+cuda" in spec:
+        if spec.satisfies("+cuda"):
             entries.append(cmake_cache_option("WITH_CUPTI", True))
             entries.append(cmake_cache_option("WITH_NVTX", True))
             entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
-        if "+rocm" in spec:
+        else:
+            entries.append(cmake_cache_option("WITH_CUPTI", False))
+            entries.append(cmake_cache_option("WITH_NVTX", False))
+
+        if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
             hip_for_radiuss_projects(entries, spec, compiler)
+        else:
+            entries.append(cmake_cache_option("WITH_ROCTRACER", False))
+            entries.append(cmake_cache_option("WITH_ROCTX", False))
             #entries.append(cmake_cache_option("ROCM_ROOT_DIR", "/usr/"))
 
         return entries
