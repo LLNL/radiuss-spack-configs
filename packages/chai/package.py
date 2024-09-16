@@ -127,8 +127,8 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     )
 
     depends_on("cmake@3.23:", type="build", when="@2024.07.0:")
-    depends_on("cmake@3.14", type="build", when="@2022.03.0:2024.02.2")
-    depends_on("cmake@3.9", type="build", when="@:2022.10.0")
+    depends_on("cmake@3.14", type="build", when="@2022.03:2024.02")
+    depends_on("cmake@3.9", type="build", when="@:2022.03")
 
     depends_on("blt")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
