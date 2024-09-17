@@ -234,7 +234,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         if spec.satisfies("+cuda"):
             entries.append(cmake_cache_option("ENABLE_CUDA", True))
             entries.append(cmake_cache_option("CUDA_SEPARABLE_COMPILATION", True))
-            entries.append(cmake_cache_string("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
+            entries.append(cmake_cache_string("NVTOOLSEXT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_string("CUB_DIR", spec["cub"].prefix))
 
             cuda_for_radiuss_projects(entries, spec)
@@ -243,8 +243,9 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            entries.append(cmake_cache_string("HIP_ROOT_DIR", spec["hip"].prefix))
-
+            if archs != "none":
+                arch_str = ",".join(archs)
+                entries.append(cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str)))
             hip_for_radiuss_projects(entries, spec, compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
@@ -286,15 +287,32 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option(
             "ENABLE_TESTS", spec.satisfies("+tests")))
+        entries.append(cmake_cache_option(
+            "CARE_ENABLE_TESTS", spec.satisfies("+tests")))
+        # For tests to work, we also need BLT_ENABLE_TESTS to be on.
+        # This will take care of the gtest dependency. CARE developers should
+        # consider consolidating these flags in the future.
+        entries.append(cmake_cache_option(
+            "BLT_ENABLE_TESTS", spec.satisfies("+tests")))
 
+        # There are both CARE_ENABLE_* and ENABLE_* variables in here because
+        # one controls the BLT infrastructure and the other controls the CARE
+        # infrastructure. The goal is to just be able to use the CARE_ENABLE_*
+        # variables, but CARE isn't set up correctly for that yet.
         entries.append(cmake_cache_option(
             "ENABLE_BENCHMARKS", spec.satisfies("+benchmarks")))
+        entries.append(cmake_cache_option(
+            "CARE_ENABLE_BENCHMARKS", spec.satisfies("+benchmarks")))
 
         entries.append(cmake_cache_option(
             "ENABLE_EXAMPLES", spec.satisfies("+examples")))
+        entries.append(cmake_cache_option(
+            "CARE_ENABLE_EXAMPLES", spec.satisfies("+examples")))
 
         entries.append(cmake_cache_option(
             "ENABLE_DOCS", spec.satisfies("+docs")))
+        entries.append(cmake_cache_option(
+            "CARE_ENABLE_DOCS", spec.satisfies("+docs")))
 
         entries.append(cmake_cache_option(
             "CARE_ENABLE_IMPLICIT_CONVERSIONS", spec.satisfies("+implicit_conversions")))
