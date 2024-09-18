@@ -148,10 +148,10 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_compiler_entries()
 
-        entries.append(cmake_cache_option("WITH_FORTRAN", spec.satisfies("+fortran"))
+        entries.append(cmake_cache_option("WITH_FORTRAN", spec.satisfies("+fortran")))
 
-        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", spec.satisfies("+shared") ))
-        entries.append(cmake_cache_option("BUILD_TESTING", spec.satisfies("+tests") ))
+        entries.append(cmake_cache_option("BUILD_SHARED_LIBS", spec.satisfies("+shared")))
+        entries.append(cmake_cache_option("BUILD_TESTING", spec.satisfies("+tests")))
         entries.append(cmake_cache_option("BUILD_DOCS", False))
         entries.append(cmake_cache_path("PYTHON_EXECUTABLE", spec["python"].command.path))
 
