@@ -8,6 +8,7 @@ import sys
 
 from spack.package import *
 
+from .camp import cuda_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
 from .camp import mpi_for_radiuss_projects
 

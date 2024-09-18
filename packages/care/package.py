@@ -9,6 +9,7 @@ from spack.package import *
 
 from .camp import cuda_for_radiuss_projects
 from .camp import hip_for_radiuss_projects
+from .camp import mpi_for_radiuss_projects
 from .blt import llnl_link_helpers
 
 
@@ -227,6 +228,8 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries = super(Care, self).initconfig_mpi_entries()
         entries.append(cmake_cache_option("ENABLE_MPI", spec.satisfies("+mpi")))
+        if spec.satisfies("+mpi"):
+            mpi_for_radiuss_projects(entries, spec, env)
 
         return entries
 

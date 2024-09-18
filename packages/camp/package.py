@@ -3,14 +3,11 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-import os
 import glob
 import re
 
 from spack.package import *
 from spack.util.executable import which_string
-
-import llnl.util.tty as tty
 
 
 def spec_uses_toolchain(spec):
