@@ -145,7 +145,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     def initconfig_compiler_entries(self):
         spec = self.spec
-        compiler = self.compiler
         entries = super().initconfig_compiler_entries()
 
         entries.append(cmake_cache_option("WITH_FORTRAN", spec.satisfies("+fortran")))
