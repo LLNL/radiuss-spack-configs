@@ -168,7 +168,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
             cuda_for_radiuss_projects(entries, spec)
-        else
+        else:
             entries.append(cmake_cache_option("WITH_CUPTI", False))
             entries.append(cmake_cache_option("WITH_NVTX", False))
 
@@ -176,7 +176,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
             hip_for_radiuss_projects(entries, spec, compiler)
-        else
+        else:
             entries.append(cmake_cache_option("WITH_ROCTRACER", False))
             entries.append(cmake_cache_option("WITH_ROCTX", False))
 
