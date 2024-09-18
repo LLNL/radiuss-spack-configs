@@ -5,7 +5,6 @@
 
 import os
 import socket
-import re
 
 from spack.package import *
 
@@ -188,31 +187,13 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super().initconfig_compiler_entries()
 
-        #### BEGIN: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-        flags = spec.compiler_flags
-
-        # use global spack compiler flags
-        cppflags = " ".join(flags["cppflags"])
-        if cppflags:
-            # avoid always ending up with " " with no flags defined
-            cppflags += " "
-
-        cflags = cppflags + " ".join(flags["cflags"])
-        if cflags:
-            entries.append(cmake_cache_string("CMAKE_C_FLAGS", cflags))
-
-        cxxflags = cppflags + " ".join(flags["cxxflags"])
-        if cxxflags:
-            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS", cxxflags))
-        #### END: Override CachedCMakePackage CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
-
-        llnl_link_helpers(entries, spec, compiler)
-
         # adrienbernede-23-01
-        # Maybe we want to share this in the above blt_link_helpers function.
+        # Maybe we want to share this in the above llnl_link_helpers function.
         compilers_using_cxx14 = ["intel-17", "intel-18", "xl"]
         if any(compiler in self.compiler.cxx for compiler in compilers_using_cxx14):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++14"))
+
+        llnl_link_helpers(entries, spec, compiler)
 
         return entries
 
@@ -220,6 +201,10 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         spec = self.spec
         compiler = self.compiler
         entries = super().initconfig_hardware_entries()
+
+        entries.append("#------------------{0}".format("-" * 30))
+        entries.append("# Package custom hardware settings")
+        entries.append("#------------------{0}\n".format("-" * 30))
 
         entries.append(cmake_cache_option("ENABLE_OPENMP", "+openmp" in spec))
 
@@ -302,6 +287,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append("#------------------{0}\n".format("-" * 60))
 
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
+        if "caliper" in self.spec:
+            entries.append(cmake_cache_path("caliper_DIR", spec["caliper"].prefix+"/share/cmake/caliper/"))
+            entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix+"/lib/cmake/adiak/"))
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))
@@ -325,13 +313,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("ENABLE_TESTS", not "tests=none" in spec or self.run_tests))
 
         entries.append(cmake_cache_option("RAJA_PERFSUITE_USE_CALIPER","+caliper" in spec))
-        if "caliper" in self.spec:
-            entries.append(cmake_cache_path("caliper_DIR", spec["caliper"].prefix+"/share/cmake/caliper/"))
-            entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix+"/lib/cmake/adiak/"))
 
         return entries
 
     def cmake_args(self):
-        options = []
-        return options
+        return []
 

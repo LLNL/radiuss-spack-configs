@@ -142,10 +142,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             sys_type = env["SYS_TYPE"]
         return sys_type
 
-    def cmake_args(self):
-        options = []
-        return options
-
     def initconfig_compiler_entries(self):
         spec = self.spec
         compiler = self.compiler
@@ -192,6 +188,11 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     def initconfig_package_entries(self):
         spec = self.spec
         entries = []
+
+        # TPL locations
+        entries.append("#------------------{0}".format("-" * 60))
+        entries.append("# TPLs and Build Options")
+        entries.append("#------------------{0}\n".format("-" * 60))
 
         if spec.satisfies("+adiak"):
             entries.append(cmake_cache_option("WITH_ADIAK", True))

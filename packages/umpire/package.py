@@ -6,8 +6,6 @@
 import os
 import socket
 
-import llnl.util.tty as tty
-
 from spack.package import *
 
 from .camp import hip_for_radiuss_projects
