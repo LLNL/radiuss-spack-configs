@@ -191,46 +191,47 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         # TPL locations
         entries.append("#------------------{0}".format("-" * 60))
-        entries.append("# TPLs and Build Options")
+        entries.append("# TPLs")
         entries.append("#------------------{0}\n".format("-" * 60))
 
         if spec.satisfies("+adiak"):
-            entries.append(cmake_cache_option("WITH_ADIAK", True))
             entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix))
-        if spec.satisfies("+gotcha"):
-            entries.append(cmake_cache_option("WITH_GOTCHA", True))
-        if spec.satisfies("+sampler"):
-            entries.append(cmake_cache_option("WITH_SAMPLER", True))
         if spec.satisfies("+papi"):
-            entries.append(cmake_cache_option("WITH_PAPI", True))
-            # use pre installed papi
             entries.append(cmake_cache_path("PAPI_PREFIX", spec["papi"].prefix))
         if spec.satisfies("+libdw"):
-            entries.append(cmake_cache_option("WITH_LIBDW", True))
             entries.append(cmake_cache_path("LIBDW_PREFIX", spec["elfutils"].prefix))
         if spec.satisfies("+libpfm"):
-            entries.append(cmake_cache_option("WITH_LIBPFM", True))
             entries.append(cmake_cache_path("LIBPFM_INSTALL", spec["libpfm4"].prefix))
         if spec.satisfies("+sosflow"):
-            entries.append(cmake_cache_option("WITH_SOSFLOW", True))
             entries.append(cmake_cache_path("SOS_PREFIX", spec["sosflow"].prefix))
-        if spec.satisfies("+kokkos"):
-            entries.append(cmake_cache_option("WITH_KOKKOS", True))
         if spec.satisfies("+variorum"):
-            entries.append(cmake_cache_option("WITH_VARIORUM", True))
             entries.append(cmake_cache_path("VARIORUM_PREFIX", spec["variorum"].prefix))
         if spec.satisfies("+vtune"):
-            entries.append(cmake_cache_option("WITH_VTUNE", True))
             itt_dir = join_path(spec["intel-oneapi-vtune"].prefix, "vtune", "latest")
             entries.append(cmake_cache_path("ITT_PREFIX", itt_dir))
+        if spec.satisfies("+libunwind"):
+            entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
+
+
+        # Build options
+        entries.append("#------------------{0}".format("-" * 60))
+        entries.append("# Build Options")
+        entries.append("#------------------{0}\n".format("-" * 60))
+
+        entries.append(cmake_cache_option("WITH_ADIAK", spec.satisfies("+adiak")))
+        entries.append(cmake_cache_option("WITH_GOTCHA", spec.satisfies("+gotcha")))
+        entries.append(cmake_cache_option("WITH_SAMPLER", spec.satisfies("+sampler")))
+        entries.append(cmake_cache_option("WITH_PAPI", spec.satisfies("+papi")))
+        entries.append(cmake_cache_option("WITH_LIBDW", spec.satisfies("+libdw")))
+        entries.append(cmake_cache_option("WITH_LIBPFM", spec.satisfies("+libpfm")))
+        entries.append(cmake_cache_option("WITH_SOSFLOW", spec.satisfies("+sosflow")))
+        entries.append(cmake_cache_option("WITH_KOKKOS", spec.satisfies("+kokkos")))
+        entries.append(cmake_cache_option("WITH_VARIORUM", spec.satisfies("+variorum")))
+        entries.append(cmake_cache_option("WITH_VTUNE", spec.satisfies("+vtune")))
 
         # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
         callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
-        if spec.satisfies("+libunwind"):
-            entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
-            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, True))
-        else:
-            entries.append(cmake_cache_option("WITH_%s" % callpath_flag, False))
+        entries.append(cmake_cache_option("WITH_%s" % callpath_flag, spec.satisfies("+libunwind")))
 
         return entries
 
