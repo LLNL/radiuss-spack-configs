@@ -42,7 +42,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     variant("mpi", default=False, description="Enable MPI support")
     variant("openmp", default=True, description="Build OpenMP backend")
-    variant("openmp_target", default=False, description="Build with OpenMP target support")
+    variant("omptarget", default=False, description="Build with OpenMP target support")
     variant("shared", default=False, description="Build Shared Libs")
     variant("omptask", default=False, description="Build OpenMP task variants of algorithms")
     variant("tests", default="basic", values=("none", "basic", "benchmarks"),
