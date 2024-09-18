@@ -1,4 +1,4 @@
-# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -147,8 +147,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         entries = super().initconfig_compiler_entries()
 
-        if spec.satisfies("+fortran"):
-            entries.append(cmake_cache_option("WITH_FORTRAN", True))
+        entries.append(cmake_cache_option("WITH_FORTRAN", spec.satisfies("+fortran"))
 
         entries.append(cmake_cache_option("BUILD_SHARED_LIBS", spec.satisfies("+shared") ))
         entries.append(cmake_cache_option("BUILD_TESTING", spec.satisfies("+tests") ))
@@ -167,11 +166,18 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("WITH_NVTX", True))
             entries.append(cmake_cache_path("CUDA_TOOLKIT_ROOT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_path("CUPTI_PREFIX", spec["cuda"].prefix))
+            cuda_for_radiuss_projects(entries, spec)
+        else
+            entries.append(cmake_cache_option("WITH_CUPTI", False))
+            entries.append(cmake_cache_option("WITH_NVTX", False))
+
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("WITH_ROCTRACER", True))
             entries.append(cmake_cache_option("WITH_ROCTX", True))
             hip_for_radiuss_projects(entries, spec, compiler)
-            #entries.append(cmake_cache_option("ROCM_ROOT_DIR", "/usr/"))
+        else
+            entries.append(cmake_cache_option("WITH_ROCTRACER", False))
+            entries.append(cmake_cache_option("WITH_ROCTX", False))
 
         return entries
 
