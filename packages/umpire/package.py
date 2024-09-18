@@ -340,10 +340,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         llnl_link_helpers(entries, spec, compiler)
 
-        #adrienbernede-22-11:
-        #  Specific to Umpire local package, worth sharing?
-        entries = [x for x in entries if not "COMPILER_ID" in x]
-
         return entries
 
     def initconfig_hardware_entries(self):
