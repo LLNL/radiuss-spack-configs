@@ -50,15 +50,17 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("caliper",default=False, description="Build with support for Caliper based profiling")
 
     depends_on("blt")
-    depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
-    depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
+    depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
+    depends_on("blt@0.5.3:", type="build", when="@2023.06.0")
+    depends_on("blt@0.5.2:", type="build", when="@2022.10.0")
     depends_on("blt@0.5.0:", type="build", when="@0.12.0:")
     depends_on("blt@0.4.1:", type="build", when="@0.11.0:")
     depends_on("blt@0.4.0:", type="build", when="@0.8.0:")
     depends_on("blt@0.3.0:", type="build", when="@:0.7.0")
 
-    depends_on("cmake@3.20:", when="@0.12.0:", type="build")
-    depends_on("cmake@3.23:", when="@0.12.0: +rocm", type="build")
+    depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
+    depends_on("cmake@3.23:", when="@0.12.0:2023.06.0 +rocm", type="build")
+    depends_on("cmake@3.20:", when="@0.12.0:2023.06.0", type="build")
     depends_on("cmake@3.14:", when="@:0.12.0", type="build")
 
     depends_on("mpi", when="+mpi")
