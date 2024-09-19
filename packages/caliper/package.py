@@ -24,7 +24,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     url = "https://github.com/LLNL/Caliper/archive/v2.11.0.tar.gz"
     tags = ["e4s", "radiuss"]
 
-    maintainers("daboehme")
+    maintainers("daboehme", "adrienbernede")
 
     test_requires_compiler = True
 
@@ -217,7 +217,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_path("ITT_PREFIX", itt_dir))
         if spec.satisfies("+libunwind"):
             entries.append(cmake_cache_path("LIBUNWIND_PREFIX", spec["unwind"].prefix))
-
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))

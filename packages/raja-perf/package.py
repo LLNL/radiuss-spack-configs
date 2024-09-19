@@ -1,4 +1,4 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -18,6 +18,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     homepage = "http://software.llnl.gov/RAJAPerf/"
     git = "https://github.com/LLNL/RAJAPerf.git"
+    tags = ["radiuss"]
 
     maintainers("davidbeckingsale", "adrienbernede")
 
@@ -104,8 +105,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("blt")
     depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
-    depends_on("blt@0.5.3:", type="build", when="@2023.06.0")
-    depends_on("blt@0.5.2:", type="build", when="@2022.10.0")
+    depends_on("blt@0.5.3", type="build", when="@2023.06")
+    depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10")
     depends_on("blt@0.5.0:", type="build", when="@0.12.0:")
     depends_on("blt@0.4.1:", type="build", when="@0.11.0:")
     depends_on("blt@0.4.0:", type="build", when="@0.8.0:")
@@ -140,10 +141,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         for sm_ in CudaPackage.cuda_arch_values:
             depends_on("caliper +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
 
-    conflicts("~openmp", when="+openmp_target", msg="OpenMP target requires OpenMP")
-    conflicts(
-        "+cuda", when="+openmp_target", msg="Cuda may not be activated when openmp_target is ON"
-    )
+    conflicts("~openmp", when="+omptarget", msg="OpenMP target requires OpenMP")
+    conflicts("+omptarget +rocm")
+    conflicts("+cuda", when="+omptarget", msg="Cuda may not be activated when omptarget is ON")
 
     def _get_sys_type(self, spec):
         sys_type = str(spec.architecture)
@@ -242,8 +242,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
-        entries.append(cmake_cache_option("ENABLE_OPENMP_TARGET", "+openmp_target" in spec))
-        if "+openmp_target" in spec:
+        entries.append(cmake_cache_option("ENABLE_OPENMP_TARGET", "+omptarget" in spec))
+        if "+omptarget" in spec:
             if "%xl" in spec:
                 entries.append(
                     cmake_cache_string(

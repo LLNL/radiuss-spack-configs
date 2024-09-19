@@ -24,7 +24,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     license("BSD-3-Clause")
 
-    maintainers("adayton1")
+    maintainers("adayton1", "adrienbernede")
 
     version("develop", branch="develop", submodules=False)
     version("master", branch="main", submodules=False)
@@ -125,6 +125,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     conflicts("+openmp", when="+rocm")
     conflicts("+openmp", when="+cuda")
+    conflicts("~tests", when="+benchmarks")
 
     with when("+openmp"):
         depends_on("umpire+openmp")
