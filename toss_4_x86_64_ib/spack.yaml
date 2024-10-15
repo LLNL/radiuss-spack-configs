@@ -569,7 +569,6 @@ spack:
         prefix: /usr
     elfutils:
       buildable: false
-      version: [0.190]
       externals:
       - spec: elfutils@0.190
         prefix: /usr
