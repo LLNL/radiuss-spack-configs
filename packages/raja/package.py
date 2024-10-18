@@ -194,6 +194,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         description="Run all the tests, including those known to fail.",
     )
 
+    variant("lowopttest", default=False, description="Intended for developers to use low optimization level for tests to pass with some compilers.")
+
     depends_on("blt", type="build")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1:", type="build", when="@2024.02.0:")
@@ -343,6 +345,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("RAJA_ENABLE_TARGET_OPENMP", "+omptarget" in spec))
 
         entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", "+sycl" in spec))
+
+        if spec.satisfies("+lowopttest"):
+            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         #C++17
         if spec.satisfies("@0.17.0:") and "+sycl" in spec:

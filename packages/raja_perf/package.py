@@ -48,6 +48,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
             multi=False, description="Tests to run")
     variant("caliper",default=False, description="Build with support for Caliper based profiling")
 
+    variant("lowopttest", default=False, description="Intended for developers to use low optimization level for tests to pass with some compilers.")
+
     depends_on("blt")
     depends_on("blt@0.5.3:", type="build", when="@2023.06.0:")
     depends_on("blt@0.5.2:", type="build", when="@2022.10.0:")
@@ -246,11 +248,14 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_option("ENABLE_BENCHMARKS", "tests=benchmarks" in spec))
         entries.append(cmake_cache_option("ENABLE_TESTS", not "tests=none" in spec or self.run_tests))
-
+         
         entries.append(cmake_cache_option("RAJA_PERFSUITE_USE_CALIPER","+caliper" in spec))
         if "caliper" in self.spec:
             entries.append(cmake_cache_path("caliper_DIR", spec["caliper"].prefix+"/share/cmake/caliper/"))
             entries.append(cmake_cache_path("adiak_DIR", spec["adiak"].prefix+"/lib/cmake/adiak/"))
+
+        if spec.satisfies("+lowopttest"):
+            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         return entries
 
