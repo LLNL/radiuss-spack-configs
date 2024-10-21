@@ -103,6 +103,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         description="Tests to run",
     )
     variant("caliper", default=False, description="Build with support for Caliper based profiling")
+    variant("lowopttest", default=False, description="Intended for developers to use low optimization level for tests to pass with some compilers.")
 
     depends_on("blt")
     depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
@@ -179,6 +180,9 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         compiler = self.compiler
         # Default entries are already defined in CachedCMakePackage, inherit them:
         entries = super().initconfig_compiler_entries()
+
+        if spec.satisfies("+lowopttest"):
+            entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         # adrienbernede-23-01
         # Maybe we want to share this in the above llnl_link_helpers function.
