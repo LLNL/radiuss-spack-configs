@@ -740,15 +740,15 @@ spack:
       externals:
       - spec: libx11@1.20.4
         prefix: /usr
+    lua:
+      buildable: false
+      externals:
+      - spec: lua@5.3.4
+        prefix: /usr
     m4:
       buildable: false
       externals:
       - spec: m4@1.4.18
-        prefix: /usr
-    ncurses:
-      buildable: false
-      externals:
-      - spec: ncurses@6.1
         prefix: /usr
     papi:
       buildable: false
