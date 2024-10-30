@@ -256,7 +256,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
-        entries.append(cmake_cache_option("ENABLE_OPENMP_TARGET", "+omptarget" in spec))
+        entries.append(cmake_cache_option("RAJA_ENABLE_TARGET_OPENMP", "+omptarget" in spec))
         if "+omptarget" in spec:
             if "%xl" in spec:
                 entries.append(
