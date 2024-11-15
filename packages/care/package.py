@@ -270,10 +270,10 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_string("CMAKE_BUILD_TYPE", spec.variants["build_type"].value))
 
         # C++14
-        elif spec.satisfies("@:0.14.1"):
+        if spec.satisfies("@:0.14.1"):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++14"))
         # C++17
-        else
+        else:
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
 
         entries.append(cmake_cache_option("ENABLE_TESTS", spec.satisfies("+tests")))
