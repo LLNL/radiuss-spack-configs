@@ -1,5 +1,8 @@
 spack:
 
+  concretizer:
+    reuse: false
+
   config:
     install_tree:
       root: $spack/..
