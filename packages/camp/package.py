@@ -6,6 +6,8 @@
 import glob
 import re
 
+from os.path import dirname
+
 from spack.package import *
 from spack.util.executable import which_string
 
@@ -22,9 +24,8 @@ def spec_uses_gccname(spec):
 
 def hip_for_radiuss_projects(options, spec, compiler):
     # Here is what is typically needed for radiuss projects when building with rocm
-    hip_root = spec["hip"].prefix
-    rocm_root = hip_root + "/.."
-    options.append(cmake_cache_path("ROCM_ROOT_DIR", rocm_root))
+    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
+    options.append(cmake_cache_path("ROCM_PATH", rocm_root))
 
     # there is only one dir like this, but the version component is unknown
     options.append(
@@ -189,7 +190,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
         options.append(self.define_from_variant("ENABLE_HIP", "rocm"))
         if spec.satisfies("+rocm"):
-            options.append("-DHIP_ROOT_DIR={0}".format(spec["hip"].prefix))
+            rocm_root = dirname(spec["llvm-amdgpu"].prefix)
+            options.append("-DROCM_PATH={0}".format(rocm_root))
 
             # there is only one dir like this, but the version component is unknown
             options.append(
