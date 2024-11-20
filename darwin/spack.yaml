@@ -24,7 +24,7 @@ spack:
     flags:
       keep_werror: 'all'
 
-    view: false
+  view: false
 
   compilers::
   - compiler:

@@ -6,3 +6,4 @@ spack:
   concretizer:
     reuse: false
     unify: false
+  view: false
