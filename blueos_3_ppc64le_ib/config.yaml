@@ -1,5 +1,4 @@
 config:
-  view: false
   install_tree:
     root: $spack/..
     padded_length: 128
