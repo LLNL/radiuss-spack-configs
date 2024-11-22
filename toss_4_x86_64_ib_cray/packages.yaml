@@ -29,7 +29,7 @@ packages::
     - spec: cuda@11.4.120
       prefix: /opt/toss/cudatoolkit/11.4/
   hip:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: hip@5.2.3%rocmcc@5.2.3
@@ -52,10 +52,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: hip@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: hip@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: hip@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   hipsparse:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: hipsparse@5.2.3%rocmcc@5.2.3
@@ -78,10 +78,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: hipsparse@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: hipsparse@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: hipsparse@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   llvm-amdgpu:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: llvm-amdgpu@5.2.3%rocmcc@5.2.3
@@ -104,10 +104,10 @@ packages::
       prefix: /opt/rocm-6.1.1/llvm
     - spec: llvm-amdgpu@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2/llvm
-    - spec: llvm-amdgpu@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0/llvm
+    - spec: llvm-amdgpu@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4/llvm
   hsa-rocr-dev:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: hsa-rocr-dev@5.2.3%rocmcc@5.2.3
@@ -130,10 +130,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: hsa-rocr-dev@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: hsa-rocr-dev@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: hsa-rocr-dev@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocminfo:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocminfo@5.2.3%rocmcc@5.2.3
@@ -156,10 +156,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocminfo@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocminfo@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocminfo@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocm-device-libs:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocm-device-libs@5.2.3%rocmcc@5.2.3
@@ -182,10 +182,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocm-device-libs@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocm-device-libs@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocm-device-libs@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocprim:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocprim@5.2.3%rocmcc@5.2.3
@@ -208,10 +208,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocprim@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocprim@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocprim@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocthrust:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocthrust@5.2.3%rocmcc@5.2.3
@@ -234,10 +234,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocthrust@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocthrust@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocthrust@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocsparse:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocsparse@5.2.3%rocmcc@5.2.3
@@ -260,10 +260,10 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocsparse@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocsparse@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocsparse@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   rocrand:
-    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.0]
+    version: [5.2.3, 5.3.0, 5.4.1, 5.4.3, 5.5.1, 5.6.1, 5.7.0, 5.7.1, 6.1.1, 6.1.2, 6.2.4]
     buildable: false
     externals:
     - spec: rocrand@5.2.3%rocmcc@5.2.3
@@ -286,8 +286,8 @@ packages::
       prefix: /opt/rocm-6.1.1
     - spec: rocrand@6.1.2%rocmcc@6.1.2
       prefix: /opt/rocm-6.1.2
-    - spec: rocrand@6.2.0%rocmcc@6.2.0
-      prefix: /opt/rocm-6.2.0
+    - spec: rocrand@6.2.4%rocmcc@6.2.4
+      prefix: /opt/rocm-6.2.4
   cray-mpich:
     buildable: false
     externals:
@@ -295,10 +295,10 @@ packages::
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-cce-15.0.1-magic
     - spec: cray-mpich@8.1.28%cce@16.0.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-cce-16.0.1-magic
-    - spec: cray-mpich@8.1.30%cce@17.0.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.30-cce-17.0.1-magic
-    - spec: cray-mpich@8.1.30%cce@18.0.0
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.30-cce-18.0.0-magic
+    - spec: cray-mpich@8.1.31%cce@17.0.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-cce-17.0.1-magic
+    - spec: cray-mpich@8.1.31%cce@18.0.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-cce-18.0.1-magic
     - spec: cray-mpich@8.1.28%gcc@12.1.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-gcc-12.1.1-magic
     - spec: cray-mpich@8.1.28%rocmcc@5.5.1
@@ -309,12 +309,12 @@ packages::
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-rocmcc-5.7.0-magic
     - spec: cray-mpich@8.1.28%rocmcc@5.7.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-rocmcc-5.7.1-magic
-    - spec: cray-mpich@8.1.30%rocmcc@6.1.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.30-rocmcc-6.1.1-magic
-    - spec: cray-mpich@8.1.30%rocmcc@6.1.2
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.30-rocmcc-6.1.2-magic
-    - spec: cray-mpich@8.1.30%rocmcc@6.2.0
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.30-rocmcc-6.2.0-magic
+    - spec: cray-mpich@8.1.31%rocmcc@6.1.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.1.1-magic
+    - spec: cray-mpich@8.1.31%rocmcc@6.1.2
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.1.2-magic
+    - spec: cray-mpich@8.1.31%rocmcc@6.2.4
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.2.4-magic
 
 
   # blas is a bit more complicated because its a virtual package so fake it with
