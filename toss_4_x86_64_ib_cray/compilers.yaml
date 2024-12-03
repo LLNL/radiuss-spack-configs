@@ -288,10 +288,10 @@ compilers::
 - compiler:
     spec: rocmcc@=6.2.4
     paths:
-      cc: /opt/rocm-6.2.4/llvm/bin/amdclang
-      cxx: /opt/rocm-6.2.4/llvm/bin/amdclang++
-      f77: /opt/rocm-6.2.4/llvm/bin/amdflang
-      fc: /opt/rocm-6.2.4/llvm/bin/amdflang
+      cc: /usr/tce/packages/rocmcc/rocmcc-6.2.4-magic/bin/amdclang
+      cxx: /usr/tce/packages/rocmcc/rocmcc-6.2.4-magic/bin/amdclang++
+      f77: /usr/tce/packages/rocmcc/rocmcc-6.2.4-magic/bin/amdflang
+      fc: /usr/tce/packages/rocmcc/rocmcc-6.2.4-magic/bin/amdflang
     flags: {}
     operating_system: rhel8
     target: x86_64
