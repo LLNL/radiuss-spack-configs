@@ -167,7 +167,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.2.3/lib, /opt/rocm-5.2.3/llvm/lib]
 - compiler:
     spec: rocmcc@=5.3.0
     paths:
@@ -180,7 +180,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.3.0/lib, /opt/rocm-5.3.0/llvm/lib]
 - compiler:
     spec: rocmcc@=5.4.1
     paths:
@@ -193,7 +193,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.4.1/lib, /opt/rocm-5.4.1/llvm/lib]
 - compiler:
     spec: rocmcc@=5.4.3
     paths:
@@ -206,7 +206,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.4.3/lib, /opt/rocm-5.4.3/llvm/lib]
 - compiler:
     spec: rocmcc@=5.5.1
     paths:
@@ -219,7 +219,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.5.1/lib, /opt/rocm-5.5.1/llvm/lib]
 - compiler:
     spec: rocmcc@=5.6.1
     paths:
@@ -232,7 +232,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.6.1/lib, /opt/rocm-5.6.1/llvm/lib]
 - compiler:
     spec: rocmcc@=5.7.0
     paths:
@@ -245,7 +245,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.7.0/lib, /opt/rocm-5.7.0/llvm/lib]
 - compiler:
     spec: rocmcc@=5.7.1
     paths:
@@ -258,7 +258,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-5.7.1/lib, /opt/rocm-5.7.1/llvm/lib]
 - compiler:
     spec: rocmcc@=6.1.1
     paths:
@@ -271,7 +271,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-6.1.1/lib, /opt/rocm-6.1.1/llvm/lib]
 - compiler:
     spec: rocmcc@=6.1.2
     paths:
@@ -284,7 +284,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-6.1.2/lib, /opt/rocm-6.1.2/llvm/lib]
 - compiler:
     spec: rocmcc@=6.2.4
     paths:
@@ -297,4 +297,4 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: []
+    extra_rpaths: [/opt/rocm-6.2.4/lib, /opt/rocm-6.2.4/llvm/lib]
