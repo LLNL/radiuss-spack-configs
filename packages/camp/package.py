@@ -1,4 +1,4 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2025 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -148,7 +148,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     variant("omptarget", default=False, description="Build with OpenMP Target support")
     variant("sycl", default=False, description="Build with Sycl support")
 
-    depends_on("cub", when="+cuda")
+    with when("+cuda"):
+        depends_on("cub", when="^cuda@:10")
 
     depends_on("blt", type="build")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
@@ -200,7 +201,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
                 + glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0]
             )
 
-            archs = self.spec.variants["amdgpu_target"].value
+            archs = ";".join(self.spec.variants["amdgpu_target"].value)
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))
             options.append("-DGPU_TARGETS={0}".format(archs))
             options.append("-DAMDGPU_TARGETS={0}".format(archs))
