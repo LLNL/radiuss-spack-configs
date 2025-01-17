@@ -296,7 +296,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         "+rocm", when="+omptarget", msg="Cant support both rocm and openmp device backends at once"
     )
     conflicts("+ipc_shmem", when="@:5.0.1")
-    conflicts("+mpi3_shmem", when="@:develop")
+    conflicts("+mpi3_shmem", when="@:2024.07.0")
     conflicts("+mpi3_shmem", when="~mpi")
     conflicts("+ipc_shmem", when="+mpi3_shmem")
     conflicts("+mpi3_shmem", when="+ipc_shmem")
