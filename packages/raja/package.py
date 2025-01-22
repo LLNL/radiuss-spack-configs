@@ -1,4 +1,4 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2025 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -455,7 +455,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     @property
     def build_relpath(self):
         """Relative path to the cmake build subdirectory."""
-        return join_path("..", self.builder.build_dirname)
+        return join_path("..", self.build_dirname)
 
     @run_after("install")
     def setup_build_tests(self):
