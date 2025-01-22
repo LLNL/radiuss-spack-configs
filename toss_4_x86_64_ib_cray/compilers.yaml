@@ -104,12 +104,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@=10.3.0
+    spec: gcc@=10.3.1
     paths:
-      cc: /opt/cray/pe/gcc/10.3.0/bin/gcc
-      cxx: /opt/cray/pe/gcc/10.3.0/bin/g++
-      f77: /opt/cray/pe/gcc/10.3.0/bin/gfortran
-      fc: /opt/cray/pe/gcc/10.3.0/bin/gfortran
+      cc: /usr/tce/packages/gcc/gcc-10.3.1-magic/bin/gcc
+      cxx: /usr/tce/packages/gcc/gcc-10.3.1-magic/bin/g++
+      f77: /usr/tce/packages/gcc/gcc-10.3.1-magic/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-10.3.1-magic/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64
@@ -117,12 +117,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@=11.2.0
+    spec: gcc@=11.2.1
     paths:
-      cc: /opt/cray/pe/gcc/11.2.0/bin/gcc
-      cxx: /opt/cray/pe/gcc/11.2.0/bin/g++
-      f77: /opt/cray/pe/gcc/11.2.0/bin/gfortran
-      fc: /opt/cray/pe/gcc/11.2.0/bin/gfortran
+      cc: /usr/tce/packages/gcc/gcc-11.2.1-magic/bin/gcc
+      cxx: /usr/tce/packages/gcc/gcc-11.2.1-magic/bin/g++
+      f77: /usr/tce/packages/gcc/gcc-11.2.1-magic/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-11.2.1-magic/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64
@@ -130,12 +130,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: gcc@=12.1.0
+    spec: gcc@=12.2.1
     paths:
-      cc: /opt/cray/pe/gcc/12.1.0/bin/gcc
-      cxx: /opt/cray/pe/gcc/12.1.0/bin/g++
-      f77: /opt/cray/pe/gcc/12.1.0/bin/gfortran
-      fc: /opt/cray/pe/gcc/12.1.0/bin/gfortran
+      cc: /usr/tce/packages/gcc/gcc-12.2.1-magic/bin/gcc
+      cxx: /usr/tce/packages/gcc/gcc-12.2.1-magic/bin/g++
+      f77: /usr/tce/packages/gcc/gcc-12.2.1-magic/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-12.2.1-magic/bin/gfortran
     flags: {}
     operating_system: rhel8
     target: x86_64
