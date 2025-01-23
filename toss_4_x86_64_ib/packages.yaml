@@ -8,6 +8,7 @@ packages::
       blas: [openblas]
       lapack: [netlib-lapack]
       mpi: [mvapich2]
+      zlib-api: [zlib]
     require:
     - spec: '^blt%oneapi'
       when: '%oneapi ^blt'
