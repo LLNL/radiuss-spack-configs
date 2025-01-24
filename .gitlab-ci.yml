@@ -39,8 +39,8 @@ no-env-name:
   stage: setup
   script:
       echo -e "\e[31mVariable \"MY_ENV_NAME\" was not set.\e[0m"
-      echo -e "\e[31m\"MY_ENV_NAME\" is required and should point to an existing directory in spack-environments.\e[0m"
+      echo -e "\e[31m\"MY_ENV_NAME\" is required and should point to an existing directory in .gitlab/spack/envs.\e[0m"
       echo -e "\e[31m\"MY_ENV_NAME\" can only be defined in GitLab UI (see documentation).\e[0m"
       echo -e "\e[31mAvailable environments \e[0m"
-      echo -e "\e[31$(ls --ignore empty spack-environments)\e[0m"
+      echo -e "\e[31$(ls --ignore empty .gitlab/spack/envs)\e[0m"
 
