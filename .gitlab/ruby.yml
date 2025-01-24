@@ -45,7 +45,7 @@ get-spack-ruby:
   stage: setup
   script:
     - !reference [.prepare_ruby_jobid, script]
-    - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 scripts/get-spack
+    - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 .gitlab/scripts/get-spack
   needs: [allocate-ruby]
 #[--get-spack]
 
@@ -53,7 +53,7 @@ generate-on-ruby:
   extends: [.on-ruby, .ruby-variables]
   stage: generate
   script:
-    - scripts/print-variables
+    - .gitlab/scripts/print-variables
     - !reference [.prepare_ruby_jobid, script]
     - srun ${JOBID_OPT} --reservation=ci --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
@@ -84,7 +84,7 @@ rm-spack-ruby:
   stage: clean
   script:
     - !reference [.prepare_ruby_jobid, script]
-    - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 scripts/remove-spack
+    - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 .gitlab/scripts/remove-spack
   needs: [build-on-ruby]
 #[--rm-spack]
 

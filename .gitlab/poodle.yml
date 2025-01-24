@@ -44,14 +44,14 @@ get-spack-poodle:
   stage: setup
   script:
     - !reference [.prepare_poodle_jobid, script]
-    - srun ${JOBID_OPT} --nodes=1 scripts/get-spack
+    - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/get-spack
   needs: [allocate-poodle]
 
 generate-on-poodle:
   extends: [.on-poodle, .poodle-variables]
   stage: generate
   script:
-    - scripts/print-variables
+    - .gitlab/scripts/print-variables
     - !reference [.prepare_poodle_jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
@@ -79,7 +79,7 @@ rm-spack-poodle:
   stage: clean
   script:
     - !reference [.prepare_poodle_jobid, script]
-    - srun ${JOBID_OPT} --nodes=1 scripts/remove-spack
+    - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/remove-spack
   needs: [build-on-poodle]
 
 release-poodle:

@@ -27,14 +27,14 @@ get-spack-lassen:
   extends: [.on-lassen, .lassen-variables]
   stage: setup
   script:
-    - scripts/get-spack
+    - .gitlab/scripts/get-spack
   needs: []
 
 generate-on-lassen:
   extends: [.on-lassen, .lassen-variables]
   stage: generate
   script:
-    - scripts/print-variables
+    - .gitlab/scripts/print-variables
     - .gitlab/spack/generate-script.sh
   artifacts:
     paths:
@@ -60,5 +60,5 @@ rm-spack-lassen:
   extends: [.on-lassen, .lassen-variables]
   stage: clean
   script:
-    - scripts/remove-spack
+    - .gitlab/scripts/remove-spack
   needs: [build-on-lassen]

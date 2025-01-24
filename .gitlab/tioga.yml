@@ -46,14 +46,14 @@ get-spack-tioga:
   stage: setup
   script:
     - !reference [.prepare_tioga_proxy, script]
-    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s scripts/get-spack)
+    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/get-spack)
   needs: [allocate-tioga]
 
 generate-on-tioga:
   extends: [.on-tioga, .tioga-variables]
   stage: generate
   script:
-    - scripts/print-variables
+    - .gitlab/scripts/print-variables
     - !reference [.prepare_tioga_proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/spack/generate-script.sh)
   artifacts:
@@ -81,7 +81,7 @@ rm-spack-tioga:
   stage: clean
   script:
     - !reference [.prepare_tioga_proxy, script]
-    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s scripts/remove-spack)
+    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/remove-spack)
   needs: [build-on-tioga]
 
 release-tioga:
