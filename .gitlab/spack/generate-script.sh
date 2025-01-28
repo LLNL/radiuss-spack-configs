@@ -15,4 +15,4 @@ spack ${MY_SPACK_DEBUG} mirror add --oci-username ${CI_REGISTRY_USER} --oci-pass
 spack ${MY_SPACK_DEBUG} config blame mirrors
 spack ${MY_SPACK_DEBUG} concretize || spack ${MY_SPACK_DEBUG} concretize
 spack ${MY_SPACK_DEBUG} --color=always --config-scope "${CI_PROJECT_DIR}/.gitlab/spack" ci generate --check-index-only --artifacts-root "${CI_PROJECT_DIR}/jobs_scratch_dir" --output-file "${CI_PROJECT_DIR}/jobs_scratch_dir/pipeline.yml"
-cp -r ${LCSCHEDCLUSTER} ${CI_PROJECT_DIR}/jobs_scratch_dir/concrete_environment/
+cp -r .gitlab/spack/envs/shared-ci/${LCSCHEDCLUSTER} ${CI_PROJECT_DIR}/jobs_scratch_dir/concrete_environment/
