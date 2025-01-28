@@ -9,9 +9,9 @@
 spack:
   #[general--]
   include:
-    - ../../../../$SYS_TYPE/$LCSCHEDCLUSTER/config.yaml
-    - ../../../../$SYS_TYPE/$LCSCHEDCLUSTER/compilers.yaml
-    - ../../../../$SYS_TYPE/$LCSCHEDCLUSTER/packages.yaml
+    - $LCSCHEDCLUSTER/config.yaml
+    - $LCSCHEDCLUSTER/compilers.yaml
+    - $LCSCHEDCLUSTER/packages.yaml
   concretizer:
     reuse: false
     unify: false
