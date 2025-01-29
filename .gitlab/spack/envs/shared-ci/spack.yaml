@@ -68,30 +68,12 @@ spack:
     - raja-perf
     - chai
     - care
-    - axom
     - caliper
-    when: env.get("LCSCHEDCLUSTER", "") in ["corona", "tioga"]
-  - radiuss-projects:
-    - umpire
-    - raja
-    - raja-perf
-    - chai
-    - care
-    - caliper
-    when: env.get("LCSCHEDCLUSTER", "") in ["ruby", "poodle"]
-  - radiuss-projects:
-    - umpire
-    - raja
-    - raja-perf
-    - chai
-    - care
-    - caliper
-    when: env.get("LCSCHEDCLUSTER", "") == "lassen"
   - dependencies: []
   #[--definitions]
 
   specs:
   - matrix:
-    - [$radiuss-projects, $dependencies]
+    - [$radiuss-projects]
     - [$compilers]
     exclude: []
