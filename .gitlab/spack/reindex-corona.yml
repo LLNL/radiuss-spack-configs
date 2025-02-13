@@ -11,6 +11,7 @@ include:
 rebuild-index-corona:
   stage: .post
   tags: [corona, shell]
+  when: always
   script:
     - export ALLOC_ID=$(flux jobs --name="${CORONA_ALLOC_NAME}" -n -o "{id}")
     - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"

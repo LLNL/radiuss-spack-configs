@@ -8,7 +8,6 @@
 rebuild-index:
   stage: .post
   tags: [oslic, shell]
-  rules:
-    - when: never
+  when: never
   script:
     - echo "Override the job set by Spack"

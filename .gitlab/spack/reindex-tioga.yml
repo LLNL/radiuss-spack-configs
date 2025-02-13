@@ -11,6 +11,7 @@ include:
 rebuild-index-tioga:
   stage: .post
   tags: [tioga, shell]
+  when: always
   script:
     - export ALLOC_ID=$(flux jobs --name="${TIOGA_ALLOC_NAME}" -n -o "{id}")
     - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
