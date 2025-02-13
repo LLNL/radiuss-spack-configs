@@ -9,7 +9,7 @@ include:
   - local: ".gitlab/spack/reindex-override.yml"
 
 rebuild-index-ruby:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [ruby, shell]
   script:
     - export JOBID=$(squeue -h --name=${RUBY_ALLOC_NAME} --format=%A)

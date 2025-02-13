@@ -9,7 +9,7 @@ include:
   - local: ".gitlab/spack/reindex-override.yml"
 
 rebuild-index-poodle:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [poodle, shell]
   script:
     - export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)

@@ -9,7 +9,7 @@ include:
   - local: ".gitlab/spack/reindex-override.yml"
 
 rebuild-index-tioga:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [tioga, shell]
   script:
     - export ALLOC_ID=$(flux jobs --name="${TIOGA_ALLOC_NAME}" -n -o "{id}")

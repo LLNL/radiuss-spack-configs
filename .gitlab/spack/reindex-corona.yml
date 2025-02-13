@@ -9,7 +9,7 @@ include:
   - local: ".gitlab/spack/reindex-override.yml"
 
 rebuild-index-corona:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [corona, shell]
   script:
     - export ALLOC_ID=$(flux jobs --name="${CORONA_ALLOC_NAME}" -n -o "{id}")

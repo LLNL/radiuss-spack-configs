@@ -9,7 +9,7 @@ include:
   - local: ".gitlab/spack/reindex-override.yml"
 
 rebuild-index-lassen:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [lassen, shell]
   script:
     - lalloc ${LASSEN_JOB_ALLOC} .gitlab/spack/reindex-script.sh
