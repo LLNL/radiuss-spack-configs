@@ -6,7 +6,7 @@
 ##############################################################################
 
 rebuild-index:
-  stage: stage-rebuild-index
+  stage: .post
   tags: [oslic, shell]
   rules:
     - when: never
