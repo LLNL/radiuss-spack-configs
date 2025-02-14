@@ -95,6 +95,7 @@ packages::
       prefix: /opt/rocm-6.2.4
     - spec: hipblas@6.3.0%rocmcc@6.3.0
       prefix: /opt/rocm-6.3.0
+      require: hipblas-common
   hipblas-common:
     version: [6.3.0]
     buildable: false
