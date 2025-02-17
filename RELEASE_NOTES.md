@@ -1,3 +1,9 @@
+
+# v2025.02.0
+
+## Add CI
+- We add a GitLab CI pipeline leveraging Spack CI to test building some packages with our shared specs.
+
 # v2025.01.0
 
 Recommended Spack version: develop-2025-01-12

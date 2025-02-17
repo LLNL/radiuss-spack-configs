@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# 3 elements in spack.lock environment description:
+# - "_meta" is typically the same among environments, we take the one in the first file.
+# - "roots" is a table of the root specs. It needs to be merged as a table.
+# - "concrete_specs" is an array of the concrete specs. It needs to be merged as an array.
+
+jq -s '{
+       _meta: .[0]._meta,
+       roots: ( reduce .[].roots as $item ([]; . + $item ) ),
+       concrete_specs: ( reduce .[].concrete_specs as $item ({}; . * $item) )
+       }' \
+       ../test1/spack.lock ../test2/spack.lock > spack.lock
