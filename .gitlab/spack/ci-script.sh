@@ -17,7 +17,7 @@ spack ${MY_SPACK_DEBUG} config blame mirrors
 spack ${MY_SPACK_DEBUG} mirror rm buildcache-destination
 spack ${MY_SPACK_DEBUG} mirror add --oci-username-variable CI_REGISTRY_USER --oci-password-variable CI_REGISTRY_PASSWORD buildcache-destination oci://${CI_REGISTRY_IMAGE}/${SPACK_TARGET}
 spack ${MY_SPACK_DEBUG} config blame mirrors
- spack ${MY_SPACK_DEBUG} ci rebuild
+spack ${MY_SPACK_DEBUG} ci rebuild
 echo Building ${SPACK_JOB_SPEC_PKG_NAME} /${SPACK_JOB_SPEC_DAG_HASH}
 spack --color=always --backtrace install --include-build-deps --no-check-signature --use-buildcache=package:never,dependencies:only /${SPACK_JOB_SPEC_DAG_HASH}
 echo Pushing ${SPACK_JOB_SPEC_PKG_NAME} /${SPACK_JOB_SPEC_DAG_HASH}
