@@ -220,7 +220,7 @@ packages::
     #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.7
     #- spec: netlib-lapack@%nvhpc@=22.11
     #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.11
-    - spec: netlib-lapack@%nvhpc@=24.1
+    - spec: netlib-lapack@3.12.0%nvhpc@=24.1
       prefix: /usr/tce/packages/lapack/lapack-3.12.0-nv-24.1
     - spec: netlib-lapack@3.9.0
       prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-xl-2020.11.12
