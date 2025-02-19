@@ -507,12 +507,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@=default
+    spec: nvhpc@=21.11
     paths:
-      cc: pgcc
-      cxx: pgc++
-      f77: pgfortran
-      fc: pgfortran
+      cc: /usr/tce/packages/pgi/pgi-21.11/bin/nvcc
+      cxx: /usr/tce/packages/pgi/pgi-21.11/bin/nvc++
+      f77: /usr/tce/packages/pgi/pgi-21.11/bin/nvfortran
+      fc: /usr/tce/packages/pgi/pgi-21.11/bin/nvfortran
     flags: {}
     operating_system: rhel7
     target: ppc64le
@@ -520,12 +520,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@=19.10
+    spec: nvhpc@=22.7
     paths:
-      cc: /usr/tce/packages/pgi/pgi-19.10/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-19.10/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-19.10/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-19.10/bin/pgfortran
+      cc: /usr/tce/packages/pgi/pgi-22.7/bin/nvcc
+      cxx: /usr/tce/packages/pgi/pgi-22.7/bin/nvc++
+      f77: /usr/tce/packages/pgi/pgi-22.7/bin/nvfortran
+      fc: /usr/tce/packages/pgi/pgi-22.7/bin/nvfortran
     flags: {}
     operating_system: rhel7
     target: ppc64le
@@ -533,12 +533,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@=20.4
+    spec: nvhpc@=22.11
     paths:
-      cc: /usr/tce/packages/pgi/pgi-20.4/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-20.4/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-20.4/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-20.4/bin/pgf90
+      cc: /usr/tce/packages/pgi/pgi-22.11/bin/nvcc
+      cxx: /usr/tce/packages/pgi/pgi-22.11/bin/nvc++
+      f77: /usr/tce/packages/pgi/pgi-22.11/bin/nvfortran
+      fc: /usr/tce/packages/pgi/pgi-22.11/bin/nvfortran
     flags: {}
     operating_system: rhel7
     target: ppc64le
@@ -546,51 +546,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@=21.11
+    spec: nvhpc@=23.1
     paths:
-      cc: /usr/tce/packages/pgi/pgi-21.11/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-21.11/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-21.11/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-21.11/bin/pgf90
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: pgi@=22.7
-    paths:
-      cc: /usr/tce/packages/pgi/pgi-22.7/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-22.7/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-22.7/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-22.7/bin/pgf90
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: pgi@=22.11
-    paths:
-      cc: /usr/tce/packages/pgi/pgi-22.11/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-22.11/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-22.11/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-22.11/bin/pgf90
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: pgi@=23.1
-    paths:
-      cc: /usr/tce/packages/pgi/pgi-23.1/bin/pgcc
-      cxx: /usr/tce/packages/pgi/pgi-23.1/bin/pgc++
-      f77: /usr/tce/packages/pgi/pgi-23.1/bin/pgfortran
-      fc: /usr/tce/packages/pgi/pgi-23.1/bin/pgf90
+      cc: /usr/tce/packages/pgi/pgi-23.1/bin/nvcc
+      cxx: /usr/tce/packages/pgi/pgi-23.1/bin/nvc++
+      f77: /usr/tce/packages/pgi/pgi-23.1/bin/nvfortran
+      fc: /usr/tce/packages/pgi/pgi-23.1/bin/nvfortran
     flags: {}
     operating_system: rhel7
     target: ppc64le

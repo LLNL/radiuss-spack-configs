@@ -3,7 +3,7 @@ packages::
     # This defaults us to machine specific flags of ivybridge which allows
     # us to run on broadwell as well
     target: [ppc64le]
-    compiler: [gcc, clang, xl, pgi]
+    compiler: [gcc, clang, xl, nvhpc]
     providers:
       blas: [netlib-lapack]
       lapack: [netlib-lapack]
@@ -133,18 +133,14 @@ packages::
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28-gcc-8.3.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=beta2019.06.20
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=19.10
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-19.10
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=20.4
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-20.4
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=21.11
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-21.11
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=22.7
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-22.7
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=22.11
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-22.11
-    - spec: spectrum-mpi@10.3.1.03rtm0%pgi@=23.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-pgi-23.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=21.11
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-nvhpc-21.11
+    - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=22.7
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-nvhpc-22.7
+    - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=22.11
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-nvhpc-22.11
+    - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=23.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-nvhpc-23.1
   # blas is a bit more complicated because its a virtual package so fake it with
   # the following per spack docs
   netlib-lapack:
@@ -220,18 +216,14 @@ packages::
       prefix: /usr/tce/packages/lapack/lapack-3.12.0-xl-2023.06.28-gcc-8.3.1
     #- spec: netlib-lapack@%xl@=beta2019.06.20
     #  prefix: /usr/tce/packages/lapack/lapack--xl-beta-2019.06.20
-    #- spec: netlib-lapack@%pgi@=19.10
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-19.10
-    #- spec: netlib-lapack@%pgi@=20.4
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-20.4
-    #- spec: netlib-lapack@%pgi@=21.11
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-21.11
-    #- spec: netlib-lapack@%pgi@=22.7
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-22.7
-    #- spec: netlib-lapack@%pgi@=22.11
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-22.11
-    #- spec: netlib-lapack@%pgi@=23.1
-    #  prefix: /usr/tce/packages/lapack/lapack--pgi-23.1
+    #- spec: netlib-lapack@%nvhpc@=21.11
+    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-21.11
+    #- spec: netlib-lapack@%nvhpc@=22.7
+    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.7
+    #- spec: netlib-lapack@%nvhpc@=22.11
+    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.11
+    - spec: netlib-lapack@%nvhpc@=24.1
+      prefix: /usr/tce/packages/lapack/lapack-3.12.0-nv-24.1
     - spec: netlib-lapack@3.9.0
       prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-xl-2020.11.12
 
