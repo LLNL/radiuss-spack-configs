@@ -230,7 +230,7 @@ packages::
     #  prefix: /usr/tce/packages/lapack/lapack--pgi-22.11
     #- spec: netlib-lapack@%pgi@=23.1
     #  prefix: /usr/tce/packages/lapack/lapack--pgi-23.1
-    - spec: netlib-lapack
+    - spec: netlib-lapack@3.9.0
       prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-xl-2020.11.12
 
   # System level packages to not build
