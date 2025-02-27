@@ -331,10 +331,10 @@ packages::
       prefix: /usr
   python:
     buildable: false
-    version: [3.8.2]
+    version: [3.11.5]
     externals:
-    - spec: python@3.8.2
-      prefix: /usr/tce/packages/python/python-3.8.2
+    - spec: python@3.11.5
+      prefix: /usr/apps/python-3.11.5
   readline:
     buildable: false
     externals:
