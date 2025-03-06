@@ -5,6 +5,8 @@
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
+# This file is used to pass variables at every job for a given machine.
+
 .corona-variables:
   variables:
     SPACK_DISABLE_LOCAL_CONFIG: ""

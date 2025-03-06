@@ -1,5 +1,5 @@
 .. ##
-.. ## Copyright (c) 2022, Lawrence Livermore National Security, LLC and
+.. ## Copyright (c) 2022-2025, Lawrence Livermore National Security, LLC and
 .. ## other RADIUSS Project Developers. See the top-level COPYRIGHT file for details.
 .. ##
 .. ## SPDX-License-Identifier: (MIT)
@@ -44,8 +44,8 @@ CMake, the usage is as follows:
   $ cmake --build -j .
   $ ctest --output-on-failure -T test
 
-In the end, this should not be a major change in developer workflow for a CMake
-project.
+In the end, this should not be a major change in developers workflow for a
+CMake project.
 
 .. _write-ci-script:
 
