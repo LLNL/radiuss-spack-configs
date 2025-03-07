@@ -1,4 +1,4 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2025 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -28,6 +28,18 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules=False)
     version("master", branch="master", submodules=False)
+    version(
+        "0.14.1",
+        tag="v0.14.1",
+        commit="110c6e5766ead59b231e2b05deecd7567874e907",
+        submodules=False,
+    )
+    version(
+        "0.14.0",
+        tag="v0.14.0",
+        commit="2784188a067abac35747d58b5a5daa1b3852756b",
+        submodules=False,
+    )
     version(
         "0.13.3",
         tag="v0.13.3",
@@ -256,6 +268,13 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append("#------------------{0}\n".format("-" * 60))
 
         entries.append(cmake_cache_string("CMAKE_BUILD_TYPE", spec.variants["build_type"].value))
+
+        # C++14
+        if spec.satisfies("@:0.14.1"):
+            entries.append(cmake_cache_string("BLT_CXX_STD", "c++14"))
+        # C++17
+        else:
+            entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
 
         entries.append(cmake_cache_option("ENABLE_TESTS", spec.satisfies("+tests")))
         entries.append(cmake_cache_option("CARE_ENABLE_TESTS", spec.satisfies("+tests")))

@@ -1,4 +1,4 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2025 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -261,9 +261,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("sqlite", when="+sqlite_experimental")
     depends_on("mpi", when="+mpi")
 
-    depends_on("fmt@9.1:", when="@2024.02.0:")
+    depends_on("fmt@9.1:11.0", when="@2024.02.0:")
     # For some reason, we need c++ 17 explicitly only with intel
-    depends_on("fmt@9.1: cxxstd=17", when="@2024.02.0: %intel@19.1")
+    depends_on("fmt@9.1:11.0 cxxstd=17", when="@2024.02.0: %intel@19.1")
 
     with when("@5.0.0:"):
         with when("+cuda"):

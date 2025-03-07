@@ -1,12 +1,12 @@
 .. ##
-.. ## Copyright (c) 2022-23, Lawrence Livermore National Security, LLC and
+.. ## Copyright (c) 2022-2025, Lawrence Livermore National Security, LLC and
 .. ## other RADIUSS Project Developers. See the top-level COPYRIGHT file for
 .. ## details.
 .. ##
 .. ## SPDX-License-Identifier: (MIT)
 .. ##
 
-.. _user_guide-label:
+.. _User Guide:
 
 ##########
 User Guide

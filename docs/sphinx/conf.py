@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'Radiuss Spack Configs'
-copyright = u'2022-23, Adrien M. Bernede'
+copyright = u'2022-2025, Adrien M. Bernede'
 author = u'Adrien M. Bernede'
 
 # The full version, including alpha/beta/rc tags
@@ -31,6 +31,7 @@ release = u'1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+'sphinx.ext.autosectionlabel'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
