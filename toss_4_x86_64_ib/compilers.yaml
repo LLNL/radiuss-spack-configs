@@ -117,19 +117,6 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: pgi@=20.4
-    paths:
-      cc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgcc
-      cxx: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgc++
-      f77: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgfortran
-      fc: /opt/toss/pgi/20.4/linux86-64-llvm/20.4/bin/pgfortran
-    flags: {}
-    operating_system: rhel8
-    target: x86_64
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
     spec: intel@=2021.6.0
     paths:
       cc: /usr/tce/packages/intel-classic/intel-classic-2021.6.0/bin/icc

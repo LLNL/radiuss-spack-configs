@@ -1,0 +1,18 @@
+##############################################################################
+# Copyright (c) 2019-2024, Lawrence Livermore National Security, LLC and
+# RADIUSS project contributors. See the COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (MIT)
+##############################################################################
+
+include:
+  - local: ".gitlab/spack/reindex-override.yml"
+
+rebuild-index-poodle:
+  stage: .post
+  tags: [poodle, shell]
+  when: always
+  script:
+    - export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)
+    - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${POODLE_JOB_ALLOC} .gitlab/spack/reindex-script.sh
+  dependencies: []

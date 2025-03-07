@@ -13,6 +13,7 @@ packages::
       blas: [openblas]
       lapack: [netlib-lapack]
       mpi: [mvapich2]
+      zlib-api: [zlib]
   gcc-runtime:
     require:
     - '%gcc'

@@ -1,4 +1,4 @@
-.. ## Copyright (c) 2019-2022, Lawrence Livermore National Security, LLC and
+.. ## Copyright (c) 2019-2025, Lawrence Livermore National Security, LLC and
 .. ## other RADIUSS Project Developers. See the top-level COPYRIGHT file for details.
 .. ##
 .. ## SPDX-License-Identifier: (MIT)
@@ -8,8 +8,8 @@
 RADIUSS Spack Configs
 #####################
 
-The RADIUSS Spack Configs projects provides a *coherent set of Spack
-configuration files* targetting Livermore Computing systems. The goal is to
+The RADIUSS Spack Configs project provides a *coherent set of Spack
+configuration files* targeting Livermore Computing systems. The goal is to
 enable any Spack user to quickly reproduce the exact same configuration RADIUSS
 projects are vetted with.
 
@@ -32,7 +32,7 @@ RADIUSS Spack Configs User Documentation
 ========================================
 
 The steps necessary to leverage RADIUSS Spack Configs are documented in the
-:doc:`RADIUSS Spack Configs User Guide <sphinx/user_guide/index>`.
+:ref:`RADIUSS Spack Configs User Guide<sphinx/user_guide/index>`.
 
 .. # RADIUSS Spack Configs Developer Documentation
 .. # =============================================
@@ -40,6 +40,10 @@ The steps necessary to leverage RADIUSS Spack Configs are documented in the
 .. # TODO: In the  :doc:`RADIUSS Spack Configs Developer Guide <sphinx/dev_guide/index>`,
 .. # we discuss the layout of the RADIUSS Spack Configs repository and how to
 .. # contribute to it.
+
+CI implementation for RADIUSS Spack Configs
+===========================================
+
 
 
 =========================
@@ -65,6 +69,7 @@ dependencies, while packaging is maintained earlier in the development process.
    :caption: User Documentation
 
    user_guide/index
+   ci_implementation/index
 
 .. # .. toctree::
 .. #    :hidden:
