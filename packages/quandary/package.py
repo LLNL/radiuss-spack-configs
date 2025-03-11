@@ -16,7 +16,7 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     license("MIT", checked_by="tdrwenski")
 
-    version("master", branch="master")
+    version("main", branch="main")
 
     depends_on("cxx", type="build")
 
