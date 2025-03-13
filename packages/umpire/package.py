@@ -197,6 +197,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("c", default=True, description="Build C API")
     variant("mpi", default=False, description="Enable MPI support")
     variant("ipc_shmem", default=False, description="Enable POSIX shared memory")
+    variant("mpi3_shmem", default=False, description="Enable MPI3 shared memory")
     variant(
         "sqlite_experimental",
         default=False,
@@ -295,6 +296,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         "+rocm", when="+omptarget", msg="Cant support both rocm and openmp device backends at once"
     )
     conflicts("+ipc_shmem", when="@:5.0.1")
+    conflicts("+mpi3_shmem", when="@:2024.07.0")
+    conflicts("+mpi3_shmem", when="~mpi")
+    conflicts("+ipc_shmem", when="+mpi3_shmem")
 
     conflicts("+sqlite_experimental", when="@:6.0.0")
     conflicts("+sanitizer_tests", when="~asan")
@@ -392,6 +396,8 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("ENABLE_MPI", spec.satisfies("+mpi")))
         if spec.satisfies("+mpi"):
             mpi_for_radiuss_projects(entries, spec, env)
+
+        entries.append(cmake_cache_option("UMPIRE_ENABLE_MPI3_SHARED_MEMORY", spec.satisfies("+mpi3_shmem")))
 
         return entries
 
