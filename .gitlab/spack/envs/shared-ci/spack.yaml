@@ -57,7 +57,7 @@ spack:
     - '+cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
     when: env.get("LCSCHEDCLUSTER", "") == "lassen"
   - compilers:
-    - '+rocm amdgpu_target=gfx90a %rocmcc@=6.3.0 ^hip@6.3.0'
+    - '+rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1'
     - '%cce@=18.0.1'
     when: env.get("LCSCHEDCLUSTER", "") == "tioga"
   #[definitions--]
