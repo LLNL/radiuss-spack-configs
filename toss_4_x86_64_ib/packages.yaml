@@ -199,44 +199,44 @@ packages::
   mvapich2:
     buildable: false
     externals:
-    - spec: mvapich2@2.3.7%intel@=19.1.2 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %intel@=19.1.2
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-19.1.2
-    - spec: mvapich2@2.3.7%intel@=19.1.2.gcc.10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %intel@=19.1.2.gcc.10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-19.1.2
-    - spec: mvapich2@2.3.7%intel@=2021.6.0 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %intel@=2021.6.0
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-2021.6.0
-    - spec: mvapich2@2.3.7%intel@=2021.6.0.gcc.10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %intel@=2021.6.0.gcc.10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-classic-2021.6.0
-    - spec: mvapich2@2.3.7%oneapi@=2022.1.0 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %oneapi@=2022.1.0
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2022.1.0
-    - spec: mvapich2@2.3.7%oneapi@=2022.1.0.gcc.10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %oneapi@=2022.1.0.gcc.10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2022.1.0
-    - spec: mvapich2@2.3.7%oneapi@=2023.2.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %oneapi@=2023.2.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2023.2.1
-    - spec: mvapich2@2.3.7%oneapi@=2023.2.1.gcc.10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %oneapi@=2023.2.1.gcc.10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2023.2.1
-    - spec: mvapich2@2.3.7%clang@=14.0.6 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %clang@=14.0.6
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
-    - spec: mvapich2@2.3.7%clang@=14.0.6.gcc.10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %clang@=14.0.6.gcc.10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
-    - spec: mvapich2@2.3.7%gcc@=10.3.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-10.3.1
-    - spec: mvapich2@2.3.7%gcc@=11.2.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=11.2.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-11.2.1
-    - spec: mvapich2@2.3.7%gcc@=12.1.1 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=12.1.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
 
   autoconf:
