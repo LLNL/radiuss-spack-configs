@@ -24,6 +24,9 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("petsc+debug", when="+debug")
     depends_on("slepc", when="+slepc")
 
+    depends_on("blt", type="build")
+    conflicts("^blt@:0.3.6", when="+rocm")
+
     with when("+rocm"):
         depends_on("petsc+rocm")
         for arch_ in ROCmPackage.amdgpu_targets:
@@ -46,6 +49,16 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     build_targets = ["all"]
     install_targets = ["install"]
+
+
+    def initconfig_package_entries(self):
+        spec = self.spec
+        entries = []
+
+        entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
+
+        return entries
+
 
     def cmake_args(self):
         args = []
