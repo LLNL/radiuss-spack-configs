@@ -7,6 +7,9 @@
 ##############################################################################
 
 spack:
+  repos:
+    - ./
+
   #[general--]
   include:
     - $LCSCHEDCLUSTER/config.yaml
