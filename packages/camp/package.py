@@ -23,10 +23,6 @@ def spec_uses_gccname(spec):
     return using_gcc_name
 
 def hip_for_radiuss_projects(options, spec, compiler):
-    # Here is what is typically needed for radiuss projects when building with rocm
-    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
-    options.append(cmake_cache_path("ROCM_PATH", rocm_root))
-
     # there is only one dir like this, but the version component is unknown
     options.append(
         cmake_cache_path(
@@ -37,6 +33,7 @@ def hip_for_radiuss_projects(options, spec, compiler):
 
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
+    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
     hip_link_flags = ""
     if spec_uses_toolchain(spec):
         gcc_prefix = spec_uses_toolchain(spec)[0]
