@@ -6,7 +6,8 @@
 ##############################################################################
 
 variables:
-  MY_SPACK_REPO: https://lc.llnl.gov/gitlab/radiuss/spack-mirror.git
+  #MY_SPACK_REPO: https://lc.llnl.gov/gitlab/radiuss/spack-mirror.git
+  MY_SPACK_REPO: https://github.com/spack/spack.git
   #MY_SPACK_COMMIT: 2d464f8c8903ce57cabe411bbe979583d4ccdb5d # develop-2024-06-16
   #MY_SPACK_COMMIT: aeaa922eef45b14199b486fa2c188252df8c9544 # develop-2024-07-07
   #MY_SPACK_COMMIT: 38643e5a797b708192d2463fde05caf5ccb66ccd # Test PR https://github.com/spack/spack/pull/45648
