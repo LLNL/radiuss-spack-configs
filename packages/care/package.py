@@ -29,6 +29,12 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     version("develop", branch="develop", submodules=False)
     version("master", branch="master", submodules=False)
     version(
+        "0.15.0",
+        tag="v0.15.0",
+        commit="aff9eea69b6d95342371aacc44b73bef785255f3",
+        submodules=False,
+    )
+    version(
         "0.14.1",
         tag="v0.14.1",
         commit="110c6e5766ead59b231e2b05deecd7567874e907",

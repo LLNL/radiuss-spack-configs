@@ -15,7 +15,7 @@ variables:
   #MY_SPACK_COMMIT: 7ad08213dc343c50f3cea2d3627e92d4e54a6421 # develop-2024-10-06
   #MY_SPACK_COMMIT: 70534ac9d457da9bc884feb10a64974ad32c19e3 # develop-2025-01-12
   #MY_SPACK_COMMIT: c0bdc372266c53a078f32f910abe25c05848a74c # develop-2025-02-09
-  MY_SPACK_BRANCH: woptim/radiuss-spack-configs-2025-03-0
+  MY_SPACK_BRANCH: woptim/rsc-2025-03-0
 
 include:
   - local: .gitlab/corona.yml
