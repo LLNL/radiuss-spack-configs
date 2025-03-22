@@ -15,3 +15,4 @@ rebuild-index-lassen:
   script:
     - lalloc ${LASSEN_JOB_ALLOC} .gitlab/spack/reindex-script.sh
   dependencies: []
+  retry: 2

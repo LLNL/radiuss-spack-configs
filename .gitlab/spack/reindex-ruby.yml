@@ -16,3 +16,4 @@ rebuild-index-ruby:
     - export JOBID=$(squeue -h --name=${RUBY_ALLOC_NAME} --format=%A)
     - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${RUBY_JOB_ALLOC} .gitlab/spack/reindex-script.sh
   dependencies: []
+  retry: 2
