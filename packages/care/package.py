@@ -93,6 +93,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant(
         "implicit_conversions",
         default=False,
+        when="@:2024",
         description="Enable implicit" "conversions to/from raw pointers",
     )
     variant("tests", default=False, description="Build tests")
