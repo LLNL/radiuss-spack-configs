@@ -93,7 +93,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant(
         "implicit_conversions",
         default=False,
-        when="@:2024",
+        when="@:0.14",
         description="Enable implicit" "conversions to/from raw pointers",
     )
     variant("tests", default=False, description="Build tests")
@@ -232,13 +232,15 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            archs = self.spec.variants["amdgpu_target"].value
-            if archs != "none":
-                arch_str = ",".join(archs)
-                entries.append(
-                    cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-                )
+            if spec.satisfies("^blt@:0.6"):
+                archs = self.spec.variants["amdgpu_target"].value
+                if archs != "none":
+                    arch_str = ",".join(archs)
+                    entries.append(
+                        cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
+                    )
             hip_for_radiuss_projects(entries, spec, compiler)
+
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
