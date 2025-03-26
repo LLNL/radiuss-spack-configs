@@ -237,7 +237,9 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
                 if archs != "none":
                     arch_str = ",".join(archs)
                     entries.append(
-                        cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
+                        cmake_cache_string(
+                            "HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str)
+                        )
                     )
             hip_for_radiuss_projects(entries, spec, compiler)
 
