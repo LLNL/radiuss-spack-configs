@@ -225,24 +225,13 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("CUDA_SEPARABLE_COMPILATION", True))
             entries.append(cmake_cache_string("NVTOOLSEXT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_string("CUB_DIR", spec["cub"].prefix))
-
             cuda_for_radiuss_projects(entries, spec)
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            if spec.satisfies("^blt@:0.6"):
-                archs = self.spec.variants["amdgpu_target"].value
-                if archs != "none":
-                    arch_str = ",".join(archs)
-                    entries.append(
-                        cmake_cache_string(
-                            "HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str)
-                        )
-                    )
             hip_for_radiuss_projects(entries, spec, compiler)
-
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))
 
