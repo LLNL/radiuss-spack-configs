@@ -1,7 +1,6 @@
-packages::
+'packages:':
   all:
     require: target=zen
-    compiler: [gcc, intel, clang, rocmcc, oneapi]
     providers:
       blas: [openblas]
       lapack: [netlib-lapack]

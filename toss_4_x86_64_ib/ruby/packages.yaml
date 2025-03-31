@@ -1,14 +1,13 @@
-packages::
+'packages:':
   all:
     require:
     - 'target=cascadelake'
-    - spec: '^blt%oneapi'
+    - spec: ^blt%oneapi
       when: '%oneapi ^blt'
-    - spec: '^blt%gcc'
+    - spec: ^blt%gcc
       when: '%gcc ^blt'
-    - spec: '^blt%intel'
+    - spec: ^blt%intel
       when: '%intel ^blt'
-    compiler: [gcc, intel, clang, oneapi]
     providers:
       blas: [openblas]
       lapack: [netlib-lapack]
