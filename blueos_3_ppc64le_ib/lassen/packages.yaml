@@ -220,7 +220,7 @@
     #- spec: netlib-lapack@%nvhpc@=22.11
     #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.11
     - spec: netlib-lapack@3.12.0%nvhpc@=24.1
-      prefix: /usr/tce/packages/lapack/lapack-3.12.0-nv-24.1
+      prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-nv-24.1
     - spec: netlib-lapack@3.9.0
       prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-xl-2020.11.12
 
@@ -328,10 +328,10 @@
       prefix: /usr
   python:
     buildable: false
-    version: [3.8.2]
+    version: [3.11.5]
     externals:
-    - spec: python@3.8.2
-      prefix: /usr/tce/packages/python/python-3.8.2
+    - spec: python@3.11.5
+      prefix: /usr/apps/python-3.11.5
   readline:
     buildable: false
     externals:

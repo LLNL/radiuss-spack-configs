@@ -64,6 +64,12 @@
       prefix: /opt/rocm-6.2.4
     - spec: hipblas@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
+  hipblas-common:
+    version: [6.3.1]
+    buildable: false
+    externals:
+    - spec: hipblas-common@6.3.1%rocmcc@6.3.1
+      prefix: /opt/rocm-6.3.1
   hipsolver:
     version: [5.7.1, 6.1.2, 6.2.4, 6.3.1]
     buildable: false
