@@ -1,7 +1,5 @@
 'packages:':
   all:
-    # This defaults us to machine specific flags of ivybridge which allows
-    # us to run on broadwell as well
     target: [ppc64le]
     providers:
       blas: [netlib-lapack]
