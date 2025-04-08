@@ -116,18 +116,14 @@
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-11.2.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.10
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.10.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22-gcc-8.3.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.11
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.12.22
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.12
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2022.08.19
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.12.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2022.08.19-gcc-8.3.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.14
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.14.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28-gcc-8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.14.cuda.11.8.0.gcc.11.2.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28-cuda-11.8.0-gcc-11.2.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=beta2019.06.20
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
     - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=21.11
@@ -209,7 +205,7 @@
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2022.08.19-gcc-8.3.1
     - spec: netlib-lapack@3.12.0%xl@=16.1.1.14
       prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-xl-2023.06.28
-    - spec: netlib-lapack@3.12.0%xl@=16.1.1.14.gcc.8.3.1
+    - spec: netlib-lapack@3.12.0%xl@=16.1.1.14.cuda.11.8.0.gcc.11.2.1
       prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-xl-2023.06.28
     #- spec: netlib-lapack@%xl@=beta2019.06.20
     #  prefix: /usr/tce/packages/lapack/lapack--xl-beta-2019.06.20
