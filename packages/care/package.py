@@ -29,6 +29,18 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     version("develop", branch="develop", submodules=False)
     version("master", branch="master", submodules=False)
     version(
+        "0.15.1",
+        tag="v0.15.1",
+        commit="f198c8b3d5dcfd274107b4263331818e86b50c7a",
+        submodules=False,
+    )
+    version(
+        "0.15.0",
+        tag="v0.15.0",
+        commit="aff9eea69b6d95342371aacc44b73bef785255f3",
+        submodules=False,
+    )
+    version(
         "0.14.1",
         tag="v0.14.1",
         commit="110c6e5766ead59b231e2b05deecd7567874e907",
@@ -87,6 +99,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant(
         "implicit_conversions",
         default=False,
+        when="@:0.14",
         description="Enable implicit" "conversions to/from raw pointers",
     )
     variant("tests", default=False, description="Build tests")
@@ -127,7 +140,6 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("raja@2024.02.0:", when="@0.12.0:")
     depends_on("raja@2022.10.5:", when="@0.10.0:")
 
-    # TODO: Add an enable_pick variant
     depends_on("chai+enable_pick+raja")
     depends_on("chai@2024.07.0:", when="@0.13.2:")
     depends_on("chai@2024.02.2:", when="@0.13.1:")
@@ -145,12 +157,7 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("chai+openmp")
 
     with when("+cuda"):
-        # WARNING: this package currently only supports an internal cub
-        # package. This will cause a race condition if compiled with another
-        # package that uses cub. TODO: have all packages point to the same external
-        # cub package.
         depends_on("cub")
-
         depends_on("umpire+cuda")
         depends_on("raja+cuda")
         depends_on("chai+cuda")
@@ -218,19 +225,12 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_option("CUDA_SEPARABLE_COMPILATION", True))
             entries.append(cmake_cache_string("NVTOOLSEXT_DIR", spec["cuda"].prefix))
             entries.append(cmake_cache_string("CUB_DIR", spec["cub"].prefix))
-
             cuda_for_radiuss_projects(entries, spec)
         else:
             entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
-            archs = self.spec.variants["amdgpu_target"].value
-            if archs != "none":
-                arch_str = ",".join(archs)
-                entries.append(
-                    cmake_cache_string("HIP_HIPCC_FLAGS", "--amdgpu-target={0}".format(arch_str))
-                )
             hip_for_radiuss_projects(entries, spec, compiler)
         else:
             entries.append(cmake_cache_option("ENABLE_HIP", False))

@@ -103,7 +103,11 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         description="Tests to run",
     )
     variant("caliper", default=False, description="Build with support for Caliper based profiling")
-    variant("lowopttest", default=False, description="Intended for developers to use low optimization level for tests to pass with some compilers.")
+    variant(
+        "lowopttest",
+        default=False,
+        description="For developers, lowers optimization level to pass tests with some compilers",
+    )
 
     depends_on("blt")
     depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
