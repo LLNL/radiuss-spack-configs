@@ -1,14 +1,13 @@
 
-# v2025.02.0
+# v2025.03.0
+
+Recommended Spack version: branch rsc-2025-03-0
 
 ## Add CI
 - We add a GitLab CI pipeline leveraging Spack CI to test building some packages with our shared specs.
 
-# v2025.03.0
-
-Recommended Spack version: develop-2025-03-23
-
 ## Packages Update
+- add 2025.03.0 releases for Camp, Umpire, RAJA, CHAI, and 0.15 releases for CARE.
 - clean hip support
 
 ## Configs Update
