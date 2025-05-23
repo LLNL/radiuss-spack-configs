@@ -234,6 +234,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp+omptarget", when="+omptarget")
     depends_on("camp+sycl", when="+sycl")
+    depends_on("camp@main", when="@develop")
     depends_on("camp@2024.07.0:", when="@2024.02.2:")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")
