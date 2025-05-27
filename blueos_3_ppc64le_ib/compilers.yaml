@@ -416,19 +416,6 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@=16.1.1.10.gcc.8.3.1
-    paths:
-      cc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf_r
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
     spec: xl@=16.1.1.11
     paths:
       cc: /usr/tce/packages/xl/xl-2021.12.22/bin/xlc_r
@@ -455,38 +442,12 @@ compilers::
     environment: {}
     extra_rpaths: []
 - compiler:
-    spec: xl@=16.1.1.12.gcc.8.3.1
-    paths:
-      cc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf_r
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
     spec: xl@=16.1.1.14
     paths:
       cc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlc_r
       cxx: /usr/tce/packages/xl/xl-2023.06.28/bin/xlC_r
       fc: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf2003_r
       f77: /usr/tce/packages/xl/xl-2023.06.28/bin/xlf_r
-    flags: {}
-    operating_system: rhel7
-    target: ppc64le
-    modules: []
-    environment: {}
-    extra_rpaths: []
-- compiler:
-    spec: xl@=16.1.1.14.gcc.8.3.1
-    paths:
-      cc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlc_r
-      cxx: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlC_r
-      fc: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf2003_r
-      f77: /usr/tce/packages/xl/xl-2023.06.28-gcc-8.3.1/bin/xlf_r
     flags: {}
     operating_system: rhel7
     target: ppc64le

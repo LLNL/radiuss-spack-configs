@@ -28,12 +28,18 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/RAJA.git"
     tags = ["radiuss", "e4s"]
 
-    maintainers("davidbeckingsale", "adrienbernede")
+    maintainers("adrienbernede", "davidbeckingsale", "kab163")
 
     license("BSD-3-Clause")
 
     version("develop", branch="develop", submodules=submodules)
     version("main", branch="main", submodules=submodules)
+    version(
+        "2025.03.0",
+        tag="v2025.03.0",
+        commit="1d70abf171474d331f1409908bdf1b1c3fe19222",
+        submodules=submodules,
+    )
     version(
         "2024.07.0",
         tag="v2024.07.0",
@@ -178,6 +184,13 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         when="^hip@6.0",
     )
 
+    # Fix compilation issue reported by Intel from their new compiler version
+    patch(
+        "https://github.com/LLNL/RAJA/pull/1668.patch?full_index=1",
+        sha256="c0548fc5220f24082fb2592d5b4e8b7c8c783b87906d5f0950d53953d25161f6",
+        when="@2024.02.1:2024.02.99 %oneapi@2025:",
+    )
+
     variant("openmp", default=False, description="Build OpenMP backend")
     variant("shared", default=False, description="Build shared libs")
     variant("desul", default=False, description="Build desul atomics backend")
@@ -221,6 +234,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp+omptarget", when="+omptarget")
     depends_on("camp+sycl", when="+sycl")
+    depends_on("camp@main", when="@develop")
     depends_on("camp@2024.07.0:", when="@2024.02.2:")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")

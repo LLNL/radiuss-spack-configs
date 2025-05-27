@@ -1,8 +1,25 @@
 
-# v2025.02.0
+# v2025.03.0
+
+Recommended Spack version: branch rsc-2025-03-0
 
 ## Add CI
 - We add a GitLab CI pipeline leveraging Spack CI to test building some packages with our shared specs.
+
+## Packages Update
+- add 2025.03.0 releases for Camp, Umpire, RAJA, CHAI, and 0.15 releases for CARE.
+- clean hip support
+
+## Configs Update
+- Updated rocm 6.3.0 to 6.3.1 on tioga
+- Cleaned older rocm toolchains
+
+## Shared CI jobs
+- Updated specs to prepare spack@1.0.0: variants must be applied before compiler
+
+## CI
+- Force concretization
+- Point at spack internal mirror to reduce firewall traffic
 
 # v2025.01.0
 

@@ -23,20 +23,9 @@ def spec_uses_gccname(spec):
     return using_gcc_name
 
 def hip_for_radiuss_projects(options, spec, compiler):
-    # Here is what is typically needed for radiuss projects when building with rocm
-    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
-    options.append(cmake_cache_path("ROCM_PATH", rocm_root))
-
-    # there is only one dir like this, but the version component is unknown
-    options.append(
-        cmake_cache_path(
-            "HIP_CLANG_INCLUDE_PATH",
-            glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0],
-        )
-    )
-
     # adrienbernede-22-11:
     #   Specific to Umpire, attempt port to RAJA and CHAI
+    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
     hip_link_flags = ""
     if spec_uses_toolchain(spec):
         gcc_prefix = spec_uses_toolchain(spec)[0]
@@ -58,7 +47,7 @@ def cuda_for_radiuss_projects(options, spec):
     if spec_uses_toolchain(spec):
         cuda_flags.append("-Xcompiler {}".format(spec_uses_toolchain(spec)[0]))
 
-    if spec.satisfies("%gcc@8.1: target=ppc64le"):
+    if spec.satisfies("target=ppc64le %gcc@8.1:"):
         cuda_flags.append("-Xcompiler -mno-float128")
 
     options.append(cmake_cache_string("CMAKE_CUDA_FLAGS", " ".join(cuda_flags)))
@@ -101,11 +90,17 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/camp.git"
     url = "https://github.com/LLNL/camp/archive/v0.1.0.tar.gz"
 
-    maintainers("trws", "adrienbernede")
+    maintainers("adrienbernede", "kab163", "trws")
 
     license("BSD-3-Clause")
 
     version("main", branch="main", submodules=False)
+    version(
+        "2025.03.0",
+        tag="v2025.03.0",
+        commit="ee0a3069a7ae72da8bcea63c06260fad34901d43",
+        submodules=False,
+    )
     version(
         "2024.07.0",
         tag="v2024.07.0",
@@ -194,12 +189,6 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
         if spec.satisfies("+rocm"):
             rocm_root = dirname(spec["llvm-amdgpu"].prefix)
             options.append("-DROCM_PATH={0}".format(rocm_root))
-
-            # there is only one dir like this, but the version component is unknown
-            options.append(
-                "-DHIP_CLANG_INCLUDE_PATH="
-                + glob.glob("{}/lib/clang/*/include".format(spec["llvm-amdgpu"].prefix))[0]
-            )
 
             archs = ";".join(self.spec.variants["amdgpu_target"].value)
             options.append("-DCMAKE_HIP_ARCHITECTURES={0}".format(archs))

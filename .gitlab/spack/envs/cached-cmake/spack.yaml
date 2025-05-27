@@ -52,17 +52,12 @@ spack:
     - '%gcc@=11.2.1'
     when: env.get("LCSCHEDCLUSTER", "") == "poodle"
   - compilers:
-    - '%oneapi@=2023.2.1'
-    - '%clang@=14.0.6'
-    - '%gcc@=11.2.1'
-    when: env.get("LCSCHEDCLUSTER", "") == "dane"
-  - compilers:
-    - '+cuda %clang@=12.0.1.ibm.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
-    - '+cuda %clang@=12.0.1.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
-    - '+cuda %clang@=14.0.5.gcc.8.3.1 ^cuda@11.7.0+allow-unsupported-compilers'
-    - '+cuda %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
-    - '+cuda %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
-    - '+cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %clang@=12.0.1.ibm.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %clang@=12.0.1.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %clang@=14.0.5.gcc.8.3.1 ^cuda@11.7.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - '+cuda cuda_arch=70 %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
     when: env.get("LCSCHEDCLUSTER", "") == "lassen"
   - compilers:
     - '+rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1'
@@ -70,18 +65,32 @@ spack:
     when: env.get("LCSCHEDCLUSTER", "") == "tioga"
   #[definitions--]
 
-  - radiuss-projects:
+  - cached-cmake-projects:
     - umpire
     - raja
     - raja-perf
     - chai
     - care
     - caliper
+    - aluminum
+    - axom
+    - dihydrogen
+    - hydrogen
+    - lbann
+    - sina
   - dependencies: []
   #[--definitions]
 
   specs:
   - matrix:
-    - [$radiuss-projects]
+    - [$cached-cmake-projects]
     - [$compilers]
-    exclude: []
+    exclude:
+    - 'sina +rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1'
+    - 'sina +cuda %clang@=12.0.1.ibm.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
+    - 'sina +cuda %clang@=12.0.1.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
+    - 'sina +cuda %clang@=14.0.5.gcc.8.3.1 ^cuda@11.7.0+allow-unsupported-compilers'
+    - 'sina +cuda %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - 'sina +cuda %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - 'sina +cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - 'sina +rocm amdgpu_target=gfx906 %rocmcc@=5.7.1 ^hip@5.7.1'

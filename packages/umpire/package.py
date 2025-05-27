@@ -22,11 +22,17 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     git = "https://github.com/LLNL/Umpire.git"
     tags = ["radiuss", "e4s"]
 
-    maintainers("davidbeckingsale", "adrienbernede")
+    maintainers("adrienbernede", "davidbeckingsale", "kab163")
 
     license("MIT")
 
     version("develop", branch="develop", submodules=False)
+    version(
+        "2025.03.0",
+        tag="v2025.03.0",
+        commit="1ed0669c57f041baa1f1070693991c3a7a43e7ee",
+        submodules=False,
+    )
     version(
         "2024.07.0",
         tag="v2024.07.0",
@@ -234,6 +240,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.8:", type="build")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
     depends_on("blt@0.5.3", type="build", when="@2023.06.0")
@@ -394,10 +401,12 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries = super().initconfig_mpi_entries()
         entries.append(cmake_cache_option("ENABLE_MPI", spec.satisfies("+mpi")))
+        entries.append(
+            cmake_cache_option("UMPIRE_ENABLE_MPI3_SHARED_MEMORY", spec.satisfies("+mpi3_shmem"))
+        )
+
         if spec.satisfies("+mpi"):
             mpi_for_radiuss_projects(entries, spec, env)
-
-        entries.append(cmake_cache_option("UMPIRE_ENABLE_MPI3_SHARED_MEMORY", spec.satisfies("+mpi3_shmem")))
 
         return entries
 
