@@ -8,12 +8,14 @@
 include:
   - local: ".gitlab/spack/reindex-override.yml"
 
-rebuild-index-poodle:
+rebuild-index-tuo:
   stage: .post
-  tags: [poodle, shell]
+  tags: [tuo, shell]
   when: always
   script:
-    - export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)
-    - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${POODLE_JOB_ALLOC} .gitlab/spack/reindex-script.sh
+    - export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")
+    - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
+    - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
+    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${TUO_JOB_ALLOC} .gitlab/spack/reindex-script.sh)
   dependencies: []
   retry: 2

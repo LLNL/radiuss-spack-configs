@@ -5,18 +5,12 @@
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
-oneapi_2023_2_1:
+rocmcc_6_3_1_hip:
   variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %oneapi@=2023.2.1 ${PROJECT_DANE_DEPS}"
-  extends: .job_on_dane
+    SPEC: "${PROJECT_TUO_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1 ${PROJECT_TUO_DEPS}"
+  extends: .job_on_tuo
 
-clang_14_0_6:
+cce_18_0_1:
   variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %clang@=14.0.6 ${PROJECT_DANE_DEPS}"
-  extends: .job_on_dane
-
-gcc_10_3_1:
-  variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %gcc@=10.3.1 ${PROJECT_DANE_DEPS}"
-  extends: .job_on_dane
-
+    SPEC: "${PROJECT_TUO_VARIANTS} %cce@=18.0.1 ${PROJECT_TUO_DEPS}"
+  extends: .job_on_tuo
