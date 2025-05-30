@@ -34,7 +34,7 @@ allocate-tioga:
       set -x
       flux --parent alloc ${TIOGA_SHARED_ALLOC} --job-name=${TIOGA_ALLOC_NAME} --bg
 
-.prepare_tioga_proxy:
+.prepare-tioga-proxy:
   script:
     - |
       export ALLOC_ID=$(flux jobs --name="${TIOGA_ALLOC_NAME}" -n -o "{id}")
@@ -45,7 +45,7 @@ get-spack-tioga:
   extends: [.on-tioga, .tioga-variables]
   stage: setup
   script:
-    - !reference [.prepare_tioga_proxy, script]
+    - !reference [.prepare-tioga-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/get-spack)
   needs: [allocate-tioga]
 
@@ -54,7 +54,7 @@ generate-on-tioga:
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_tioga_proxy, script]
+    - !reference [.prepare-tioga-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/spack/generate-script.sh)
   artifacts:
     paths:
@@ -80,7 +80,7 @@ rm-spack-tioga:
   extends: [.on-tioga, .tioga-variables]
   stage: clean
   script:
-    - !reference [.prepare_tioga_proxy, script]
+    - !reference [.prepare-tioga-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/remove-spack)
   needs: [build-on-tioga]
 

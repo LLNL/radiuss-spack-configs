@@ -32,7 +32,7 @@ allocate-dane:
   script:
     - salloc ${DANE_SHARED_ALLOC} --no-shell --job-name=${DANE_ALLOC_NAME}
 
-.prepare_dane_jobid:
+.prepare-dane-jobid:
   script:
     - |
       export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
@@ -43,7 +43,7 @@ get-spack-dane:
   extends: [.on-dane, .dane-variables]
   stage: setup
   script:
-    - !reference [.prepare_dane_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/get-spack
   needs: [allocate-dane]
 
@@ -52,7 +52,7 @@ generate-on-dane:
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_dane_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
     paths:
@@ -78,7 +78,7 @@ rm-spack-dane:
   extends: [.on-dane, .dane-variables]
   stage: clean
   script:
-    - !reference [.prepare_dane_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/remove-spack
   needs: [build-on-dane]
 
@@ -88,6 +88,6 @@ release-dane:
   extends: [.on-dane, .dane-variables]
   stage: .post
   script:
-    - !reference [.prepare_dane_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - ([[ -n "${JOBID}" ]] && scancel ${JOBID} || exit 0)
   needs: [rm-spack-dane]

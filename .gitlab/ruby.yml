@@ -32,7 +32,7 @@ allocate-ruby:
   script:
     - salloc ${RUBY_SHARED_ALLOC} --no-shell --job-name=${RUBY_ALLOC_NAME}
 
-.prepare_ruby_jobid:
+.prepare-ruby-jobid:
   script:
     - |
       export JOBID=$(squeue -h --name=${RUBY_ALLOC_NAME} --format=%A)
@@ -44,7 +44,7 @@ get-spack-ruby:
   extends: [.on-ruby, .ruby-variables]
   stage: setup
   script:
-    - !reference [.prepare_ruby_jobid, script]
+    - !reference [.prepare-ruby-jobid, script]
     - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 .gitlab/scripts/get-spack
   needs: [allocate-ruby]
 #[--get-spack]
@@ -54,7 +54,7 @@ generate-on-ruby:
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_ruby_jobid, script]
+    - !reference [.prepare-ruby-jobid, script]
     - srun ${JOBID_OPT} --reservation=ci --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
     paths:
@@ -83,7 +83,7 @@ rm-spack-ruby:
   extends: [.on-ruby, .ruby-variables]
   stage: clean
   script:
-    - !reference [.prepare_ruby_jobid, script]
+    - !reference [.prepare-ruby-jobid, script]
     - srun ${JOBID_OPT} --reservation=ci --nodes=2 -n 2 .gitlab/scripts/remove-spack
   needs: [build-on-ruby]
 #[--rm-spack]
@@ -94,6 +94,6 @@ release-ruby:
   extends: [.on-ruby, .ruby-variables]
   stage: .post
   script:
-    - !reference [.prepare_ruby_jobid, script]
+    - !reference [.prepare-ruby-jobid, script]
     - ([[ -n "${JOBID}" ]] && scancel ${JOBID} || exit 0)
   needs: [rm-spack-ruby]

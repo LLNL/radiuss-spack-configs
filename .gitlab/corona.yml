@@ -34,7 +34,7 @@ allocate-corona:
       set -x
       flux --parent alloc ${CORONA_SHARED_ALLOC} --job-name=${CORONA_ALLOC_NAME} --bg
 
-.prepare_corona_proxy:
+.prepare-corona-proxy:
   script:
     - |
       export ALLOC_ID=$(flux jobs --name="${CORONA_ALLOC_NAME}" -n -o "{id}")
@@ -45,7 +45,7 @@ get-spack-corona:
   extends: [.on-corona, .corona-variables]
   stage: setup
   script:
-    - !reference [.prepare_corona_proxy, script]
+    - !reference [.prepare-corona-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/get-spack)
   needs: [allocate-corona]
 
@@ -54,7 +54,7 @@ generate-on-corona:
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_corona_proxy, script]
+    - !reference [.prepare-corona-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/spack/generate-script.sh)
   artifacts:
     paths:
@@ -80,7 +80,7 @@ rm-spack-corona:
   extends: [.on-corona, .corona-variables]
   stage: clean
   script:
-    - !reference [.prepare_corona_proxy, script]
+    - !reference [.prepare-corona-proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/remove-spack)
   needs: [build-on-corona]
 
