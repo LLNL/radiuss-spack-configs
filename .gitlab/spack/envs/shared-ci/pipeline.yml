@@ -23,4 +23,4 @@ include:
   - local: .gitlab/dane.yml
   - local: .gitlab/lassen.yml
   - local: .gitlab/tioga.yml
-  - local: .gitlab/tuo.yml
+  - local: .gitlab/tuolumne.yml

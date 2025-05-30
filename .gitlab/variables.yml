@@ -57,11 +57,11 @@
     MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
     SPACK_TARGET: zen3
 
-.tuo-variables:
+.tuolumne-variables:
   variables:
     SPACK_DISABLE_LOCAL_CONFIG: ""
     MY_SPACK_DEBUG: ""
-    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuo
-    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuo/spack-user-cache
+    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuolumne
+    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuolumne/spack-user-cache
     MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
     SPACK_TARGET: zen4

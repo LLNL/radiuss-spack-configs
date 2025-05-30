@@ -8,9 +8,9 @@
 rocmcc_6_3_1_hip:
   variables:
     SPEC: "${PROJECT_TUO_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1 ${PROJECT_TUO_DEPS}"
-  extends: .job_on_tuo
+  extends: .job_on_tuolumne
 
 cce_18_0_1:
   variables:
     SPEC: "${PROJECT_TUO_VARIANTS} %cce@=18.0.1 ${PROJECT_TUO_DEPS}"
-  extends: .job_on_tuo
+  extends: .job_on_tuolumne

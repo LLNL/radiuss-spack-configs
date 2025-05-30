@@ -10,88 +10,88 @@ variables:
   TUO_SHARED_ALLOC: "--queue=pci --exclusive --time-limit=60m --nodes=1"
   TUO_JOB_ALLOC: "--nodes=1 --begin-time=+2s"
 
-.on-tuo:
+.on-tuolumne:
   tags:
     - shell
     - tuolumne
   rules:
-    # Runs except if we explicitly deactivate tuo by variable.
+    # Runs except if we explicitly deactivate tuolumne by variable.
     - if: '$ON_TUO == "OFF"'
       when: never
     # We should always release resources allocated in the pipeline.
-    - if: '$CI_JOB_NAME =~ /release-tuo/'
+    - if: '$CI_JOB_NAME =~ /release-tuolumne/'
       when: always
     # A true statement is expected to allow jobs to run. Here is the default.
     - when: on_success
 
-allocate-tuo:
+allocate-tuolumne:
   variables:
     GIT_STRATEGY: none
-  extends: [.on-tuo, .tuo-variables]
+  extends: [.on-tuolumne, .tuolumne-variables]
   stage: .pre
   script:
     - |
       set -x
       flux --parent alloc ${TUO_SHARED_ALLOC} --job-name=${TUO_ALLOC_NAME} --bg
 
-.prepare_tuo_proxy:
+.prepare_tuolumne_proxy:
   script:
     - |
       export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")
       echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
       export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
 
-get-spack-tuo:
-  extends: [.on-tuo, .tuo-variables]
+get-spack-tuolumne:
+  extends: [.on-tuolumne, .tuolumne-variables]
   stage: setup
   script:
-    - !reference [.prepare_tuo_proxy, script]
+    - !reference [.prepare_tuolumne_proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/get-spack)
-  needs: [allocate-tuo]
+  needs: [allocate-tuolumne]
 
-generate-on-tuo:
-  extends: [.on-tuo, .tuo-variables]
+generate-on-tuolumne:
+  extends: [.on-tuolumne, .tuolumne-variables]
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_tuo_proxy, script]
+    - !reference [.prepare_tuolumne_proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/spack/generate-script.sh)
   artifacts:
     paths:
       - "${CI_PROJECT_DIR}/jobs_scratch_dir"
-  needs: [get-spack-tuo]
+  needs: [get-spack-tuolumne]
 
-build-on-tuo:
-  extends: [.tuo-variables]
+build-on-tuolumne:
+  extends: [.tuolumne-variables]
   stage: build
   trigger:
     include:
       - artifact: "jobs_scratch_dir/pipeline.yml"
-        job: generate-on-tuo
+        job: generate-on-tuolumne
       - project: "lc-templates/id_tokens"
         file: "id_tokens.yml"
-      - local: ".gitlab/spack/reindex-tuo.yml"
+      - local: ".gitlab/spack/reindex-tuolumne.yml"
     strategy: depend
     forward:
       pipeline_variables: true
-  needs: [generate-on-tuo]
+  needs: [generate-on-tuolumne]
 
-rm-spack-tuo:
-  extends: [.on-tuo, .tuo-variables]
+rm-spack-tuolumne:
+  extends: [.on-tuolumne, .tuolumne-variables]
   stage: clean
   script:
-    - !reference [.prepare_tuo_proxy, script]
+    - !reference [.prepare_tuolumne_proxy, script]
     - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs --nodes=1 --begin-time=+2s .gitlab/scripts/remove-spack)
-  needs: [build-on-tuo]
+  needs: [build-on-tuolumne]
 
-release-tuo:
+release-tuolumne:
   variables:
     GIT_STRATEGY: none
-  extends: [.on-tuo, .tuo-variables]
+  extends: [.on-tuolumne, .tuolumne-variables]
   stage: .post
   script:
     - |
       set -x
       export URI=$(flux jobs -o "{id} {name}" | grep ${TUO_ALLOC_NAME} | awk '{print $1}')
       ([[ -n "${URI}" ]] && flux job kill ${URI} || exit 0)
-  needs: [rm-spack-tuo]
+  needs: [rm-spack-tuolumne]

@@ -8,7 +8,7 @@
 include:
   - local: ".gitlab/spack/reindex-override.yml"
 
-rebuild-index-tuo:
+rebuild-index-tuolumne:
   stage: .post
   tags: [tuolumne, shell]
   when: always
