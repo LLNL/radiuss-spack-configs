@@ -10,7 +10,7 @@ include:
 
 rebuild-index-tuo:
   stage: .post
-  tags: [tuo, shell]
+  tags: [tuolumne, shell]
   when: always
   script:
     - export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")

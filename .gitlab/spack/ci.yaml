@@ -56,7 +56,7 @@ ci:
     - match:
       - 'target=zen4'
       build-job:
-        tags: [tuo, shell]
+        tags: [tuolumne, shell]
         script::
         - export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")
         - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"

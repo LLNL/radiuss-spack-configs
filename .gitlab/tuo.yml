@@ -13,7 +13,7 @@ variables:
 .on-tuo:
   tags:
     - shell
-    - tuo
+    - tuolumne
   rules:
     # Runs except if we explicitly deactivate tuo by variable.
     - if: '$ON_TUO == "OFF"'
