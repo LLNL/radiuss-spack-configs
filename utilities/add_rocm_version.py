@@ -71,6 +71,20 @@ def get_prefix_pattern(package_name, version):
     else:
         return f"/opt/rocm-{version}"
 
+def parse_externals_entries(externals_content, package_name):
+    """Parse existing externals entries and return them as structured data."""
+    entries = []
+    
+    # Split into individual entries (each starting with "- spec:")
+    entry_pattern = r'(\s*- spec: ' + package_name + r'@(\d+\.\d+\.\d+).*?\n\s*prefix: .*?)(?=\n\s*- spec:|\n\s*\w+:|\Z)'
+    
+    for match in re.finditer(entry_pattern, externals_content, re.DOTALL):
+        entry_text = match.group(1)
+        version = match.group(2)
+        entries.append((version, entry_text))
+    
+    return entries
+
 def add_rocm_version_to_package(content, package_name, new_version):
     """Add a new ROCm version to a specific package in the YAML content."""
     
@@ -99,30 +113,45 @@ def add_rocm_version_to_package(content, package_name, new_version):
     
     content = re.sub(version_pattern, replace_version_list, content, flags=re.MULTILINE)
     
-    # Add new spec entry
+    # Generate new spec entry
     prefix = get_prefix_pattern(package_name, new_version)
     
     # Special handling for cray-mpich (has compiler variant)
     if package_name == "cray-mpich":
-        new_spec = f"    - spec: cray-mpich@8.1.31%rocmcc@{new_version}\n      prefix: {prefix}"
+        new_entry = f"    - spec: cray-mpich@8.1.31%rocmcc@{new_version}\n      prefix: {prefix}"
     else:
-        new_spec = f"    - spec: {package_name}@{new_version}%rocmcc@{new_version}\n      prefix: {prefix}"
+        new_entry = f"    - spec: {package_name}@{new_version}%rocmcc@{new_version}\n      prefix: {prefix}"
     
-    # Find the externals section for this package and add the new spec
-    externals_pattern = rf"({package_name}:.*?externals:\s*\n)(.*?)(\n\s*\w+:|\n$|\Z)"
+    # Find the externals section and rebuild it with proper ordering
+    externals_pattern = rf"({package_name}:.*?externals:\s*\n)(.*?)(\n\s*\w+:|\Z)"
     
-    def add_spec_to_externals(match):
+    def rebuild_externals(match):
         externals_header = match.group(1)
-        existing_specs = match.group(2)
+        externals_content = match.group(2)
         rest = match.group(3) if match.group(3) else ""
         
-        # Add new spec at the end of existing specs
-        if existing_specs.strip():
-            return f"{externals_header}{existing_specs}{new_spec}\n{rest}"
-        else:
-            return f"{externals_header}{new_spec}\n{rest}"
+        # Parse existing entries
+        existing_entries = parse_externals_entries(externals_content, package_name)
+        
+        # Add new entry to the list
+        existing_entries.append((new_version, new_entry))
+        
+        # Sort by version
+        existing_entries.sort(key=lambda x: [int(i) for i in x[0].split('.')])
+        
+        # Rebuild externals section
+        rebuilt_externals = ""
+        for version, entry_text in existing_entries:
+            # Clean up the entry text and ensure proper formatting
+            clean_entry = entry_text.strip()
+            if not clean_entry.startswith("    "):
+                # Add proper indentation if missing
+                clean_entry = "    " + clean_entry.lstrip()
+            rebuilt_externals += clean_entry + "\n"
+        
+        return f"{externals_header}{rebuilt_externals}{rest}"
     
-    content = re.sub(externals_pattern, add_spec_to_externals, content, flags=re.MULTILINE | re.DOTALL)
+    content = re.sub(externals_pattern, rebuild_externals, content, flags=re.MULTILINE | re.DOTALL)
     
     print(f"  Added version {new_version} to {package_name}")
     return content
