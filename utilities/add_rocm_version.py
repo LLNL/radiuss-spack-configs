@@ -2,9 +2,14 @@
 
 import argparse
 import os
-import re
 import sys
 from pathlib import Path
+
+try:
+    from ruamel.yaml import YAML
+except ImportError:
+    print("Error: ruamel.yaml is required. Install with: pip install ruamel.yaml")
+    sys.exit(1)
 
 def find_yaml_files(directory):
     """Find all packages.yaml files in the directory tree."""
@@ -37,26 +42,6 @@ def get_rocm_packages():
         "cray-mpich"  # Has ROCm compiler variants
     ]
 
-def parse_existing_versions(content, package_name):
-    """Parse existing ROCm versions for a package."""
-    versions = set()
-    
-    # Look for version lines like: version: [5.7.1, 6.1.2, 6.2.4, 6.3.1]
-    version_pattern = rf"{package_name}:\s*\n\s*version:\s*\[(.*?)\]"
-    match = re.search(version_pattern, content, re.MULTILINE)
-    if match:
-        version_str = match.group(1)
-        # Extract versions
-        for v in re.findall(r'(\d+\.\d+\.\d+)', version_str):
-            versions.add(v)
-    
-    # Also look for spec lines to find versions
-    spec_pattern = rf"- spec: {package_name}@(\d+\.\d+\.\d+)"
-    for match in re.finditer(spec_pattern, content):
-        versions.add(match.group(1))
-    
-    return sorted(versions, key=lambda x: [int(i) for i in x.split('.')])
-
 def get_prefix_pattern(package_name, version):
     """Generate the expected prefix path for a package and version."""
     if package_name == "hip":
@@ -71,109 +56,113 @@ def get_prefix_pattern(package_name, version):
     else:
         return f"/opt/rocm-{version}"
 
-def parse_externals_entries(externals_content, package_name):
-    """Parse existing externals entries and return them as structured data."""
-    entries = []
-    
-    # Split into individual entries (each starting with "- spec:")
-    entry_pattern = r'(\s*- spec: ' + package_name + r'@(\d+\.\d+\.\d+).*?\n\s*prefix: .*?)(?=\n\s*- spec:|\n\s*\w+:|\Z)'
-    
-    for match in re.finditer(entry_pattern, externals_content, re.DOTALL):
-        entry_text = match.group(1)
-        version = match.group(2)
-        entries.append((version, entry_text))
-    
-    return entries
+def version_key(version_str):
+    """Convert version string to tuple for proper sorting."""
+    return tuple(int(x) for x in version_str.split('.'))
 
-def add_rocm_version_to_package(content, package_name, new_version):
-    """Add a new ROCm version to a specific package in the YAML content."""
+def add_rocm_version_to_package(packages_data, package_name, new_version):
+    """Add a new ROCm version to a specific package in the YAML data."""
     
-    # Skip if package not found
-    if f"{package_name}:" not in content:
-        return content
+    if package_name not in packages_data:
+        return False
+    
+    package = packages_data[package_name]
+    
+    # Check if package has version list
+    if 'version' not in package:
+        return False
     
     # Get existing versions
-    existing_versions = parse_existing_versions(content, package_name)
+    existing_versions = package['version']
+    if not isinstance(existing_versions, list):
+        return False
     
     # Skip if version already exists
     if new_version in existing_versions:
         print(f"  Version {new_version} already exists for {package_name}")
-        return content
+        return False
     
-    # Add new version to the list
-    updated_versions = existing_versions + [new_version]
-    updated_versions.sort(key=lambda x: [int(i) for i in x.split('.')])
+    # Add new version and sort
+    existing_versions.append(new_version)
+    existing_versions.sort(key=version_key)
     
-    # Update version list
-    version_pattern = rf"({package_name}:\s*\n\s*version:\s*\[)(.*?)(\])"
-    version_list = ", ".join(updated_versions)
+    # Check if package has externals
+    if 'externals' not in package:
+        return False
     
-    def replace_version_list(match):
-        return f"{match.group(1)}{version_list}{match.group(3)}"
+    externals = package['externals']
+    if not isinstance(externals, list):
+        return False
     
-    content = re.sub(version_pattern, replace_version_list, content, flags=re.MULTILINE)
-    
-    # Generate new spec entry
+    # Generate new external entry
     prefix = get_prefix_pattern(package_name, new_version)
     
     # Special handling for cray-mpich (has compiler variant)
     if package_name == "cray-mpich":
-        new_entry = f"    - spec: cray-mpich@8.1.31%rocmcc@{new_version}\n      prefix: {prefix}"
+        new_spec = f"cray-mpich@8.1.31%rocmcc@{new_version}"
     else:
-        new_entry = f"    - spec: {package_name}@{new_version}%rocmcc@{new_version}\n      prefix: {prefix}"
+        new_spec = f"{package_name}@{new_version}%rocmcc@{new_version}"
     
-    # Find the externals section and rebuild it with proper ordering
-    externals_pattern = rf"({package_name}:.*?externals:\s*\n)(.*?)(\n\s*\w+:|\Z)"
+    new_external = {
+        'spec': new_spec,
+        'prefix': prefix
+    }
     
-    def rebuild_externals(match):
-        externals_header = match.group(1)
-        externals_content = match.group(2)
-        rest = match.group(3) if match.group(3) else ""
-        
-        # Parse existing entries
-        existing_entries = parse_externals_entries(externals_content, package_name)
-        
-        # Add new entry to the list
-        existing_entries.append((new_version, new_entry))
-        
-        # Sort by version
-        existing_entries.sort(key=lambda x: [int(i) for i in x[0].split('.')])
-        
-        # Rebuild externals section
-        rebuilt_externals = ""
-        for version, entry_text in existing_entries:
-            # Clean up the entry text and ensure proper formatting
-            clean_entry = entry_text.strip()
-            if not clean_entry.startswith("    "):
-                # Add proper indentation if missing
-                clean_entry = "    " + clean_entry.lstrip()
-            rebuilt_externals += clean_entry + "\n"
-        
-        return f"{externals_header}{rebuilt_externals}{rest}"
+    # Add new external entry
+    externals.append(new_external)
     
-    content = re.sub(externals_pattern, rebuild_externals, content, flags=re.MULTILINE | re.DOTALL)
+    # Sort externals by version
+    def extract_version_from_spec(external):
+        spec = external.get('spec', '')
+        # Extract version from spec like "package@version%compiler"
+        if '@' in spec:
+            parts = spec.split('@')[1]  # Get everything after package@
+            if '%' in parts:
+                version_part = parts.split('%')[0]  # Get version before %compiler
+            else:
+                version_part = parts
+            try:
+                return version_key(version_part)
+            except:
+                return (0, 0, 0)  # fallback for unparseable versions
+        return (0, 0, 0)
+    
+    externals.sort(key=extract_version_from_spec)
     
     print(f"  Added version {new_version} to {package_name}")
-    return content
+    return True
 
 def update_yaml_file(file_path, new_version):
     """Update a single YAML file with the new ROCm version."""
     print(f"Updating {file_path}")
     
     try:
-        with open(file_path, 'r') as f:
-            content = f.read()
+        yaml = YAML()
+        yaml.preserve_quotes = True
+        yaml.map_indent = 2
+        yaml.sequence_indent = 2
+        yaml.sequence_dash_offset = 0
         
-        original_content = content
+        # Read the file
+        with open(file_path, 'r') as f:
+            data = yaml.load(f)
+        
+        if not data or 'packages' not in data:
+            print(f"  No packages section found in {file_path}")
+            return
+        
+        packages_data = data['packages']
         rocm_packages = get_rocm_packages()
         
+        changes_made = False
         for package in rocm_packages:
-            content = add_rocm_version_to_package(content, package, new_version)
+            if add_rocm_version_to_package(packages_data, package, new_version):
+                changes_made = True
         
-        # Only write if content changed
-        if content != original_content:
+        # Write back if changes were made
+        if changes_made:
             with open(file_path, 'w') as f:
-                f.write(content)
+                yaml.dump(data, f)
             print(f"  Updated {file_path}")
         else:
             print(f"  No changes needed for {file_path}")
@@ -200,7 +189,9 @@ def main():
     args = parser.parse_args()
     
     # Validate version format
-    if not re.match(r'^\d+\.\d+\.\d+$', args.rocm_version):
+    try:
+        version_key(args.rocm_version)
+    except:
         print(f"Error: Invalid version format '{args.rocm_version}'. Expected format: X.Y.Z")
         sys.exit(1)
     
@@ -216,12 +207,13 @@ def main():
     
     if args.dry_run:
         print("DRY RUN - No files will be modified")
-    
-    for yaml_file in yaml_files:
-        if not args.dry_run:
-            update_yaml_file(yaml_file, args.rocm_version)
-        else:
+        # For dry run, we'd need to implement a preview mode
+        # For now, just show which files would be processed
+        for yaml_file in yaml_files:
             print(f"Would update: {yaml_file}")
+    else:
+        for yaml_file in yaml_files:
+            update_yaml_file(yaml_file, args.rocm_version)
 
 if __name__ == "__main__":
     main()
