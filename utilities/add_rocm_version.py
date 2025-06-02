@@ -78,7 +78,7 @@ def restore_yaml_format(content, had_quoted_packages):
     """Restore the original YAML format with quoted packages key if needed."""
     if had_quoted_packages:
         # Restore quotes around packages:
-        content = content.replace("packages", "'packages:'", 1)
+        content = content.replace("packages:", "'packages:':", 1)
 
     return content
 
@@ -97,17 +97,25 @@ def add_rocm_version_to_package(packages_data, package_name, new_version):
     """Add a new ROCm version to a specific package in the YAML data."""
 
     if package_name not in packages_data:
+        print(f"  Package {package_name} not found in file")
         return False
 
     package = packages_data[package_name]
+    print(f"  Processing {package_name}")
+
+    # Special handling for cray-mpich - it might not have a version list
+    if package_name == "cray-mpich":
+        return add_rocm_version_to_cray_mpich(package, new_version)
 
     # Check if package has version list
     if 'version' not in package:
+        print(f"  No version list found for {package_name}")
         return False
 
     # Get existing versions
     existing_versions = package['version']
     if not isinstance(existing_versions, list):
+        print(f"  Version field is not a list for {package_name}")
         return False
 
     # Skip if version already exists
@@ -121,20 +129,17 @@ def add_rocm_version_to_package(packages_data, package_name, new_version):
 
     # Check if package has externals
     if 'externals' not in package:
+        print(f"  No externals found for {package_name}")
         return False
 
     externals = package['externals']
     if not isinstance(externals, list):
+        print(f"  Externals field is not a list for {package_name}")
         return False
 
     # Generate new external entry
     prefix = get_prefix_pattern(package_name, new_version)
-
-    # Special handling for cray-mpich (has compiler variant)
-    if package_name == "cray-mpich":
-        new_spec = f"cray-mpich@8.1.31%rocmcc@{new_version}"
-    else:
-        new_spec = f"{package_name}@{new_version}%rocmcc@{new_version}"
+    new_spec = f"{package_name}@{new_version}%rocmcc@{new_version}"
 
     new_external = {
         'spec': new_spec,
@@ -163,6 +168,63 @@ def add_rocm_version_to_package(packages_data, package_name, new_version):
     externals.sort(key=extract_version_from_spec)
 
     print(f"  Added version {new_version} to {package_name}")
+    return True
+
+def add_rocm_version_to_cray_mpich(package, new_version):
+    """Special handling for cray-mpich package."""
+    print(f"  Special handling for cray-mpich")
+    
+    # Check if package has externals
+    if 'externals' not in package:
+        print(f"  No externals found for cray-mpich")
+        return False
+
+    externals = package['externals']
+    if not isinstance(externals, list):
+        print(f"  Externals field is not a list for cray-mpich")
+        return False
+
+    # Check if this ROCm version already exists
+    new_spec_pattern = f"cray-mpich@8.1.31%rocmcc@{new_version}"
+    for external in externals:
+        if external.get('spec', '') == new_spec_pattern:
+            print(f"  Version {new_version} already exists for cray-mpich")
+            return False
+
+    # Generate new external entry
+    prefix = get_prefix_pattern("cray-mpich", new_version)
+    new_spec = f"cray-mpich@8.1.31%rocmcc@{new_version}"
+
+    new_external = {
+        'spec': new_spec,
+        'prefix': prefix
+    }
+
+    # Add new external entry
+    externals.append(new_external)
+
+    # Sort externals by ROCm compiler version
+    def extract_rocmcc_version_from_spec(external):
+        spec = external.get('spec', '')
+        # Look for %rocmcc@version pattern
+        if '%rocmcc@' in spec:
+            rocmcc_part = spec.split('%rocmcc@')[1]
+            # Get version (might have other stuff after it)
+            version_part = rocmcc_part.split()[0]  # Take first part before any spaces
+            try:
+                return version_key(version_part)
+            except:
+                return (0, 0, 0)
+        # Non-ROCm entries go to the beginning
+        return (0, 0, 0)
+
+    # Sort to keep ROCm entries together and in version order
+    externals.sort(key=lambda x: (
+        0 if '%rocmcc@' not in x.get('spec', '') else 1,  # Non-ROCm first, then ROCm
+        extract_rocmcc_version_from_spec(x)  # Then by ROCm version
+    ))
+
+    print(f"  Added version {new_version} to cray-mpich")
     return True
 
 def update_yaml_file(file_path, new_version):
