@@ -60,57 +60,90 @@ def version_key(version_str):
     """Convert version string to tuple for proper sorting."""
     return tuple(int(x) for x in version_str.split('.'))
 
+def prepare_yaml_for_processing(content):
+    """
+    Temporarily modify YAML content to make it parseable by ruamel.yaml.
+    Returns (modified_content, has_quoted_packages_key).
+    """
+    has_quoted_packages = content.strip().startswith("'packages:'")
+
+    if has_quoted_packages:
+        # Temporarily remove quotes around packages: for processing
+        modified_content = content.replace("'packages:'", "packages", 1)
+        return modified_content, True
+
+    return content, False
+
+def restore_yaml_format(content, had_quoted_packages):
+    """Restore the original YAML format with quoted packages key if needed."""
+    if had_quoted_packages:
+        # Restore quotes around packages:
+        content = content.replace("packages", "'packages:'", 1)
+
+    return content
+
+def debug_yaml_structure(data, file_path):
+    """Print the structure of the YAML file for debugging."""
+    print(f"  YAML structure in {file_path}:")
+    if isinstance(data, dict):
+        for key in data.keys():
+            print(f"    - {key}")
+            if key == "packages" and isinstance(data[key], dict):
+                print(f"      Found {len(data[key])} packages")
+    else:
+        print(f"    Root is {type(data)}, not a dictionary")
+
 def add_rocm_version_to_package(packages_data, package_name, new_version):
     """Add a new ROCm version to a specific package in the YAML data."""
-    
+
     if package_name not in packages_data:
         return False
-    
+
     package = packages_data[package_name]
-    
+
     # Check if package has version list
     if 'version' not in package:
         return False
-    
+
     # Get existing versions
     existing_versions = package['version']
     if not isinstance(existing_versions, list):
         return False
-    
+
     # Skip if version already exists
     if new_version in existing_versions:
         print(f"  Version {new_version} already exists for {package_name}")
         return False
-    
+
     # Add new version and sort
     existing_versions.append(new_version)
     existing_versions.sort(key=version_key)
-    
+
     # Check if package has externals
     if 'externals' not in package:
         return False
-    
+
     externals = package['externals']
     if not isinstance(externals, list):
         return False
-    
+
     # Generate new external entry
     prefix = get_prefix_pattern(package_name, new_version)
-    
+
     # Special handling for cray-mpich (has compiler variant)
     if package_name == "cray-mpich":
         new_spec = f"cray-mpich@8.1.31%rocmcc@{new_version}"
     else:
         new_spec = f"{package_name}@{new_version}%rocmcc@{new_version}"
-    
+
     new_external = {
         'spec': new_spec,
         'prefix': prefix
     }
-    
+
     # Add new external entry
     externals.append(new_external)
-    
+
     # Sort externals by version
     def extract_version_from_spec(external):
         spec = external.get('spec', '')
@@ -126,49 +159,92 @@ def add_rocm_version_to_package(packages_data, package_name, new_version):
             except:
                 return (0, 0, 0)  # fallback for unparseable versions
         return (0, 0, 0)
-    
+
     externals.sort(key=extract_version_from_spec)
-    
+
     print(f"  Added version {new_version} to {package_name}")
     return True
 
 def update_yaml_file(file_path, new_version):
     """Update a single YAML file with the new ROCm version."""
     print(f"Updating {file_path}")
-    
+
     try:
+        # Read the original file
+        with open(file_path, 'r') as f:
+            original_content = f.read()
+
+        # Prepare content for YAML processing
+        content_for_processing, had_quoted_packages = prepare_yaml_for_processing(original_content)
+
         yaml = YAML()
         yaml.preserve_quotes = True
         yaml.map_indent = 2
         yaml.sequence_indent = 2
         yaml.sequence_dash_offset = 0
-        
-        # Read the file
-        with open(file_path, 'r') as f:
-            data = yaml.load(f)
-        
-        if not data or 'packages' not in data:
+
+        # Parse the modified content
+        data = yaml.load(content_for_processing)
+
+        if not data:
+            print(f"  Empty or invalid YAML file: {file_path}")
+            return
+
+        # Debug: show the structure
+        debug_yaml_structure(data, file_path)
+
+        # Try different possible structures
+        packages_data = None
+
+        if 'packages' in data:
+            packages_data = data['packages']
+        elif isinstance(data, dict):
+            # Check if the root level contains package definitions directly
+            # Look for common package names to determine if this is a packages structure
+            rocm_packages = get_rocm_packages()
+            found_packages = [pkg for pkg in rocm_packages if pkg in data]
+            if found_packages:
+                print(f"  Found packages at root level: {found_packages}")
+                packages_data = data
+
+        if not packages_data:
             print(f"  No packages section found in {file_path}")
             return
-        
-        packages_data = data['packages']
+
+        if not isinstance(packages_data, dict):
+            print(f"  Packages section is not a dictionary in {file_path}")
+            return
+
         rocm_packages = get_rocm_packages()
-        
+
         changes_made = False
         for package in rocm_packages:
             if add_rocm_version_to_package(packages_data, package, new_version):
                 changes_made = True
-        
+
         # Write back if changes were made
         if changes_made:
+            # Write to string buffer first
+            from io import StringIO
+            buffer = StringIO()
+            yaml.dump(data, buffer)
+
+            # Get the processed content and restore original format
+            processed_content = buffer.getvalue()
+            final_content = restore_yaml_format(processed_content, had_quoted_packages)
+
+            # Write final content to file
             with open(file_path, 'w') as f:
-                yaml.dump(data, f)
+                f.write(final_content)
+
             print(f"  Updated {file_path}")
         else:
             print(f"  No changes needed for {file_path}")
-            
+
     except Exception as e:
         print(f"Error updating {file_path}: {e}")
+        import traceback
+        traceback.print_exc()
 
 def main():
     parser = argparse.ArgumentParser(
@@ -185,26 +261,31 @@ def main():
         action="store_true", 
         help="Show what would be changed without making changes"
     )
-    
+    parser.add_argument(
+        "--debug", 
+        action="store_true", 
+        help="Show debug information about YAML structure"
+    )
+
     args = parser.parse_args()
-    
+
     # Validate version format
     try:
         version_key(args.rocm_version)
     except:
         print(f"Error: Invalid version format '{args.rocm_version}'. Expected format: X.Y.Z")
         sys.exit(1)
-    
+
     # Find all packages.yaml files
     yaml_files = find_yaml_files(args.directory)
-    
+
     if not yaml_files:
         print("No packages.yaml files found")
         sys.exit(1)
-    
+
     print(f"Found {len(yaml_files)} packages.yaml files")
     print(f"Adding ROCm version {args.rocm_version}")
-    
+
     if args.dry_run:
         print("DRY RUN - No files will be modified")
         # For dry run, we'd need to implement a preview mode
