@@ -23,11 +23,13 @@
     - spec: cmake@3.24.2
       prefix: /usr/tce/packages/cmake/cmake-3.24.2
   cuda:
-    version: [11.4.120]
+    version: [12.2.0, 11.8.0]
     buildable: false
     externals:
-    - spec: cuda@11.4.120
-      prefix: /opt/toss/cudatoolkit/11.4/
+    - spec: cuda@12.2.0
+      prefix: /usr/tce/packages/cuda/cuda-12.2.0
+    - spec: cuda@11.8.0
+      prefix: /usr/tce/packages/cuda/cuda-11.8.0
   hip:
     version: [5.7.1, 6.1.2, 6.2.4, 6.3.1]
     buildable: false
