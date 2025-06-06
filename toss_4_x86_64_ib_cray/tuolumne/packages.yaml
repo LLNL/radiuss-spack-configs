@@ -279,12 +279,6 @@
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.3.1-magic
     - spec: cray-mpich@8.1.31%rocmcc@6.4.0
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.4.0-magic
-  netlib-lapack:
-    buildable: false
-    externals:
-    - spec: netlib-lapack@3.8.0
-      prefix: /usr
-
   # System level packages to not build
   autoconf:
     buildable: false
