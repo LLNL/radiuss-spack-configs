@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 
+##############################################################################
+# Copyright (c) 2025, Lawrence Livermore National Security, LLC and
+# RADIUSS project contributors. See the COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (MIT)
+##############################################################################
+
+# This script add the software stack for the specified rocm version to Spack
+# packages.yaml.
+
 import argparse
 import os
 import sys
