@@ -31,7 +31,7 @@
     - spec: cuda@11.8.0
       prefix: /usr/tce/packages/cuda/cuda-11.8.0
   hip:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hip@5.7.1%rocmcc@5.7.1
@@ -42,10 +42,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: hip@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hip@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hip@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   hipsparse:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hipsparse@5.7.1%rocmcc@5.7.1
@@ -56,10 +56,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: hipsparse@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hipsparse@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hipsparse@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   hipblas:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hipblas@5.7.1%rocmcc@5.7.1
@@ -70,18 +70,18 @@
       prefix: /opt/rocm-6.2.4
     - spec: hipblas@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hipblas@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hipblas@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   hipblas-common:
-    version: [6.3.1, 6.4.0]
+    version: [6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hipblas-common@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hipblas-common@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hipblas-common@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   hipsolver:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hipsolver@5.7.1%rocmcc@5.7.1
@@ -92,10 +92,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: hipsolver@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hipsolver@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hipsolver@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   llvm-amdgpu:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: llvm-amdgpu@5.7.1%rocmcc@5.7.1
@@ -106,10 +106,10 @@
       prefix: /opt/rocm-6.2.4/llvm
     - spec: llvm-amdgpu@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1/llvm
-    - spec: llvm-amdgpu@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0/llvm
+    - spec: llvm-amdgpu@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1/llvm
   hsa-rocr-dev:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: hsa-rocr-dev@5.7.1%rocmcc@5.7.1
@@ -120,10 +120,22 @@
       prefix: /opt/rocm-6.2.4
     - spec: hsa-rocr-dev@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: hsa-rocr-dev@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: hsa-rocr-dev@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
+  papi:
+    buildable: false
+    version: [7.2.0.1]
+    externals:
+    - spec: papi@7.2.0.1
+      prefix: /opt/cray/pe/papi/7.2.0.1
+  python:
+    buildable: false
+    version: [3.9.12]
+    externals:
+    - spec: python@3.9.12
+      prefix: /usr/tce/packages/python/python-3.9.12
   rocminfo:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocminfo@5.7.1%rocmcc@5.7.1
@@ -134,10 +146,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocminfo@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocminfo@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocminfo@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocm-device-libs:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocm-device-libs@5.7.1%rocmcc@5.7.1
@@ -148,10 +160,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocm-device-libs@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocm-device-libs@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocm-device-libs@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocprim:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocprim@5.7.1%rocmcc@5.7.1
@@ -162,10 +174,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocprim@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocprim@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocprim@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocthrust:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocthrust@5.7.1%rocmcc@5.7.1
@@ -176,10 +188,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocthrust@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocthrust@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocthrust@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocsparse:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocsparse@5.7.1%rocmcc@5.7.1
@@ -190,10 +202,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocsparse@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocsparse@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocsparse@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocrand:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocrand@5.7.1%rocmcc@5.7.1
@@ -204,10 +216,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocrand@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocrand@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocrand@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocblas:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocblas@5.7.1%rocmcc@5.7.1
@@ -218,10 +230,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocblas@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocblas@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocblas@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocsolver:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocsolver@5.7.1%rocmcc@5.7.1
@@ -232,10 +244,10 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocsolver@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocsolver@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocsolver@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   rocm-core:
-    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.0]
+    version: [5.7.1, 6.1.2, 6.2.4, 6.3.1, 6.4.1]
     buildable: false
     externals:
     - spec: rocm-core@5.7.1%rocmcc@5.7.1
@@ -246,33 +258,31 @@
       prefix: /opt/rocm-6.2.4
     - spec: rocm-core@6.3.1%rocmcc@6.3.1
       prefix: /opt/rocm-6.3.1
-    - spec: rocm-core@6.4.0%rocmcc@6.4.0
-      prefix: /opt/rocm-6.4.0
+    - spec: rocm-core@6.4.1%rocmcc@6.4.1
+      prefix: /opt/rocm-6.4.1
   cray-mpich:
     buildable: false
     externals:
-    - spec: cray-mpich@8.1.31%cce@17.0.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-cce-17.0.1-magic
-    - spec: cray-mpich@8.1.31%cce@18.0.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-cce-18.0.1-magic
-    - spec: cray-mpich@8.1.31%gcc@12.1.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-gcc-12.1.1-magic
+    - spec: cray-mpich@8.1.32%cce@17.0.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-17.0.1-magic
+    - spec: cray-mpich@8.1.32%cce@18.0.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-18.0.1-magic
+    - spec: cray-mpich@8.1.32%cce@19.0.0
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-19.0.0-magic
+    - spec: cray-mpich@8.1.32%gcc@12.2.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-gcc-12.2.1-magic
+    - spec: cray-mpich@8.1.32%gcc@13.3.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-gcc-13.3.1-magic
     - spec: cray-mpich@8.1.28%rocmcc@5.7.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.28-rocmcc-5.7.1-magic
-    - spec: cray-mpich@8.1.31%rocmcc@6.1.2
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.1.2-magic
-    - spec: cray-mpich@8.1.31%rocmcc@6.2.4
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.2.4-magic
-    - spec: cray-mpich@8.1.31%rocmcc@6.3.1
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.3.1-magic
-    - spec: cray-mpich@8.1.31%rocmcc@6.4.0
-      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.31-rocmcc-6.4.0-magic
-  netlib-lapack:
-    buildable: false
-    externals:
-    - spec: netlib-lapack@3.8.0
-      prefix: /usr
-
+    - spec: cray-mpich@8.1.32%rocmcc@6.1.2
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-rocmcc-6.1.2-magic
+    - spec: cray-mpich@8.1.32%rocmcc@6.2.4
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-rocmcc-6.2.4-magic
+    - spec: cray-mpich@8.1.32%rocmcc@6.3.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-rocmcc-6.3.1-magic
+    - spec: cray-mpich@8.1.32%rocmcc@6.4.1
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-rocmcc-6.4.1-magic
   # System level packages to not build
   autoconf:
     buildable: false
@@ -287,7 +297,7 @@
   binutils:
     buildable: false
     externals:
-    - spec: binutils@2.40
+    - spec: binutils@2.30
       prefix: /usr
   bzip2:
     buildable: false
@@ -324,25 +334,26 @@
     externals:
     - spec: ghostscript@9.27
       prefix: /usr
-  gmake:
+  graphviz:
     buildable: false
     externals:
-    - spec: gmake@4.2.1
+    - spec: graphviz@2.40.1
       prefix: /usr
   groff:
     buildable: false
     externals:
     - spec: groff@1.22.3
       prefix: /usr
-  graphviz:
+  #lapack
+  netlib-lapack:
     buildable: false
     externals:
-    - spec: graphviz@2.40.1
+    - spec: netlib-lapack@3.8.0
       prefix: /usr
   libepoxy:
     buildable: false
     externals:
-    - spec: libepoxy@1.5.2
+    - spec: libepoxy@1.5.8
       prefix: /usr
   libtool:
     buildable: false
@@ -352,45 +363,50 @@
   libunwind:
     buildable: false
     externals:
-    - spec: libunwind@8.0.1
+    - spec: libunwind@1.3.1
       prefix: /usr
   libx11:
     buildable: false
     externals:
-    - spec: libx11@1.20.4
+    - spec: libx11@1.6.8
+      prefix: /usr
+  libyogrt:
+    externals:
+    - spec: libyogrt@1.35 scheduler=flux
+      prefix: /usr
+    - spec: libyogrt@1.35 scheduler=slurm
       prefix: /usr
   lua:
     buildable: false
     externals:
     - spec: lua@5.3.4
       prefix: /usr
+  #make
+  gmake:
+    buildable: false
+    externals:
+    - spec: gmake@4.2.1
+      prefix: /usr
   m4:
     buildable: false
     externals:
     - spec: m4@1.4.18
       prefix: /usr
-  papi:
-    buildable: false
-    version: [7.1.0.2]
-    externals:
-    - spec: papi@7.1.0.2
-      prefix: /opt/cray/pe/papi/7.1.0.2
   perl:
     buildable: false
     externals:
     - spec: perl@5.26.3
       prefix: /usr
-  pkg-config:
+  pdsh:
     buildable: false
     externals:
-    - spec: pkg-config@1.4.2
+    - spec: pdsh@2.35
       prefix: /usr
-  python:
+  pkgconf:
     buildable: false
-    version: [3.10.8]
     externals:
-    - spec: python@3.10.8
-      prefix: /usr/tce/packages/python/python-3.10.8
+    - spec: pkgconf@1.4.2
+      prefix: /usr
   readline:
     buildable: false
     externals:
@@ -410,17 +426,4 @@
     buildable: false
     externals:
     - spec: zlib@1.2.11
-      prefix: /usr
-
-  # External dependencies for SCR
-  libyogrt:
-    externals:
-    - spec: libyogrt@1.24 scheduler=flux
-      prefix: /usr
-    - spec: libyogrt@1.24 scheduler=slurm
-      prefix: /usr
-  pdsh:
-    buildable: false
-    externals:
-    - spec: pdsh@2.35
       prefix: /usr
