@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (c) 2019-2024, Lawrence Livermore National Security, LLC and
+# Copyright (c) 2019-2025, Lawrence Livermore National Security, LLC and
 # RADIUSS project contributors. See the COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (MIT)
@@ -30,12 +30,12 @@
 #[--create-unique-path]
     SPACK_TARGET: cascadelake
 
-.poodle-variables:
+.dane-variables:
   variables:
     SPACK_DISABLE_LOCAL_CONFIG: ""
     MY_SPACK_DEBUG: ""
-    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-poodle
-    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-poodle/spack-user-cache
+    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-dane
+    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-dane/spack-user-cache
     MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
     SPACK_TARGET: sapphirerapids
 
@@ -56,3 +56,12 @@
     SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tioga/spack-user-cache
     MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
     SPACK_TARGET: zen3
+
+.tuolumne-variables:
+  variables:
+    SPACK_DISABLE_LOCAL_CONFIG: ""
+    MY_SPACK_DEBUG: ""
+    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuolumne
+    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-tuolumne/spack-user-cache
+    MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
+    SPACK_TARGET: zen4
