@@ -21,6 +21,8 @@
   intel-oneapi-runtime:
     require:
     - '%oneapi'
+
+  # external packages (module)
   cmake:
     version: [3.23.1, 3.22.4, 3.21.1, 3.19.2, 3.14.5]
     buildable: false
@@ -75,6 +77,24 @@
       prefix: /opt/rocm-5.7.1
     - spec: hsa-rocr-dev@6.0.2%rocmcc@6.0.2
       prefix: /opt/rocm-6.0.2
+  ninja:
+    version: [1.11.1]
+    buildable: false
+    externals:
+    - spec: ninja@1.11.1
+      prefix: /usr/tce/packages/ninja/ninja-1.11.1
+  papi:
+    version: [6.0.0.1]
+    buildable: false
+    externals:
+    - spec: papi@6.0.0.1
+      prefix: /usr/tce/packages/papi/papi-6.0.0.1
+  python:
+    version: [3.9.12]
+    buildable: false
+    externals:
+    - spec: python@3.9.12
+      prefix: /usr/tce/packages/python/python-3.9.12
   rocminfo:
     version: [5.7.1, 6.0.2]
     buildable: false
@@ -99,6 +119,8 @@
       prefix: /opt/rocm-5.7.1/
     - spec: rocprim@6.0.2%rocmcc@6.0.2
       prefix: /opt/rocm-6.0.2/
+
+  # Special case (module / wrapper)
   mvapich2:
     buildable: false
     externals:
@@ -142,6 +164,7 @@
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=12.1.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
 
+  # System packages (use dnf)
   autoconf:
     buildable: false
     externals:
@@ -187,15 +210,15 @@
     externals:
     - spec: expat@2.2.5
       prefix: /usr
-  flex:
-    buildable: false
-    externals:
-    - spec: flex@2.6.1
-      prefix: /usr
   findutils:
     buildable: false
     externals:
     - spec: findutils@4.6.0
+      prefix: /usr
+  flex:
+    buildable: false
+    externals:
+    - spec: flex@2.6.1
       prefix: /usr
   gettext:
     buildable: false
@@ -206,11 +229,6 @@
     buildable: false
     externals:
     - spec: ghostscript@9.27
-      prefix: /usr
-  gmake:
-    buildable: false
-    externals:
-    - spec: gmake@4.2.1
       prefix: /usr
   graphviz:
     buildable: false
@@ -225,7 +243,7 @@
   hwloc:
     buildable: false
     externals:
-    - spec: hwloc@2.11.1
+    - spec: hwloc@2.11.2
       prefix: /usr
   libepoxy:
     buildable: false
@@ -237,17 +255,11 @@
     externals:
     - spec: libtool@2.4.6
       prefix: /usr
-# NOTE: removed since fails on clang builds
-# libunwind:
-#   buildable: false
-#   externals:
-#   - spec: libunwind@1.3.1
-#     prefix: /usr
   libunwind:
     buildable: false
-    version: [8.0.1]
+    version: [1.3.1]
     externals:
-    - spec: libunwind@8.0.1
+    - spec: libunwind@1.3.1
       prefix: /usr
   libx11:
     buildable: false
@@ -264,16 +276,17 @@
     externals:
     - spec: m4@1.4.18
       prefix: /usr
+  #make
+  gmake:
+    buildable: false
+    externals:
+    - spec: gmake@4.2.1
+      prefix: /usr
   netlib-lapack:
     buildable: false
     externals:
     - spec: netlib-lapack@3.8.0
       prefix: /usr
-  ninja:
-    buildable: false
-    externals:
-    - spec: ninja@1.11.1
-      prefix: /usr/tce/packages/ninja/ninja-1.11.1
   openblas:
     buildable: false
     externals:
@@ -294,28 +307,16 @@
     externals:
     - spec: openssl@1.1.1k
       prefix: /usr
-  papi:
-    buildable: false
-    version: [6.0.0.1]
-    externals:
-    - spec: papi@6.0.0.1
-      prefix: /usr/tce/packages/papi/papi-6.0.0.1
   perl:
     buildable: false
     externals:
     - spec: perl@5.26.3
       prefix: /usr
-  pkg-config:
+  pkgconf:
     buildable: false
     externals:
-    - spec: pkg-config@1.4.2
+    - spec: pkgconf@1.4.2
       prefix: /usr
-  python:
-    buildable: false
-    version: [3.10.8]
-    externals:
-    - spec: python@3.10.8
-      prefix: /usr/tce/packages/python/python-3.10.8
   readline:
     buildable: false
     externals:

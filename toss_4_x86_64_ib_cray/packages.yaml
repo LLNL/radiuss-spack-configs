@@ -123,14 +123,14 @@
     - spec: hsa-rocr-dev@6.4.1%rocmcc@6.4.1
       prefix: /opt/rocm-6.4.1
   papi:
-    buildable: false
     version: [7.2.0.1]
+    buildable: false
     externals:
     - spec: papi@7.2.0.1
       prefix: /opt/cray/pe/papi/7.2.0.1
   python:
-    buildable: false
     version: [3.9.12]
+    buildable: false
     externals:
     - spec: python@3.9.12
       prefix: /usr/tce/packages/python/python-3.9.12
