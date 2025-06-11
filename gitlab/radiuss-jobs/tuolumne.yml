@@ -5,12 +5,12 @@
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
-rocmcc_6_3_1_hip:
+rocmcc_6_4_1_hip:
   variables:
-    SPEC: "${PROJECT_TUO_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.3.1 ^hip@6.3.1 ${PROJECT_TUO_DEPS}"
+    SPEC: "${PROJECT_TUO_VARIANTS} +rocm amdgpu_target=gfx90a %rocmcc@=6.4.1 ^hip@6.4.1 ${PROJECT_TUO_DEPS}"
   extends: .job_on_tuolumne
 
-cce_18_0_1:
+cce_19_0_0:
   variables:
-    SPEC: "${PROJECT_TUO_VARIANTS} %cce@=18.0.1 ${PROJECT_TUO_DEPS}"
+    SPEC: "${PROJECT_TUO_VARIANTS} %cce@=19.0.0 ${PROJECT_TUO_DEPS}"
   extends: .job_on_tuolumne
