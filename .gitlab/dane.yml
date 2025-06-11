@@ -1,93 +1,93 @@
 ##############################################################################
-# Copyright (c) 2019-2024, Lawrence Livermore National Security, LLC and
+# Copyright (c) 2019-2025, Lawrence Livermore National Security, LLC and
 # RADIUSS project contributors. See the COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
 variables:
-  POODLE_ALLOC_NAME: ${CI_PROJECT_NAME}_ci_${CI_PIPELINE_ID}
-  POODLE_SHARED_ALLOC: "--exclusive --time=60 --nodes=1"
-  POODLE_JOB_ALLOC: "--overlap --nodes=1"
+  DANE_ALLOC_NAME: ${CI_PROJECT_NAME}_ci_${CI_PIPELINE_ID}
+  DANE_SHARED_ALLOC: "--exclusive --time=60 --nodes=1"
+  DANE_JOB_ALLOC: "--overlap --nodes=1"
 
-.on-poodle:
+.on-dane:
   tags:
     - shell
-    - poodle
+    - dane
   rules:
-    # Runs except if we explicitly deactivate poodle by variable.
-    - if: '$ON_POODLE == "OFF"'
+    # Runs except if we explicitly deactivate dane by variable.
+    - if: '$ON_DANE == "OFF"'
       when: never
     # We should always release resources allocated in the pipeline.
-    - if: '$CI_JOB_NAME =~ /release-poodle/'
+    - if: '$CI_JOB_NAME =~ /release-dane/'
       when: always
     # A true statement is expected to allow jobs to run. Here is the default.
     - when: on_success
 
-allocate-poodle:
+allocate-dane:
   variables:
     GIT_STRATEGY: none
-  extends: [.on-poodle, .poodle-variables]
+  extends: [.on-dane, .dane-variables]
   stage: .pre
   script:
-    - salloc ${POODLE_SHARED_ALLOC} --no-shell --job-name=${POODLE_ALLOC_NAME}
+    - salloc ${DANE_SHARED_ALLOC} --no-shell --job-name=${DANE_ALLOC_NAME}
 
-.prepare_poodle_jobid:
+.prepare-dane-jobid:
   script:
     - |
-      export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)
+      export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
       echo -e "[Information] Shared allocation ID = ${JOBID}"
       export JOBID_OPT=$([[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}")
 
-get-spack-poodle:
-  extends: [.on-poodle, .poodle-variables]
+get-spack-dane:
+  extends: [.on-dane, .dane-variables]
   stage: setup
   script:
-    - !reference [.prepare_poodle_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/get-spack
-  needs: [allocate-poodle]
+  needs: [allocate-dane]
 
-generate-on-poodle:
-  extends: [.on-poodle, .poodle-variables]
+generate-on-dane:
+  extends: [.on-dane, .dane-variables]
   stage: generate
   script:
     - .gitlab/scripts/print-variables
-    - !reference [.prepare_poodle_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
     paths:
       - "${CI_PROJECT_DIR}/jobs_scratch_dir"
-  needs: [get-spack-poodle]
+  needs: [get-spack-dane]
 
-build-on-poodle:
-  extends: [.poodle-variables]
+build-on-dane:
+  extends: [.dane-variables]
   stage: build
   trigger:
     include:
       - artifact: "jobs_scratch_dir/pipeline.yml"
-        job: generate-on-poodle
+        job: generate-on-dane
       - project: "lc-templates/id_tokens"
         file: "id_tokens.yml"
-      - local: ".gitlab/spack/reindex-poodle.yml"
+      - local: ".gitlab/spack/reindex-dane.yml"
     strategy: depend
     forward:
       pipeline_variables: true
-  needs: [generate-on-poodle]
+  needs: [generate-on-dane]
 
-rm-spack-poodle:
-  extends: [.on-poodle, .poodle-variables]
+rm-spack-dane:
+  extends: [.on-dane, .dane-variables]
   stage: clean
   script:
-    - !reference [.prepare_poodle_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/remove-spack
-  needs: [build-on-poodle]
+  needs: [build-on-dane]
 
-release-poodle:
+release-dane:
   variables:
     GIT_STRATEGY: none
-  extends: [.on-poodle, .poodle-variables]
+  extends: [.on-dane, .dane-variables]
   stage: .post
   script:
-    - !reference [.prepare_poodle_jobid, script]
+    - !reference [.prepare-dane-jobid, script]
     - ([[ -n "${JOBID}" ]] && scancel ${JOBID} || exit 0)
-  needs: [rm-spack-poodle]
+  needs: [rm-spack-dane]

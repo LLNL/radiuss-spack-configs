@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (c) 2019-2024, Lawrence Livermore National Security, LLC and
+# Copyright (c) 2019-2025, Lawrence Livermore National Security, LLC and
 # RADIUSS project contributors. See the COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (MIT)
@@ -8,12 +8,11 @@
 include:
   - local: ".gitlab/spack/reindex-override.yml"
 
-rebuild-index-poodle:
+rebuild-index-dane:
   stage: .post
-  tags: [poodle, shell]
+  tags: [dane, shell]
   when: always
   script:
-    - export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)
-    - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${POODLE_JOB_ALLOC} .gitlab/spack/reindex-script.sh
+    - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
+    - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/reindex-script.sh
   dependencies: []
-  retry: 2
