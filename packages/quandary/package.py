@@ -54,9 +54,6 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries = []
 
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
+        entries.append(cmake_cache_option("WITH_SLEPC", spec.satisfies("+slepc")))
 
         return entries
-
-    def cmake_args(self):
-        args = [self.define_from_variant("WITH_SLEPC", "slepc")]
-        return args
