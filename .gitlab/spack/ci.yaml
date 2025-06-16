@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (c) 2021-2024, Lawrence Livermore National Security, LLC and
+# Copyright (c) 2021-2025, Lawrence Livermore National Security, LLC and
 # RADIUSS Stack Testing project contributors.
 # See the LICENSE file for details.
 #
@@ -34,10 +34,10 @@ ci:
     - match:
       - 'target=sapphirerapids'
       build-job:
-        tags: [poodle, shell]
+        tags: [dane, shell]
         script::
-        - export JOBID=$(squeue -h --name=${POODLE_ALLOC_NAME} --format=%A)
-        - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${POODLE_JOB_ALLOC} .gitlab/spack/ci-script.sh
+        - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
+        - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
     - match:
       - 'target=power9le'
       build-job:
@@ -53,6 +53,15 @@ ci:
         - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
         - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
         - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${TIOGA_JOB_ALLOC} .gitlab/spack/ci-script.sh)
+    - match:
+      - 'target=zen4'
+      build-job:
+        tags: [tuolumne, shell]
+        script::
+        - export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")
+        - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
+        - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
+        - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${TUO_JOB_ALLOC} .gitlab/spack/ci-script.sh)
     match_behavior: first
 
   - reindex-job:
