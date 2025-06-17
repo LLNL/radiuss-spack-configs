@@ -31,7 +31,7 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("petsc+int64", when="+int64")
     depends_on("slepc", when="+slepc")
     depends_on("mpi", type=("build", "link", "run"))
-
+    depends_on("caliper")
     depends_on("blt@0.6.0:", type="build")
 
     with when("+rocm"):
