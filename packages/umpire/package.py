@@ -240,6 +240,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.8:", type="build")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.7.1:", type="build", when="@2025.06.0:")
     depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
@@ -252,6 +253,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp")
+    depends_on("camp@2025.06.0:", when="@2025.06.0:")
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
     depends_on("camp~rocm", when="~rocm")
