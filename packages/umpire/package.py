@@ -305,7 +305,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("+ipc_shmem", when="@:5.0.1")
     conflicts("+mpi3_shmem", when="@:2024.07.0")
     conflicts("+mpi3_shmem", when="~mpi")
-    conflicts("+ipc_shmem", when="+mpi3_shmem")
+    conflicts("+ipc_shmem", when="+mpi3_shmem @:2025.03.0")
 
     conflicts("+sqlite_experimental", when="@:6.0.0")
     conflicts("+sanitizer_tests", when="~asan")
