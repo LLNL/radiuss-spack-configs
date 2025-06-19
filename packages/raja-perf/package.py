@@ -336,7 +336,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", spec.satisfies("+sycl")))
 
         # C++17
-        if (spec.satisfies("@develop") or
+        if (spec.satisfies("@2025.06.0:") or
             (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
         # C++17
