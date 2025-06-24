@@ -5,11 +5,19 @@
 
 import socket
 
-from spack.package import *
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+    cmake_cache_string,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+from spack_repo.builtin.packages.camp.package import hip_for_radiuss_projects
+from spack_repo.builtin.packages.camp.package import cuda_for_radiuss_projects
+from spack_repo.builtin.packages.blt.package import llnl_link_helpers
 
-from .camp import hip_for_radiuss_projects
-from .camp import cuda_for_radiuss_projects
-from .blt import llnl_link_helpers
+from spack.package import *
 
 
 # Starting with 2022.03.0, the only submodule we want to fetch is tpl/desul
@@ -167,8 +175,6 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         "0.4.0", tag="v0.4.0", commit="31b2a48192542c2da426885baa5af0ed57606b78", submodules="True"
     )
 
-    depends_on("cxx", type="build")  # generated
-
     # export targets when building pre-2.4.0 release with BLT 0.4.0+
     patch(
         "https://github.com/LLNL/RAJA/commit/eca1124ee4af380d6613adc6012c307d1fd4176b.patch?full_index=1",
@@ -186,7 +192,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     # Fix compilation issue reported by Intel from their new compiler version
     patch(
-        "https://github.com/LLNL/RAJA/pull/1668.patch?full_index=1",
+        "https://github.com/LLNL/RAJA/commit/3e831e034bd92daacf49f40b66459aefd6ea3972.patch?full_index=1",
         sha256="c0548fc5220f24082fb2592d5b4e8b7c8c783b87906d5f0950d53953d25161f6",
         when="@2024.02.1:2024.02.99 %oneapi@2025:",
     )
@@ -200,6 +206,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     )
     variant("omptarget", default=False, description="Build OpenMP on target device support")
     variant("sycl", default=False, description="Build sycl backend")
+    variant("gpu-profiling", default=False, description="Enable GPU profiling")
 
     variant("plugins", default=False, description="Enable runtime plugins")
     variant("examples", default=True, description="Build examples.")
@@ -217,7 +224,13 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         description="Run all the tests, including those known to fail.",
     )
 
-    variant("lowopttest", default=False, description="Intended for developers to use low optimization level for tests to pass with some compilers.")
+    variant(
+        "lowopttest",
+        default=False,
+        description="For developers, lowers optimization level to pass tests with some compilers",
+    )
+
+    depends_on("cxx", type="build")  # generated
 
     depends_on("blt", type="build")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
@@ -266,6 +279,10 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         depends_on("camp+cuda")
         for sm_ in CudaPackage.cuda_arch_values:
             depends_on("camp +cuda cuda_arch={0}".format(sm_), when="cuda_arch={0}".format(sm_))
+
+    conflicts("+gpu-profiling", when="~cuda~rocm", msg="GPU profiling requires CUDA or ROCm")
+    conflicts("+gpu-profiling +cuda", when="@:2022.02.99")
+    conflicts("+gpu-profiling +rocm", when="@:2022.02.99")
 
     conflicts("+omptarget +rocm")
     conflicts("+sycl +omptarget")
@@ -376,6 +393,12 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         )
 
         entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", spec.satisfies("+sycl")))
+        entries.append(
+            cmake_cache_option("RAJA_ENABLE_NV_TOOLS_EXT", spec.satisfies("+gpu-profiling +cuda"))
+        )
+        entries.append(
+            cmake_cache_option("RAJA_ENABLE_ROCTX", spec.satisfies("+gpu-profiling +rocm"))
+        )
 
         if spec.satisfies("+lowopttest"):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
