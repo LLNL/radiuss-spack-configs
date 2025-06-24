@@ -5,12 +5,20 @@
 
 import socket
 
-from spack.package import *
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+    cmake_cache_string,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+from spack_repo.builtin.packages.camp.package import cuda_for_radiuss_projects
+from spack_repo.builtin.packages.camp.package import hip_for_radiuss_projects
+from spack_repo.builtin.packages.camp.package import mpi_for_radiuss_projects
+from spack_repo.builtin.packages.blt.package import llnl_link_helpers
 
-from .camp import cuda_for_radiuss_projects
-from .camp import hip_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
-from .blt import llnl_link_helpers
+from spack.package import *
 
 
 class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -90,10 +98,6 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
         "0.2.0", tag="v0.2.0", commit="30135e03b14b1dc753634e9147dafede0663906f", submodules="True"
     )
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
-
     variant("openmp", default=False, description="Build with OpenMP support")
     variant("mpi", default=False, description="Enable MPI support")
     variant(
@@ -107,6 +111,10 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("examples", default=False, description="Build examples.")
     variant("docs", default=False, description="Build documentation")
     variant("loop_fuser", default=False, description="Enable loop fusion capability")
+
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build")  # generated
 
     depends_on("cmake", type="build")
     depends_on("cmake@3.23:", type="build", when="@0.13.2:")

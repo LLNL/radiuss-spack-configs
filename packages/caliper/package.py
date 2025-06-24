@@ -7,11 +7,19 @@ import os
 import socket
 import sys
 
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+from spack_repo.builtin.packages.camp.package import hip_for_radiuss_projects
+from spack_repo.builtin.packages.camp.package import cuda_for_radiuss_projects
+from spack_repo.builtin.packages.camp.package import mpi_for_radiuss_projects
+
 from spack.package import *
 
-from .camp import cuda_for_radiuss_projects
-from .camp import hip_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     """Caliper is a program instrumentation and performance measurement
@@ -85,10 +93,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         "1.7.0", tag="v1.7.0", commit="898277c93d884d4e7ca1ffcf3bbea81d22364f26", deprecated=True
     )
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
-
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
     variant("adiak", default=True, description="Enable Adiak support")
@@ -112,6 +116,10 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("tests", default=False, description="Enable tests")
     variant("tools", default=True, description="Enable tools")
     variant("python", default=False, when="@v2.12:", description="Build Python bindings")
+
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build")  # generated
 
     depends_on("adiak@0.1:0", when="@2.2:2.10 +adiak")
     depends_on("adiak@0.4:0", when="@2.11: +adiak")
@@ -141,6 +149,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("+libdw", "@:2.4")
     conflicts("+rocm", "@:2.7")
     conflicts("+rocm+cuda")
+    # Legacy nvtx is only supported until cuda@12.8, newer cuda only provides nvtx3.
+    conflicts("^cuda@12.9:", "@:2.12.1")
 
     patch("for_aarch64.patch", when="@:2.11 target=aarch64:")
     patch(
