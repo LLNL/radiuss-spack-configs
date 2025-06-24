@@ -8,13 +8,11 @@
 
 spack:
   repos:
-    - ./
-
-  #[general--]
+    llnl.radiuss: ./
   include:
-    - $LCSCHEDCLUSTER/config.yaml
-    - $LCSCHEDCLUSTER/compilers.yaml
-    - $LCSCHEDCLUSTER/packages.yaml
+  - $LCSCHEDCLUSTER/config.yaml
+  #- $LCSCHEDCLUSTER/compilers.yaml
+  - $LCSCHEDCLUSTER/packages.yaml
   concretizer:
     reuse: false
     unify: false
@@ -24,7 +22,7 @@ spack:
   #[config-override--]
   config:
     install_tree:
-      root: /usr/workspace/radiuss/install/bradiuss
+      root: /usr/workspace/bernede1/install-v1/test
       padded_length: 128
       projections:
         all: '{architecture}/{compiler.name}-{compiler.version}/{name}-{version}-{hash}'
@@ -33,31 +31,31 @@ spack:
     test_stage: $user_cache_path/test
     misc_cache: $user_cache_path/misc
     flags:
-      keep_werror: 'all'
+      keep_werror: all
   #[--config-override]
 
   #[definitions--]
   definitions:
   - compilers:
-    - '+rocm amdgpu_target=gfx906 %rocmcc@=5.7.1 ^hip@5.7.1'
+    - +rocm amdgpu_target=gfx906 %rocmcc@=5.7.1 ^hip@5.7.1
     when: env.get("LCSCHEDCLUSTER", "") == "corona"
   - compilers:
-    - '%oneapi@=2023.2.1'
+    - '%intel-oneapi-compilers@=2023.2.0'
     - '%clang@=14.0.6'
     - '%gcc@=10.3.1'
     when: env.get("LCSCHEDCLUSTER", "") == "ruby"
   - compilers:
-    - '%oneapi@=2023.2.1'
+    - '%intel-oneapi-compilers@=2023.2.0'
     - '%clang@=14.0.6'
     - '%gcc@=11.2.1'
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
-    - '+cuda %clang@=12.0.1.ibm.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
-    - '+cuda %clang@=12.0.1.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers'
-    - '+cuda %clang@=14.0.5.gcc.8.3.1 ^cuda@11.7.0+allow-unsupported-compilers'
-    - '+cuda %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
-    - '+cuda %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
-    - '+cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - +cuda %clang@=12.0.1.ibm.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers
+    - +cuda %clang@=12.0.1.gcc.8.3.1 ^cuda@11.2.0+allow-unsupported-compilers
+    - +cuda %clang@=14.0.5.gcc.8.3.1 ^cuda@11.7.0+allow-unsupported-compilers
+    - +cuda %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers
+    - +cuda %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1 ^cuda@11.8.0+allow-unsupported-compilers
+    - +cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "lassen"
   - compilers:
     - '+rocm amdgpu_target=gfx90a %rocmcc@=6.4.1 ^hip@6.4.1'
