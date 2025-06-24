@@ -237,7 +237,7 @@
         file_systems=lustre,nfs,ufs process_managers=slurm %intel-oneapi-compilers@=2022.1.0
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2022.1.0
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm %intel-oneapi-compilers@=2023.2.1
+        file_systems=lustre,nfs,ufs process_managers=slurm %intel-oneapi-compilers@=2023.2.0
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2023.2.1
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %clang@=14.0.6
