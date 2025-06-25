@@ -9,7 +9,7 @@
 spack:
   #[general--]
   repos:
-    llnl.radiuss: ./
+    llnl.radiuss: ./spack_repo/llnl/radiuss/
     builtin:
       commit: c63151a5ba
       git: https://github.com/spack/spack-packages.git
