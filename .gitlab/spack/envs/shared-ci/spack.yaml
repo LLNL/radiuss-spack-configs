@@ -43,12 +43,12 @@ spack:
     - +rocm amdgpu_target=gfx906 %llvm-amdgpu@=5.7.1 ^hip@5.7.1
     when: env.get("LCSCHEDCLUSTER", "") == "corona"
   - compilers:
-    - '%intel-oneapi-compilers@=2023.2.0'
+    - '%oneapi-2023-gcc-10'
     - '%clang-14-gcc-10'
     - '%gcc@=10.3.1'
     when: env.get("LCSCHEDCLUSTER", "") == "ruby"
   - compilers:
-    - '%intel-oneapi-compilers@=2023.2.0'
+    - '%oneapi-2023-gcc-10'
     - '%clang-14-gcc-10'
     - '%gcc@=11.2.1'
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
