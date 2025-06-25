@@ -7,10 +7,12 @@ import socket
 
 from spack.package import *
 
-from .camp import hip_for_radiuss_projects
-from .camp import cuda_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
-from .blt import llnl_link_helpers
+from spack_repo.llnl.radiuss.packages.camp.package import (
+    hip_for_radiuss_projects,
+    cuda_for_radiuss_projects,
+    mpi_for_radiuss_projects,
+)
+from spack_repo.llnl.radiuss.packages.blt.package import llnl_link_helpers
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
