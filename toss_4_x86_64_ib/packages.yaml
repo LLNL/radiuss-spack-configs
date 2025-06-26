@@ -11,7 +11,7 @@
     - spec: ^blt%intel-oneapi-compilers-classic
       when: '%intel-oneapi-compilers-classic ^blt'
     - spec: ^mvapich2
-      when: '^mpi'    
+      when: '^mpi'
     providers:
       blas: [openblas]
       lapack: [netlib-lapack]

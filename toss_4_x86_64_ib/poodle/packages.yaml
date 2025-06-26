@@ -8,6 +8,8 @@
       when: '%gcc ^blt'
     - spec: ^blt%intel-oneapi-compilers-classic
       when: '%intel-oneapi-compilers-classic ^blt'
+    - spec: ^mvapich2
+      when: '^mpi'
     providers:
       blas: [openblas]
       lapack: [netlib-lapack]
