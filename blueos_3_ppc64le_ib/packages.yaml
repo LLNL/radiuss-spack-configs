@@ -11,6 +11,8 @@
       when: '%gcc ^blt'
     - spec: ^blt%clang
       when: '%clang ^blt'
+    - spec: ^spectrum-mpi
+      when: '^mpi'
   xl:
     externals:
       #- spec: xl@=16.1.1.14+r languages:='c,c++'

@@ -1,6 +1,9 @@
 'packages:':
   all:
-    require: target=zen
+    require:
+    - 'target=zen'
+    - spec: ^mvapich2
+      when: '^mpi'
     providers:
       blas: [openblas]
       lapack: [netlib-lapack]

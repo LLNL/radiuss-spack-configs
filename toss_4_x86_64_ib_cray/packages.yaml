@@ -1,6 +1,9 @@
 'packages:':
   all:
     target: [zen2]
+    require:
+    - spec: ^cray-mpich
+      when: '^mpi'
     providers:
       blas: [netlib-lapack]
       lapack: [netlib-lapack]
