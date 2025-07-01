@@ -331,9 +331,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
             hipcc_flags = []
-            if self.spec.satisfies("@2025.04.0:"):
+            if self.spec.satisfies("@2025.09.0:"):
                 hipcc_flags.append("-std=c++17")
-            elif self.spec.satisfies("@0.14.0:2025.03.0"):
+            elif self.spec.satisfies("@0.14.0:2025.09.0"):
                 hipcc_flags.append("-std=c++14")
             entries.append(cmake_cache_string("HIP_HIPCC_FLAGS", " ".join(hipcc_flags)))
             hip_for_radiuss_projects(entries, spec, compiler)
@@ -383,11 +383,11 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         # C++17
-        if (spec.satisfies("@2025.06.0:") or
+        if (spec.satisfies("@2025.09.0:") or
             (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
         # C++17
-        elif spec.satisfies("@0.14.0:2025.03.0"):
+        elif spec.satisfies("@0.14.0:2025.09.0"):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++14"))
 
             if spec.satisfies("+desul"):
