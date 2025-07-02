@@ -39,7 +39,7 @@ Uberenv and Spack as a build infrastructure.
 
 Both `RADIUSS Spack Configs`_ and `Uberenv`_ are to be set as submodules.
 
-We will describe how to set up RADIUSS Spack Configs to build you project and
+We will describe how to set up RADIUSS Spack Configs to build your project and
 its dependencies with Spack. We identified two key steps:
 
 .. toctree::
