@@ -339,7 +339,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         if (spec.satisfies("@2025.09.0:") or
             (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
-        # C++17
+        # C++14
         # Using RAJA version as threshold on purpose (no 0.14 version of RAJAPerf were released).
         elif spec.satisfies("@0.14.0:2025.09.0"):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++14"))
