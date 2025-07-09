@@ -64,7 +64,7 @@ spack:
     - '%cce@=19.0.0'
     when: env.get("LCSCHEDCLUSTER", "") == "tioga"
   - compilers:
-    - '+rocm amdgpu_target=gfx90a %rocmcc@=6.4.1 ^hip@6.4.1'
+    - '+rocm amdgpu_target=gfx942 %rocmcc@=6.4.1 ^hip@6.4.1'
     - '%cce@=19.0.0'
     when: env.get("LCSCHEDCLUSTER", "") == "tuolumne"
   #[definitions--]
