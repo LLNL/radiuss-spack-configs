@@ -6,9 +6,9 @@
 ##############################################################################
 
 variables:
-  TUO_ALLOC_NAME: ${CI_PROJECT_NAME}_ci_${CI_PIPELINE_ID}
-  TUO_SHARED_ALLOC: "--queue=pci --exclusive --time-limit=60m --nodes=1"
-  TUO_JOB_ALLOC: "--nodes=1 --begin-time=+2s"
+  TUOLUMNE_ALLOC_NAME: ${CI_PROJECT_NAME}_ci_${CI_PIPELINE_ID}
+  TUOLUMNE_SHARED_ALLOC: "--queue=pci --exclusive --time-limit=60m --nodes=1"
+  TUOLUMNE_JOB_ALLOC: "--nodes=1 --begin-time=+2s"
 
 .on-tuolumne:
   tags:
@@ -16,7 +16,7 @@ variables:
     - tuolumne
   rules:
     # Runs except if we explicitly deactivate tuolumne by variable.
-    - if: '$ON_TUO == "OFF"'
+    - if: '$ON_TUOLUMNE == "OFF"'
       when: never
     # We should always release resources allocated in the pipeline.
     - if: '$CI_JOB_NAME =~ /release-tuolumne/'
@@ -32,12 +32,12 @@ allocate-tuolumne:
   script:
     - |
       set -x
-      flux --parent alloc ${TUO_SHARED_ALLOC} --job-name=${TUO_ALLOC_NAME} --bg
+      flux --parent alloc ${TUOLUMNE_SHARED_ALLOC} --job-name=${TUOLUMNE_ALLOC_NAME} --bg
 
 .prepare-tuolumne-proxy:
   script:
     - |
-      export ALLOC_ID=$(flux jobs --name="${TUO_ALLOC_NAME}" -n -o "{id}")
+      export ALLOC_ID=$(flux jobs --name="${TUOLUMNE_ALLOC_NAME}" -n -o "{id}")
       echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
       export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
 
@@ -92,6 +92,6 @@ release-tuolumne:
   script:
     - |
       set -x
-      export URI=$(flux jobs -o "{id} {name}" | grep ${TUO_ALLOC_NAME} | awk '{print $1}')
+      export URI=$(flux jobs -o "{id} {name}" | grep ${TUOLUMNE_ALLOC_NAME} | awk '{print $1}')
       ([[ -n "${URI}" ]] && flux job kill ${URI} || exit 0)
   needs: [rm-spack-tuolumne]
