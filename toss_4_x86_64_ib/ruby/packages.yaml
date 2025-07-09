@@ -20,7 +20,7 @@
     - '%gcc'
   intel-oneapi-runtime:
     require:
-    - one_of: ['%intel-oneapi-runtime', '%intel-oneapi-compilers-classic']
+    - one_of: ['%intel-oneapi-compilers', '%intel-oneapi-compilers-classic']
 
   # compilers
   gcc:

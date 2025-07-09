@@ -2,6 +2,12 @@
   all:
     require:
     - 'target=zen'
+    - spec: ^blt%intel-oneapi-compilers
+      when: '%intel-oneapi-compilers ^blt'
+    - spec: ^blt%gcc
+      when: '%gcc ^blt'
+    - spec: ^blt%intel-oneapi-compilers-classic
+      when: '%intel-oneapi-compilers-classic ^blt'
     - spec: ^mvapich2
       when: '^mpi'
     providers:
@@ -9,6 +15,12 @@
       lapack: [netlib-lapack]
       mpi: [mvapich2]
       zlib-api: [zlib]
+  gcc-runtime:
+    require:
+    - '%gcc'
+  intel-oneapi-runtime:
+    require:
+    - one_of: ['%intel-oneapi-compilers', '%intel-oneapi-compilers-classic']
 
   # compilers
   gcc:
