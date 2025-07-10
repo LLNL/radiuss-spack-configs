@@ -369,14 +369,14 @@
       prefix: /usr
 
 'toolchains:':
-  clang-14-gcc-10:
-    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
-    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
+  clang-14-gcc-11:
+    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
+    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
     - spec: '%[virtuals=c]llvm@14.0.6+clang~flang~lld~lldb'
       when: '%c'
     - spec: '%[virtuals=cxx]llvm@14.0.6+clang~flang~lld~lldb'
       when: '%cxx'
-    - spec: '%[virtuals=fortran]gcc@10.3.1'
+    - spec: '%[virtuals=fortran]gcc@11.2.1'
       when: '%fortran'
   intel-classic-2021-gcc-10:
     - spec: cflags='-gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc'
