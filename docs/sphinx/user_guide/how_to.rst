@@ -22,7 +22,7 @@ the RADIUSS Build Infrastructure and the RADIUSS Shared CI Infrastructure.
 Update Spack, Uberenv, or RADIUSS Spack Configs
 ===============================================
 
-The RADIUSS Build infrustructure relies on three components to work properly:
+The RADIUSS Build Infrustructure relies on three components to work properly:
 `Spack`_, `Uberenv`_ and `radiuss-spack-configs`_. The dependency scheme
 between those components is as follows:
 
@@ -50,16 +50,15 @@ formatting and options that will require you to update `radiuss-spack-configs`_
 and `Uberenv`_.
 
 A typical source of issues is the introduction by Spack of breaking changes in
-the configuration files formatting or parsing. This has happen on a regular
+the configuration files formatting or parsing. This has happened on a regular
 basis, and it is important to analyse the release notes to spot such a risk,
 and learn how to best address it.
 
 Updating Uberenv
 ================
 
-You should know that `Uberenv`_ may lag behind in terms of compatibility with
-`Spack`_ and updating to a newer Spack version may require modifications to
-Uberenv.
+Beware that `Uberenv`_ may lag behind in terms of compatibility with `Spack`_
+and updating to a newer Spack version may require modifications to Uberenv.
 
 Shared CI jobs
 ==============

@@ -1,6 +1,6 @@
 'packages:':
   all:
-    require: target=zen3
+    require: target=zen4
     providers:
       blas: [netlib-lapack]
       lapack: [netlib-lapack]

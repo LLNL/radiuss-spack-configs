@@ -1,6 +1,6 @@
 #! /bin/bash
 ##############################################################################
-# Copyright (c) 2019-2024, Lawrence Livermore National Security, LLC and
+# Copyright (c) 2019-2025, Lawrence Livermore National Security, LLC and
 # RADIUSS project contributors. See the COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (MIT)

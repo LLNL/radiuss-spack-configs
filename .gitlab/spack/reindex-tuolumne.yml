@@ -8,14 +8,14 @@
 include:
   - local: ".gitlab/spack/reindex-override.yml"
 
-rebuild-index-corona:
+rebuild-index-tuolumne:
   stage: .post
-  tags: [corona, shell]
+  tags: [tuolumne, shell]
   when: always
   script:
-    - export ALLOC_ID=$(flux jobs --name="${CORONA_ALLOC_NAME}" -n -o "{id}")
+    - export ALLOC_ID=$(flux jobs --name="${TUOLUMNE_ALLOC_NAME}" -n -o "{id}")
     - echo -e "[Information] Shared allocation ID = ${ALLOC_ID}"
     - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
-    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${CORONA_JOB_ALLOC} .gitlab/spack/reindex-script.sh)
+    - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${TUOLUMNE_JOB_ALLOC} .gitlab/spack/reindex-script.sh)
   dependencies: []
   retry: 2
