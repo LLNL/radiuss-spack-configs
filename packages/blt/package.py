@@ -6,6 +6,9 @@
 import os
 import re
 
+from spack_repo.builtin.build_systems.cached_cmake import cmake_cache_string
+from spack_repo.builtin.build_systems.generic import Package
+
 from spack.package import *
 
 
@@ -23,7 +26,7 @@ def spec_uses_gccname(spec):
 
 def llnl_link_helpers(options, spec, compiler):
     # From local package:
-    if compiler.fc:
+    if "fortran" in spec:
         fortran_compilers = ["gfortran", "xlf"]
         if any(f_comp in compiler.fc for f_comp in fortran_compilers) and (
             "clang" in compiler.cxx
@@ -38,7 +41,7 @@ def llnl_link_helpers(options, spec, compiler):
             if flags:
                 options.append(cmake_cache_string("BLT_EXE_LINKER_FLAGS", flags, description))
 
-    if "cce" in compiler.cxx:
+    if "cxx" in spec and spec["cxx"].name == "cce":
         description = "Adds a missing rpath for libraries " "associated with the fortran compiler"
         # Here is where to find libs that work for fortran
         libdir = "/opt/cray/pe/cce/{0}/cce-clang/x86_64/lib".format(compiler.version)
