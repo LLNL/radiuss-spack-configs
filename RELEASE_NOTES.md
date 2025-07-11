@@ -1,4 +1,25 @@
 
+# v2025.06.0
+
+Recommended Spack version: branch rsc-2025-03-0
+
+## Configs Update
+- Add rocm 6.4.1 and cce 19.0.0 (cray machines)
+- Update gcc to 13.3.1, update mpich to 8.1.32 (cray machines)
+- Update cuda to 11.8.0 and add 12.2.0 (cray machines)
+- Support running on Dane and Tuolumne
+- Check external packages on every machine (expect lassen), update when necessary
+
+## CI
+- Replace Poodle with Dane in CI
+- Mention CI capabilities in documentation
+
+## Others
+- Add utilities to help with spack configs updates
+- Improve ordering of externals in packages.yaml files
+- Update copyright
+- Fix naming convention
+
 # v2025.03.0
 
 Recommended Spack version: branch rsc-2025-03-0
