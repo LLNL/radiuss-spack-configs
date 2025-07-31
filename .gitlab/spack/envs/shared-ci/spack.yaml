@@ -10,9 +10,9 @@ spack:
   #[general--]
   repos:
     llnl_radiuss: ./spack_repo/llnl_radiuss/
-    builtin:
-      commit: c63151a5ba
-      git: https://github.com/spack/spack-packages.git
+#    builtin:
+#      commit: c63151a5ba
+#      git: https://github.com/spack/spack-packages.git
   include:
   - $LCSCHEDCLUSTER/config.yaml
   - $LCSCHEDCLUSTER/packages.yaml
