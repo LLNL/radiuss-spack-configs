@@ -10,6 +10,9 @@ hostname
 
 . ${MY_SPACK_PARENT_DIR}/spack/share/spack/setup-env.sh
 spack ${MY_SPACK_DEBUG} env activate --without-view .gitlab/spack/envs/${MY_ENV_NAME}
+spack ${MY_SPACK_DEBUG} config blame repos
+spack ${MY_SPACK_DEBUG} repo update
+spack ${MY_SPACK_DEBUG} config blame repos
 spack ${MY_SPACK_DEBUG} config blame mirrors
 spack ${MY_SPACK_DEBUG} mirror add --oci-username-variable CI_REGISTRY_USER --oci-password-variable CI_REGISTRY_PASSWORD buildcache-destination oci://${CI_REGISTRY_IMAGE}/${SPACK_TARGET}
 spack ${MY_SPACK_DEBUG} config blame mirrors
