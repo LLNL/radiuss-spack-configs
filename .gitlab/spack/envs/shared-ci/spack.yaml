@@ -10,9 +10,10 @@ spack:
   #[general--]
   repos:
     llnl_radiuss: ./spack_repo/llnl_radiuss/
-#    builtin:
+    builtin:
 #      commit: c63151a5ba
-#      git: https://github.com/spack/spack-packages.git
+      branch: bugfix/external-oneapi-classic 
+      git: https://github.com/spack/spack-packages.git
   include:
   - $LCSCHEDCLUSTER/config.yaml
   - $LCSCHEDCLUSTER/packages.yaml
