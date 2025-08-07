@@ -46,6 +46,18 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     version("develop", branch="develop", submodules=submodules)
     version("main", branch="main", submodules=submodules)
     version(
+        "2025.03.2",
+        tag="v2025.03.2",
+        commit="6e36a94380adbe88fed11a3213fc08461428ece0",
+        submodules=submodules,
+    )
+    version(
+        "2025.03.1",
+        tag="v2025.03.1",
+        commit="ffa7b92377705aff855b4bf602e197ae4f8e8cc3",
+        submodules=submodules,
+    )
+    version(
         "2025.03.0",
         tag="v2025.03.0",
         commit="1d70abf171474d331f1409908bdf1b1c3fe19222",
@@ -233,10 +245,11 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         description="For developers, lowers optimization level to pass tests with some compilers",
     )
 
-    depends_on("cxx", type="build")  # generated
+    depends_on("cxx", type="build")
 
     depends_on("blt", type="build")
-    depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
+    depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
+    depends_on("blt@0.6.2", type="build", when="@2024.02.1:2024.02.2")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
     depends_on("blt@0.5.3", type="build", when="@2023.06.0:2023.06.1")
     depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10.5")
@@ -251,7 +264,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+omptarget", when="+omptarget")
     depends_on("camp+sycl", when="+sycl")
     depends_on("camp@main", when="@develop")
-    depends_on("camp@2024.07.0:", when="@2024.02.2:")
+    depends_on("camp@2025.03.0", when="@2025.03")
+    depends_on("camp@2024.07.0", when="@2024.02.2")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")
     depends_on("camp@2023.06.0", when="@2023.06.0:2023.06.1")
