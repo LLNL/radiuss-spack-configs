@@ -9,8 +9,8 @@
     require:
     - spec: ^blt%gcc
       when: '%gcc ^blt'
-    - spec: ^blt%clang
-      when: '%clang ^blt'
+    - spec: ^blt%llvm
+      when: '%llvm ^blt'
     - spec: ^spectrum-mpi
       when: '^mpi'
   xl:
@@ -503,16 +503,16 @@
       prefix: /usr
 'toolchains:':
   clang-16:
-    - spec: '%[virtuals=c]llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb'
+    - spec: '%[virtuals=c]llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
       when: '%c'
-    - spec: '%[virtuals=cxx]llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb'
+    - spec: '%[virtuals=cxx]llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
       when: '%cxx'
     - spec: '%[virtuals=fortran]xl@16.1.1.14.cuda.11.8.0.gcc.11.2.1+r'
       when: '%fortran'
   clang-16-ibm:
-    - spec: '%[virtuals=c]llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb'
+    - spec: '%[virtuals=c]llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
       when: '%c'
-    - spec: '%[virtuals=cxx]llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb'
+    - spec: '%[virtuals=cxx]llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
       when: '%cxx'
     - spec: '%[virtuals=fortran]xl@16.1.1.14.cuda.11.8.0.gcc.11.2.1+r'
       when: '%fortran'
