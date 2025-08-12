@@ -114,7 +114,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     # We propagate the patch here.
     patch("change_mpi_target_name_umpire_patch.patch", when="@2022.10.0:2023.06.0")
 
-    variant("enable_pick", default=False, when="@:2025", description="Enable pick method")
+    variant("enable_pick", default=False, when="@:2024", description="Enable pick method")
     variant(
         "separable_compilation",
         default=True,

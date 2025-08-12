@@ -142,7 +142,8 @@ class Care(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("raja@2024.02.0:", when="@0.12.0:")
     depends_on("raja@2022.10.5:", when="@0.10.0:")
 
-    depends_on("chai+enable_pick+raja")
+    depends_on("chai+enable_pick+raja", when="@:0.14.99")
+    depends_on("chai+raja", when="@0.15.0:")
     depends_on("chai@2025.03.0:", when="@0.15.0:")
     depends_on("chai@2024.07.0:", when="@0.13.2:")
     depends_on("chai@2024.02.2:", when="@0.13.1:")
