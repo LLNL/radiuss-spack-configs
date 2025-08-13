@@ -39,6 +39,7 @@ allocate-dane:
       echo -e "[Information] Shared allocation ID = ${JOBID}"
       export JOBID_OPT=$([[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}")
 
+#[get-spack--]
 get-spack-dane:
   extends: [.on-dane, .dane-variables]
   stage: setup
@@ -46,6 +47,7 @@ get-spack-dane:
     - !reference [.prepare-dane-jobid, script]
     - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/get-spack
   needs: [allocate-dane]
+#[--get-spack]
 
 generate-on-dane:
   extends: [.on-dane, .dane-variables]
@@ -53,12 +55,13 @@ generate-on-dane:
   script:
     - .gitlab/scripts/print-variables
     - !reference [.prepare-dane-jobid, script]
-    - srun ${JOBID_OPT} --nodes=1 .gitlab/spack/generate-script.sh
+    - srun ${JOBID_OPT} --reservation=ci --nodes=1 .gitlab/spack/generate-script.sh
   artifacts:
     paths:
       - "${CI_PROJECT_DIR}/jobs_scratch_dir"
   needs: [get-spack-dane]
 
+#[send-variable-child--]
 build-on-dane:
   extends: [.dane-variables]
   stage: build
@@ -73,14 +76,17 @@ build-on-dane:
     forward:
       pipeline_variables: true
   needs: [generate-on-dane]
+#[--send-variable-child]
 
+#[rm-spack--]
 rm-spack-dane:
   extends: [.on-dane, .dane-variables]
   stage: clean
   script:
     - !reference [.prepare-dane-jobid, script]
-    - srun ${JOBID_OPT} --nodes=1 .gitlab/scripts/remove-spack
+    - srun ${JOBID_OPT} --reservation=ci --nodes=1 .gitlab/scripts/remove-spack
   needs: [build-on-dane]
+#[--rm-spack]
 
 release-dane:
   variables:

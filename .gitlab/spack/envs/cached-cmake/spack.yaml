@@ -44,11 +44,6 @@ spack:
   - compilers:
     - '%oneapi@=2023.2.1'
     - '%clang@=14.0.6'
-    - '%gcc@=10.3.1'
-    when: env.get("LCSCHEDCLUSTER", "") == "ruby"
-  - compilers:
-    - '%oneapi@=2023.2.1'
-    - '%clang@=14.0.6'
     - '%gcc@=11.2.1'
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
