@@ -138,12 +138,12 @@ all four supported machines::
       RADIUSS_JOBS_PATH: "scripts/radiuss-spack-configs/gitlab/radiuss-jobs"
       LOCAL_JOBS_PATH: ".gitlab/jobs"
     script:
-      - cat ${RADIUSS_JOBS_PATH}/ruby.yml ${LOCAL_JOBS_PATH}/ruby.yml > ruby-jobs.yml
+      - cat ${RADIUSS_JOBS_PATH}/dane.yml ${LOCAL_JOBS_PATH}/dane.yml > dane-jobs.yml
       - cat ${RADIUSS_JOBS_PATH}/lassen.yml ${LOCAL_JOBS_PATH}/lassen.yml > lassen-jobs.yml
       ...
     artifacts:
       paths:
-        - ruby-jobs.yml
+        - dane-jobs.yml
         - lassen-jobs.yml
         ...
 
@@ -289,21 +289,21 @@ We aim at sharing those specs so that projects build with similar
 configurations. However we allow projects to add extra specs to test
 project-specific configurations.
 
-Shared specs for machine ``ruby``, for example, can be listed directly in
+Shared specs for machine ``dane``, for example, can be listed directly in
 `radiuss-shared-ci`_:
 
 .. code-block:: bash
 
   cd radiuss-shared-ci
-  git grep SPEC ruby-build-and-test.yml
+  git grep SPEC gitlab/radiuss-jobs/dane.yml
 
-Extra ``ruby`` specs, specific to one project, are defined locally to the
-project in ``.gitlab/ruby-build-and-test-extra.yml``
+Extra ``dane`` specs, specific to one project, are defined locally to the
+project in ``.gitlab/jobs/dane.yml``
 
 .. code-block:: bash
 
   cd <project>
-  git grep SPEC .gitlab/ruby-build-and-test-extra.yml
+  git grep SPEC .gitlab/jobs/dane.yml
 
 ===========
 Use Uberenv
