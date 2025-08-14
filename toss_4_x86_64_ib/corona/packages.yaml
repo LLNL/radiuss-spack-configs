@@ -6,6 +6,7 @@
       lapack: [netlib-lapack]
       mpi: [mvapich2]
       zlib-api: [zlib]
+      pkgconfig: [pkgconf]
 
   # external packages (module)
   cmake:
