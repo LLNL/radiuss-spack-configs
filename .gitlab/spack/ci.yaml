@@ -25,13 +25,6 @@ ci:
         - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
         - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${CORONA_JOB_ALLOC} .gitlab/spack/ci-script.sh)
     - match:
-      - 'target=cascadelake'
-      build-job:
-        tags: [ruby, shell]
-        script::
-        - export JOBID=$(squeue -h --name=${RUBY_ALLOC_NAME} --format=%A)
-        - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${RUBY_JOB_ALLOC} .gitlab/spack/ci-script.sh
-    - match:
       - 'target=sapphirerapids'
       build-job:
         tags: [dane, shell]

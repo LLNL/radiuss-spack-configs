@@ -16,20 +16,6 @@
     MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
     SPACK_TARGET: zen
 
-.ruby-variables:
-  variables:
-    SPACK_DISABLE_LOCAL_CONFIG: ""
-    MY_SPACK_DEBUG: ""
-#[create-unique-path--]
-    # Spack clone for ruby generated pipeline
-    MY_SPACK_PARENT_DIR: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-ruby
-    # Spack cache for spack at pipeline generation time, then overridden by each CI job
-    SPACK_USER_CACHE_PATH: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-ruby/spack-user-cache
-    # Spack cache for each CI job in the generated pipeline (avoids collision)
-    MY_SPACK_USER_CACHE: /dev/shm/llnl-stack-${CI_PIPELINE_ID}-${CI_JOB_ID}/spack-cache
-#[--create-unique-path]
-    SPACK_TARGET: cascadelake
-
 .dane-variables:
   variables:
     SPACK_DISABLE_LOCAL_CONFIG: ""
