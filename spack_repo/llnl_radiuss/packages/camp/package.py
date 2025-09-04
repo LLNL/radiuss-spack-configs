@@ -38,7 +38,7 @@ def hip_for_radiuss_projects(options, spec, compiler):
     if spec_uses_toolchain(spec):
         gcc_prefix = spec_uses_toolchain(spec)[0]
         options.append(cmake_cache_string("HIP_CLANG_FLAGS", "--gcc-toolchain={0}".format(gcc_prefix)))
-        options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath {}/lib64".format(gcc_prefix)))
+        options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", hip_link_flags + " -Wl,-rpath={0}/lib64".format(gcc_prefix)))
     else:
         options.append(cmake_cache_string("CMAKE_EXE_LINKER_FLAGS", "-Wl,-rpath={0}/llvm/lib/".format(rocm_root)))
 
