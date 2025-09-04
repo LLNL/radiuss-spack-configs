@@ -13,6 +13,9 @@ export SPACK_DISABLE_LOCAL_CONFIG=""
 export SPACK_USER_CACHE_PATH="${MY_SPACK_USER_CACHE}"
 spack --version
 spack ${MY_SPACK_DEBUG} env activate --without-view ${SPACK_CONCRETE_ENV_DIR}
+spack ${MY_SPACK_DEBUG} config blame repos
+spack ${MY_SPACK_DEBUG} repo update
+spack ${MY_SPACK_DEBUG} config blame repos
 spack ${MY_SPACK_DEBUG} config blame mirrors
 spack ${MY_SPACK_DEBUG} mirror rm buildcache-destination
 spack ${MY_SPACK_DEBUG} mirror add --oci-username-variable CI_REGISTRY_USER --oci-password-variable CI_REGISTRY_PASSWORD buildcache-destination oci://${CI_REGISTRY_IMAGE}/${SPACK_TARGET}

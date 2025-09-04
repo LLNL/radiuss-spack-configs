@@ -5,12 +5,23 @@
 
 import socket
 
-from spack.package import *
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+    cmake_cache_string,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
 
-from .camp import hip_for_radiuss_projects
-from .camp import cuda_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
-from .blt import llnl_link_helpers
+from spack_repo.llnl_radiuss.packages.camp.package import (
+    hip_for_radiuss_projects,
+    cuda_for_radiuss_projects,
+    mpi_for_radiuss_projects,
+)
+from spack_repo.llnl_radiuss.packages.blt.package import llnl_link_helpers
+
+from spack.package import *
 
 
 class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -87,8 +98,6 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         "0.4.0", tag="v0.4.0", commit="a8f669c1ad01d51132a4e3d9d6aa8b2cabc9eff0", submodules="True"
     )
 
-    depends_on("cxx", type="build")  # generated
-
     variant("mpi", default=False, description="Enable MPI support")
     variant("openmp", default=False, description="Build OpenMP backend")
     variant("omptarget", default=False, description="Build with OpenMP target support")
@@ -108,6 +117,8 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         default=False,
         description="For developers, lowers optimization level to pass tests with some compilers",
     )
+
+    depends_on("cxx", type="build")  # generated
 
     depends_on("blt")
     depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")

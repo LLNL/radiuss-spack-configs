@@ -7,11 +7,22 @@ import os
 import socket
 import sys
 
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+
+from spack_repo.llnl_radiuss.packages.camp.package import (
+    hip_for_radiuss_projects,
+    cuda_for_radiuss_projects,
+    mpi_for_radiuss_projects,
+)
+
 from spack.package import *
 
-from .camp import cuda_for_radiuss_projects
-from .camp import hip_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     """Caliper is a program instrumentation and performance measurement
@@ -32,6 +43,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     license("BSD-3-Clause")
 
     version("master", branch="master")
+    version("2.13.1", sha256="7cef0173e0e0673abb7943a2641b660adfbc3d6bc4b33941ab4f431f92a4d016")
+    version("2.13.0", sha256="28c6e8fd940bdee9e80d1e8ae1ce0f76d6a690cbb6242d4eec115d6c0204e331")
     version("2.12.1", sha256="2b5a8f98382c94dc75cc3f4517c758eaf9a3f9cea0a8dbdc7b38506060d6955c")
     version("2.11.0", sha256="b86b733cbb73495d5f3fe06e6a9885ec77365c8aa9195e7654581180adc2217c")
     version("2.10.0", sha256="14c4fb5edd5e67808d581523b4f8f05ace8549698c0e90d84b53171a77f58565")
@@ -85,10 +98,6 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         "1.7.0", tag="v1.7.0", commit="898277c93d884d4e7ca1ffcf3bbea81d22364f26", deprecated=True
     )
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
-
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
     variant("adiak", default=True, description="Enable Adiak support")
@@ -112,6 +121,10 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("tests", default=False, description="Enable tests")
     variant("tools", default=True, description="Enable tools")
     variant("python", default=False, when="@v2.12:", description="Build Python bindings")
+
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build")  # generated
 
     depends_on("adiak@0.1:0", when="@2.2:2.10 +adiak")
     depends_on("adiak@0.4:0", when="@2.11: +adiak")
@@ -141,6 +154,8 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("+libdw", "@:2.4")
     conflicts("+rocm", "@:2.7")
     conflicts("+rocm+cuda")
+    # Legacy nvtx is only supported until cuda@12.8, newer cuda only provides nvtx3.
+    conflicts("^cuda@12.9:", "@:2.12.1")
 
     patch("for_aarch64.patch", when="@:2.11 target=aarch64:")
     patch(
@@ -269,7 +284,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     def cmake_args(self):
         return []
 
-    def setup_run_environment(self, env):
+    def setup_run_environment(self, env: EnvironmentModifications) -> None:
         if self.spec.satisfies("+python"):
             env.prepend_path("PYTHONPATH", self.spec.prefix.join(python_platlib))
             env.prepend_path("PYTHONPATH", self.spec.prefix.join(python_purelib))
