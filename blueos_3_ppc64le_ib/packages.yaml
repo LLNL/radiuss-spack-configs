@@ -6,6 +6,7 @@
       lapack: [netlib-lapack]
       mpi: [spectrum-mpi]
       zlib-api: [zlib]
+      pkgconfig: [pkg-config]
     require:
     - spec: ^blt%gcc
       when: '%gcc ^blt'

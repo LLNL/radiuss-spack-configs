@@ -15,6 +15,7 @@
       lapack: [netlib-lapack]
       mpi: [mvapich2]
       zlib-api: [zlib]
+      pkgconfig: [pkgconf]
   gcc-runtime:
     require:
     - '%gcc'
