@@ -96,6 +96,12 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
     version("main", branch="main", submodules=False)
     version(
+        "2025.09.1",
+        tag="v2025.09.1",
+        commit="64a197ecc6dd44ccb30cd46a1fce7b053c0ce4f0",
+        submodules=False,
+    )
+    version(
         "2025.03.0",
         tag="v2025.03.0",
         commit="ee0a3069a7ae72da8bcea63c06260fad34901d43",
@@ -147,6 +153,8 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
         depends_on("cub", when="^cuda@:10")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.7.1:", type="build", when="@2025.09.0:")
+    depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
