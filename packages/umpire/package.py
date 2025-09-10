@@ -28,6 +28,12 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     version("develop", branch="develop", submodules=False)
     version(
+        "2025.09.0",
+        tag="v2025.09.0",
+        commit="6b0ea9edbbbc741c8a429768d946549cd3bd7d33",
+        submodules=False,
+    )
+    version(
         "2025.03.0",
         tag="v2025.03.0",
         commit="1ed0669c57f041baa1f1070693991c3a7a43e7ee",
@@ -240,7 +246,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.8:", type="build")
 
     depends_on("blt", type="build")
-    depends_on("blt@0.7.1:", type="build", when="@2025.06.0:")
+    depends_on("blt@0.7.1:", type="build", when="@2025.09.0:")
     depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
@@ -253,7 +259,8 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp")
-    depends_on("camp@2025.06.0:", when="@2025.06.0:")
+    depends_on("camp@2025.09.1:", when="@2025.09.0:")
+    depends_on("camp@2025.03.0:", when="@2025.03.0:")
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
     depends_on("camp~rocm", when="~rocm")
