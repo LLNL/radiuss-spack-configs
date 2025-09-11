@@ -4,6 +4,8 @@
     - 'target=sapphirerapids'
     - spec: ^blt%intel-oneapi-compilers
       when: '%intel-oneapi-compilers ^blt'
+    - spec: ^blt%llvm
+      when: '%llvm ^blt'
     - spec: ^blt%gcc
       when: '%gcc ^blt'
     - spec: ^blt%intel-oneapi-compilers-classic
