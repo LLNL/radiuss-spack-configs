@@ -17,18 +17,24 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
     license("MIT", checked_by="tdrwenski")
 
     version("main", branch="main", preferred=True)
+    version("4.2", tag="v4.2", commit="557675fd76daf9fd0be7ebd6321bf2afcb6a6b9c")
     version("learning", branch="learning")
 
     variant("slepc", default=False, description="Build with SLEPc library")
     variant("int64", default=False, description="Use 64 bit ints for PetscInts")
     variant("test", default=False, description="Add dependencies needed for testing")
+    variant("werror", default=False, description="Enable warnings as errors")
 
     depends_on("cxx", type="build")
     depends_on("c", type="build")
 
     depends_on("petsc~hypre~metis~fortran")
     depends_on("petsc+debug", when="build_type=Debug")
+    depends_on("petsc~debug", when="build_type=Release")
+    depends_on("petsc~debug", when="build_type=RelWithDebInfo")
     depends_on("petsc+int64", when="+int64")
+    depends_on("petsc~int64", when="~int64")
+
     depends_on("slepc", when="+slepc")
     depends_on("mpi", type=("build", "link", "run"))
 
@@ -55,5 +61,6 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         entries.append(cmake_cache_option("WITH_SLEPC", spec.satisfies("+slepc")))
+        entries.append(cmake_cache_option("ENABLE_WARNINGS_AS_ERRORS", spec.satisfies("+werror")))
 
         return entries

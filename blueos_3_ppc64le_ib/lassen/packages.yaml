@@ -5,6 +5,7 @@
       lapack: [netlib-lapack]
       mpi: [spectrum-mpi]
       zlib-api: [zlib]
+      pkgconfig: [pkg-config]
     require:
     - target=power9le
     - spec: ^blt%gcc
