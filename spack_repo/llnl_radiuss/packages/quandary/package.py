@@ -3,6 +3,14 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+
 from spack.package import *
 
 
@@ -12,7 +20,7 @@ class Quandary(CachedCMakePackage, CudaPackage, ROCmPackage):
     homepage = "https://github.com/LLNL/quandary"
     git = "https://github.com/LLNL/quandary.git"
 
-    maintainers("steffi7574", "tdrwenski")
+    maintainers("steffi7574", "tdrwenski", "adrienbernede")
 
     license("MIT", checked_by="tdrwenski")
 
