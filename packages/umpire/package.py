@@ -259,7 +259,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp")
-    depends_on("camp@2025.09.1:", when="@2025.09.0:")
+    depends_on("camp@2025.09.2:", when="@2025.09.0:")
     depends_on("camp@2025.03.0:", when="@2025.03.0:")
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
