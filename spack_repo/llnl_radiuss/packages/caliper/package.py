@@ -157,6 +157,11 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     # Legacy nvtx is only supported until cuda@12.8, newer cuda only provides nvtx3.
     conflicts("^cuda@12.9:", "@:2.12.1")
 
+    patch(
+        "https://github.com/LLNL/Caliper/commit/648f8ab496a4a2c3f38e0cfa572340e429d8c76e.patch?full_index=1"
+        sha256="d947b5df6b68a24f516bb3b4ec04c28d4b8246ac0cbe664cf113dd2b6ca92073",
+        when="@2.12:2.13",
+    )
     patch("for_aarch64.patch", when="@:2.11 target=aarch64:")
     patch(
         "sampler-service-missing-libunwind-include-dir.patch",
