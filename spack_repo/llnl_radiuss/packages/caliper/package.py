@@ -158,7 +158,7 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^cuda@12.9:", "@:2.12.1")
 
     patch(
-        "https://github.com/LLNL/Caliper/commit/648f8ab496a4a2c3f38e0cfa572340e429d8c76e.patch?full_index=1"
+        "https://github.com/LLNL/Caliper/commit/648f8ab496a4a2c3f38e0cfa572340e429d8c76e.patch?full_index=1",
         sha256="d947b5df6b68a24f516bb3b4ec04c28d4b8246ac0cbe664cf113dd2b6ca92073",
         when="@2.12:2.13",
     )
