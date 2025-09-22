@@ -44,7 +44,7 @@
         extra_rpaths: [/opt/cray/pe/mpich/8.1.31/gtl/lib]
   gcc:
     externals:
-    - spec: gcc@12.2.1 languages:='c,c++,fortran'
+    - spec: gcc@12.2.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-12.2.1-magic
       extra_attributes:
         compilers:
@@ -54,7 +54,7 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@13.3.1 languages:='c,c++,fortran'
+    - spec: gcc@13.3.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-13.3.1-magic
       extra_attributes:
         compilers:

@@ -30,7 +30,7 @@
   # compilers
   gcc:
     externals:
-    - spec: gcc@10.3.1 languages:='c,c++,fortran'
+    - spec: gcc@10.3.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-10.3.1
       extra_attributes:
         compilers:
@@ -40,7 +40,7 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@11.2.1 languages:='c,c++,fortran'
+    - spec: gcc@11.2.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-11.2.1
       extra_attributes:
         compilers:
@@ -50,7 +50,7 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@12.1.1 languages:='c,c++,fortran'
+    - spec: gcc@12.1.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-12.1.1
       extra_attributes:
         compilers:
