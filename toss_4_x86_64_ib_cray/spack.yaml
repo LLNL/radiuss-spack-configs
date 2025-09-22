@@ -5,7 +5,7 @@ spack:
       git: https://github.com/spack/spack-packages.git
   include:
     - config.yaml
-    - compilers.yaml
+#    - compilers.yaml
     - packages.yaml
   concretizer:
     reuse: false
