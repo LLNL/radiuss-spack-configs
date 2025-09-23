@@ -16,7 +16,7 @@ ci:
 
   - submapping:
     - match:
-      - 'target=zen'
+      - env.get("LCSCHEDCLUSTER", "") == "corona"
       build-job:
         tags: [corona, shell]
         script::
@@ -25,20 +25,20 @@ ci:
         - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
         - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${CORONA_JOB_ALLOC} .gitlab/spack/ci-script.sh)
     - match:
-      - 'target=sapphirerapids'
+      - env.get("LCSCHEDCLUSTER", "") == "dane"
       build-job:
         tags: [dane, shell]
         script::
         - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
         - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
     - match:
-      - 'target=power9le'
+      - env.get("LCSCHEDCLUSTER", "") == "lassen"
       build-job:
         tags: [lassen, shell]
         script::
         - lalloc ${LASSEN_JOB_ALLOC} .gitlab/spack/ci-script.sh
     - match:
-      - 'target=zen3'
+      - env.get("LCSCHEDCLUSTER", "") == "tioga"
       build-job:
         tags: [tioga, shell]
         script::
@@ -47,7 +47,7 @@ ci:
         - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
         - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${TIOGA_JOB_ALLOC} .gitlab/spack/ci-script.sh)
     - match:
-      - 'target=zen4'
+      - env.get("LCSCHEDCLUSTER", "") == "tuolumne"
       build-job:
         tags: [tuolumne, shell]
         script::
