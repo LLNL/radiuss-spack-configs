@@ -247,8 +247,8 @@ compilers::
 - compiler:
     spec: clang@=19.0.0
     paths:
-      cc: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang
-      cxx: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang++
+      cc: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/bin/clang
+      cxx: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/bin/clang++
       f77: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
       fc: /usr/tce/packages/gcc/gcc-10.3.1/bin/gfortran
     flags: {}
@@ -256,7 +256,7 @@ compilers::
     target: x86_64
     modules: []
     environment: {}
-    extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib, /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib64]
+    extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/lib, /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/lib64]
 - compiler:
     spec: clang@=20.0.0
     paths:
