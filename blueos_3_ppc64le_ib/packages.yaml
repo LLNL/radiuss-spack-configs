@@ -242,29 +242,29 @@
   spectrum-mpi:
     buildable: false
     externals:
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=13.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=13.0.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-13.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@14.0.5+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-14.0.5
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.gcc.8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@14.0.5.gcc.8.3.1+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-14.0.5-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6.gcc.11.2.1+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.cuda.11.8.0.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6-cuda-11.8.0-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=13.0.1.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=13.0.1.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-13.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=14.0.5.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-14.0.5
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.ibm.gcc.8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=14.0.5.ibm.gcc.8.3.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-14.0.5-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm.gcc.11.2.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@=8.3.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-8.3.1
@@ -289,53 +289,33 @@
   netlib-lapack:
     buildable: false
     externals:
-    #- spec: netlib-lapack@3.    %clang@=9.0.0
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-9.0.0
-    #- spec: netlib-lapack@3.    %clang@=10.0.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-10.0.1
-    #- spec: netlib-lapack@3.    %clang@=11.0.0
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-11.0.0
-    #- spec: netlib-lapack@3.    %clang@=12.0.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-12.0.1
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-12.0.1-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=13.0.1
+    #- spec: netlib-lapack@3.    %llvm@=13.0.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-13.0.1
-    #- spec: netlib-lapack@3.    %clang@=14.0.5
+    #- spec: netlib-lapack@3.    %llvm@=14.0.5
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-14.0.5
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.gcc.8.3.1
+    #- spec: netlib-lapack@3.    %llvm@=14.0.5.gcc.8.3.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-14.0.5-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=15.0.6
+    #- spec: netlib-lapack@3.    %llvm@=15.0.6
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-15.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.gcc.11.2.1
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6.gcc.11.2.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6-gcc-11.2.1
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6.cuda.11.8.0.gcc.11.2.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6-cuda-11.8.0-gcc-11.2.1
-    #- spec: netlib-lapack@3.    %clang@=9.0.0.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-2019.10.03
-    #- spec: netlib-lapack@3.    %clang@=10.0.1.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-10.0.1
-    #- spec: netlib-lapack@3.    %clang@=11.0.0.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-11.0.0
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-12.0.1
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.ibm.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-12.0.1-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=13.0.1.ibm
+    #- spec: netlib-lapack@3.    %llvm@=13.0.1.ibm
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-13.0.1
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.ibm
+    #- spec: netlib-lapack@3.    %llvm@=14.0.5.ibm
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-14.0.5
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.ibm.gcc.8.3.1
+    #- spec: netlib-lapack@3.    %llvm@=14.0.5.ibm.gcc.8.3.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-14.0.5-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=15.0.6.ibm
+    #- spec: netlib-lapack@3.    %llvm@=15.0.6.ibm
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-15.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6.ibm
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-16.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm.gcc.11.2.1
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6.ibm.gcc.11.2.1
     #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-16.0.6-gcc-11.2.1
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
+    #- spec: netlib-lapack@3.    %llvm@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
     #  prefix: /usr/tce/packages/lapack/lapack-      -clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1
     - spec: netlib-lapack@3.8.0%gcc@=4.9.3
       prefix: /usr/tcetmp/packages/lapack/lapack-3.8.0-P9-gcc-4.9.3
