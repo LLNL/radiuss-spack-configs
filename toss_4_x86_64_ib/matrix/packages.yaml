@@ -148,6 +148,50 @@
     - spec: python@3.9.12
       prefix: /usr/tce/packages/python/python-3.9.12
 
+  cmake:
+    version: [3.23.1, 3.22.4, 3.21.1, 3.20.2, 3.18.0, 3.16.8, 3.14.5]
+    buildable: false
+    externals:
+    - spec: cmake@3.14.5
+      prefix: /usr/tce/packages/cmake/cmake-3.14.5
+    - spec: cmake@3.19.2
+      prefix: /usr/tce/packages/cmake/cmake-3.19.2
+    - spec: cmake@3.21.1
+      prefix: /usr/tce/packages/cmake/cmake-3.21.1
+    - spec: cmake@3.22.4
+      prefix: /usr/tce/packages/cmake/cmake-3.22.4
+    - spec: cmake@3.23.1
+      prefix: /usr/tce/packages/cmake/cmake-3.23.1
+    - spec: cmake@3.25.2
+      prefix: /usr/tce/packages/cmake/cmake-3.25.2
+    - spec: cmake@3.25.3
+      prefix: /usr/tce/packages/cmake/cmake-3.26.3
+    - spec: cmake@3.30.5
+      prefix: /usr/tce/packages/cmake/cmake-3.30.5
+  cuda:
+    version: [12.9.1, 12.6.0, 12.2.2, 11.8.0, 11.7.0, 11.5.0, 11.2.0, 11.1.0, 10.2.89, 10.1.168]
+    buildable: false
+    externals:
+    - spec: cuda@12.9.1+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.9.1
+    - spec: cuda@12.6.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.6.0
+    - spec: cuda@12.2.2+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.2.2
+    - spec: cuda@11.8.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.8.0
+    - spec: cuda@11.7.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.7.0
+    - spec: cuda@11.5.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.5.0
+    - spec: cuda@11.2.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.2.0
+    - spec: cuda@11.1.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.1.0
+    - spec: cuda@10.2.89+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.2.89
+    - spec: cuda@10.1.168+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.1.168
   # Special case (module / wrapper)
   mvapich2:
     buildable: false

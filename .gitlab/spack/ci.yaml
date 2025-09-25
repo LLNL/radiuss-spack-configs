@@ -25,9 +25,16 @@ ci:
         - export PROXY="$( [[ -n "${ALLOC_ID}" ]] && echo "flux proxy ${ALLOC_ID}" || echo "" )"
         - ${PROXY} flux watch $( ${PROXY} flux batch -o output.stdout.type=kvs ${CORONA_JOB_ALLOC} .gitlab/spack/ci-script.sh)
     - match:
-      - 'target=sapphirerapids'
+      - 'target=sapphirerapids ~cuda'
       build-job:
         tags: [dane, shell]
+        script::
+        - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
+        - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
+    - match:
+      - 'target=sapphirerapids +cuda'
+      build-job:
+        tags: [matrix, shell]
         script::
         - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
         - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
