@@ -250,9 +250,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("sanitizer_tests", default=False, description="Enable address sanitizer tests")
     variant("fmt_header_only", default=True, description="Link to header-only fmt target")
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", when="+fortran", type="build")
 
     depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
     depends_on("cmake@3.23:", when="@2022.10.0: +rocm", type="build")

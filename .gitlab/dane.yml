@@ -76,6 +76,11 @@ build-on-dane:
     forward:
       pipeline_variables: true
   needs: [generate-on-dane]
+  rules:
+    # Runs except if we explicitly deactivate dane by variable.
+    - if: '$ON_DANE == "OFF"'
+      when: never
+    - when: on_success
 #[--send-variable-child]
 
 #[rm-spack--]

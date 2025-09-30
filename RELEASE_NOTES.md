@@ -1,4 +1,23 @@
 
+# v2025.09.0
+
+Recommended Spack version: 1.0.2:
+Vetted spack-packages commit: a3806d96d2
+
+Update Spack configurations to v1 format
+- Remove compilers.yaml
+- Move compiler definition to packages.yaml
+- Create appropriate toolchains
+Update most packages with 2025.09 release.
+Add support for spack-packages repository set from environment
+
+Retire Ruby
+
+Update CI configuration
+Use CI reservation on Dane
+
+Add patches for Caliper
+
 # v2025.06.0
 
 Recommended Spack version: branch rsc-2025-03-0
