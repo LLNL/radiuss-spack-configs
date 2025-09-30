@@ -7,16 +7,16 @@
 
 oneapi_2023_2_1:
   variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %oneapi@=2023.2.1 ${PROJECT_DANE_DEPS}"
+    SPEC: "${PROJECT_DANE_VARIANTS} %oneapi-2023-gcc-10 ${PROJECT_DANE_DEPS}"
   extends: .job_on_dane
 
 clang_14_0_6:
   variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %clang@=14.0.6 ${PROJECT_DANE_DEPS}"
+    SPEC: "${PROJECT_DANE_VARIANTS} %clang-14-gcc-11 ${PROJECT_DANE_DEPS}"
   extends: .job_on_dane
 
-gcc_10_3_1:
+gcc_11_2_1:
   variables:
-    SPEC: "${PROJECT_DANE_VARIANTS} %gcc@=10.3.1 ${PROJECT_DANE_DEPS}"
+    SPEC: "${PROJECT_DANE_VARIANTS} %gcc@=11.2.1 ${PROJECT_DANE_DEPS}"
   extends: .job_on_dane
 

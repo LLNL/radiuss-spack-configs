@@ -6,12 +6,23 @@
 import os
 import socket
 
-from spack.package import *
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+    cmake_cache_string,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
 
-from .camp import hip_for_radiuss_projects
-from .camp import cuda_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
-from .blt import llnl_link_helpers
+from spack_repo.llnl_radiuss.packages.camp.package import (
+    hip_for_radiuss_projects,
+    cuda_for_radiuss_projects,
+    mpi_for_radiuss_projects,
+)
+from spack_repo.llnl_radiuss.packages.blt.package import llnl_link_helpers
+
+from spack.package import *
 
 
 class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
@@ -27,6 +38,18 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     license("MIT")
 
     version("develop", branch="develop", submodules=False)
+    version(
+        "2025.09.0",
+        tag="v2025.09.0",
+        commit="6b0ea9edbbbc741c8a429768d946549cd3bd7d33",
+        submodules=False,
+    )
+    version(
+        "2025.03.1",
+        tag="v2025.03.1",
+        commit="df47e275d538ce2337fcdd2c09875616715101db",
+        submodules=False,
+    )
     version(
         "2025.03.0",
         tag="v2025.03.0",
@@ -157,10 +180,6 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
         "0.1.3", tag="v0.1.3", commit="cc347edeb17f5f30f694aa47f395d17369a2e449", submodules=True
     )
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
-
     # Some projects importing both camp and umpire targets end up with conflicts in BLT targets
     # import. This is not addressing the root cause, which will be addressed in BLT@5.4.0 and will
     # require adapting umpire build system.
@@ -231,6 +250,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("sanitizer_tests", default=False, description="Enable address sanitizer tests")
     variant("fmt_header_only", default=True, description="Link to header-only fmt target")
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", when="+fortran", type="build")
+
     depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
     depends_on("cmake@3.23:", when="@2022.10.0: +rocm", type="build")
     depends_on("cmake@3.20:", when="@2022.10.0:2024.02.1", type="build")
@@ -240,7 +263,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.8:", type="build")
 
     depends_on("blt", type="build")
-    depends_on("blt@0.7.1:", type="build", when="@2025.06.0:")
+    depends_on("blt@0.7.1:", type="build", when="@2025.09.0:")
     depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
@@ -253,11 +276,11 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     conflicts("^blt@:0.3.6", when="+rocm")
 
     depends_on("camp")
-    depends_on("camp@2025.06.0:", when="@2025.06.0:")
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
     depends_on("camp~rocm", when="~rocm")
-    depends_on("camp@main", when="@develop")
+    depends_on("camp@2025.09.2:", when="@2025.09.0:")
+    depends_on("camp@2025.03.0:", when="@2025.03.0:")
     depends_on("camp@2024.07.0:", when="@2024.07.0:")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")
@@ -343,7 +366,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         option_prefix = "UMPIRE_" if spec.satisfies("@2022.03.0:") else ""
 
-        if spec.satisfies("+fortran") and compiler.fc is not None:
+        if spec.satisfies("+fortran") and "fortran" in spec:
             entries.append(cmake_cache_option("ENABLE_FORTRAN", True))
         else:
             entries.append(cmake_cache_option("ENABLE_FORTRAN", False))
@@ -509,7 +532,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     def cmake_args(self):
         return []
 
-    def setup_run_environment(self, env):
+    def setup_run_environment(self, env: EnvironmentModifications) -> None:
         for library in ["lib", "lib64"]:
             lib_path = join_path(self.prefix, library)
             if os.path.exists(lib_path):

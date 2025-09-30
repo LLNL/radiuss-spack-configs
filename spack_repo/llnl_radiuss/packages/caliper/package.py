@@ -7,11 +7,22 @@ import os
 import socket
 import sys
 
+from spack_repo.builtin.build_systems.cached_cmake import (
+    CachedCMakePackage,
+    cmake_cache_option,
+    cmake_cache_path,
+)
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+
+from spack_repo.llnl_radiuss.packages.camp.package import (
+    hip_for_radiuss_projects,
+    cuda_for_radiuss_projects,
+    mpi_for_radiuss_projects,
+)
+
 from spack.package import *
 
-from .camp import cuda_for_radiuss_projects
-from .camp import hip_for_radiuss_projects
-from .camp import mpi_for_radiuss_projects
 
 class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     """Caliper is a program instrumentation and performance measurement
@@ -32,62 +43,13 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     license("BSD-3-Clause")
 
     version("master", branch="master")
+    version("2.13.1", sha256="7cef0173e0e0673abb7943a2641b660adfbc3d6bc4b33941ab4f431f92a4d016")
+    version("2.13.0", sha256="28c6e8fd940bdee9e80d1e8ae1ce0f76d6a690cbb6242d4eec115d6c0204e331")
     version("2.12.1", sha256="2b5a8f98382c94dc75cc3f4517c758eaf9a3f9cea0a8dbdc7b38506060d6955c")
     version("2.11.0", sha256="b86b733cbb73495d5f3fe06e6a9885ec77365c8aa9195e7654581180adc2217c")
     version("2.10.0", sha256="14c4fb5edd5e67808d581523b4f8f05ace8549698c0e90d84b53171a77f58565")
     version("2.9.1", sha256="4771d630de505eff9227e0ec498d0da33ae6f9c34df23cb201b56181b8759e9e")
     version("2.9.0", sha256="507ea74be64a2dfd111b292c24c4f55f459257528ba51a5242313fa50978371f")
-    version(
-        "2.8.0",
-        sha256="17807b364b5ac4b05997ead41bd173e773f9a26ff573ff2fe61e0e70eab496e4",
-        deprecated=True,
-    )
-    version(
-        "2.7.0",
-        sha256="b3bf290ec2692284c6b4f54cc0c507b5700c536571d3e1a66e56626618024b2b",
-        deprecated=True,
-    )
-    version(
-        "2.6.0",
-        sha256="6efcd3e4845cc9a6169e0d934840766b12182c6d09aa3ceca4ae776e23b6360f",
-        deprecated=True,
-    )
-    version(
-        "2.5.0",
-        sha256="d553e60697d61c53de369b9ca464eb30710bda90fba9671201543b64eeac943c",
-        deprecated=True,
-    )
-    version(
-        "2.4.0", tag="v2.4.0", commit="30577b4b8beae104b2b35ed487fec52590a99b3d", deprecated=True
-    )
-    version(
-        "2.3.0", tag="v2.3.0", commit="9fd89bb0120750d1f9dfe37bd963e24e478a2a20", deprecated=True
-    )
-    version(
-        "2.2.0", tag="v2.2.0", commit="c408e9b3642c7aa80eff37b0826d819c57e7bc04", deprecated=True
-    )
-    version(
-        "2.1.1", tag="v2.1.1", commit="0593b0e01c1d8d3e50c990399cc0fee403485599", deprecated=True
-    )
-    version(
-        "2.0.1", tag="v2.0.1", commit="4d7ff46381c53a461e62edd949e2d9dea9db7b08", deprecated=True
-    )
-    version(
-        "1.9.1", tag="v1.9.1", commit="cfc1defbbee20b50dd3e3477badd09a92b1df970", deprecated=True
-    )
-    version(
-        "1.9.0", tag="v1.9.0", commit="8356e747349b285aa621c5b74e71559f0babc4a1", deprecated=True
-    )
-    version(
-        "1.8.0", tag="v1.8.0", commit="117c1ef596b617dc71407b8b67eebef094a654f8", deprecated=True
-    )
-    version(
-        "1.7.0", tag="v1.7.0", commit="898277c93d884d4e7ca1ffcf3bbea81d22364f26", deprecated=True
-    )
-
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
 
     is_linux = sys.platform.startswith("linux")
     variant("shared", default=True, description="Build shared libraries")
@@ -104,20 +66,22 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     # Gotcha is Linux-only
     variant("gotcha", default=is_linux, description="Enable GOTCHA support")
     variant("sampler", default=is_linux, description="Enable sampling support on Linux")
-    variant("sosflow", default=False, description="Enable SOSflow support")
     variant("fortran", default=False, description="Enable Fortran support")
     variant("variorum", default=False, description="Enable Variorum support")
     variant("vtune", default=False, description="Enable Intel Vtune support")
-    variant("kokkos", default=True, when="@2.3.0:", description="Enable Kokkos profiling support")
+    variant("kokkos", default=True, description="Enable Kokkos profiling support")
     variant("tests", default=False, description="Enable tests")
     variant("tools", default=True, description="Enable tools")
-    variant("python", default=False, when="@v2.12:", description="Build Python bindings")
+    variant("python", default=False, description="Build Python bindings")
 
-    depends_on("adiak@0.1:0", when="@2.2:2.10 +adiak")
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", when="+fortran", type="build")
+
+    depends_on("adiak@0.1:0", when="@:2.10 +adiak")
     depends_on("adiak@0.4:0", when="@2.11: +adiak")
 
-    depends_on("papi@5.3:5", when="@:2.2 +papi")
-    depends_on("papi@5.3:", when="@2.3: +papi")
+    depends_on("papi@5.3:", when="+papi")
 
     depends_on("libpfm4@4.8:4", when="+libpfm")
 
@@ -127,21 +91,22 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("variorum", when="+variorum")
     depends_on("intel-oneapi-vtune", when="+vtune")
 
-    depends_on("sosflow@spack", when="@1.0:1+sosflow")
-
     depends_on("cmake", type="build")
     depends_on("python", type="build")
 
     depends_on("python@3", when="+python", type=("build", "link", "run"))
     depends_on("py-pybind11", when="+python", type=("build", "link", "run"))
 
-    # sosflow support not yet in 2.0
-    conflicts("+sosflow", "@2:")
-    conflicts("+adiak", "@:2.1")
-    conflicts("+libdw", "@:2.4")
-    conflicts("+rocm", "@:2.7")
     conflicts("+rocm+cuda")
+    # Legacy nvtx is only supported until cuda@12.8, newer cuda only provides nvtx3.
+    conflicts("^cuda@12.9:", "@:2.12.1")
 
+    patch("libunwind.patch", when="@:2.13")
+    patch(
+        "https://github.com/LLNL/Caliper/commit/648f8ab496a4a2c3f38e0cfa572340e429d8c76e.patch?full_index=1",
+        sha256="d947b5df6b68a24f516bb3b4ec04c28d4b8246ac0cbe664cf113dd2b6ca92073",
+        when="@2.12:2.13",
+    )
     patch("for_aarch64.patch", when="@:2.11 target=aarch64:")
     patch(
         "sampler-service-missing-libunwind-include-dir.patch",
@@ -259,17 +224,14 @@ class Caliper(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("WITH_VARIORUM", spec.satisfies("+variorum")))
         entries.append(cmake_cache_option("WITH_VTUNE", spec.satisfies("+vtune")))
         entries.append(cmake_cache_option("WITH_PYTHON_BINDINGS", spec.satisfies("+python")))
-
-        # -DWITH_CALLPATH was renamed -DWITH_LIBUNWIND in 2.5
-        callpath_flag = "LIBUNWIND" if spec.satisfies("@2.5:") else "CALLPATH"
-        entries.append(cmake_cache_option("WITH_%s" % callpath_flag, spec.satisfies("+libunwind")))
+        entries.append(cmake_cache_option("WITH_LIBUNWIND", spec.satisfies("+libunwind")))
 
         return entries
 
     def cmake_args(self):
         return []
 
-    def setup_run_environment(self, env):
+    def setup_run_environment(self, env: EnvironmentModifications) -> None:
         if self.spec.satisfies("+python"):
             env.prepend_path("PYTHONPATH", self.spec.prefix.join(python_platlib))
             env.prepend_path("PYTHONPATH", self.spec.prefix.join(python_purelib))

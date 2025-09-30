@@ -8,6 +8,14 @@ import re
 
 from os.path import dirname
 
+from spack_repo.builtin.build_systems.cached_cmake import (
+    cmake_cache_path,
+    cmake_cache_string,
+)
+from spack_repo.builtin.build_systems.cmake import CMakePackage
+from spack_repo.builtin.build_systems.cuda import CudaPackage
+from spack_repo.builtin.build_systems.rocm import ROCmPackage
+
 from spack.package import *
 from spack.util.executable import which_string
 
@@ -96,6 +104,18 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
     version("main", branch="main", submodules=False)
     version(
+        "2025.09.2",
+        tag="v2025.09.2",
+        commit="4070ce93a802849d61037310a87c50cc24c9e498",
+        submodules=False,
+    )
+    version(
+        "2025.09.0",
+        tag="v2025.09.0",
+        commit="b642f29b9d0eee9113bea2791958c29243063e5c",
+        submodules=False,
+    )
+    version(
         "2025.03.0",
         tag="v2025.03.0",
         commit="ee0a3069a7ae72da8bcea63c06260fad34901d43",
@@ -134,19 +154,21 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
     version("0.2.2", sha256="194d38b57e50e3494482a7f94940b27f37a2bee8291f2574d64db342b981d819")
     version("0.1.0", sha256="fd4f0f2a60b82a12a1d9f943f8893dc6fe770db493f8fae5ef6f7d0c439bebcc")
 
-    depends_on("c", type="build")
-    depends_on("cxx", type="build")
-
     # TODO: figure out gtest dependency and then set this default True.
     variant("tests", default=False, description="Build tests")
     variant("openmp", default=False, description="Build with OpenMP support")
     variant("omptarget", default=False, description="Build with OpenMP Target support")
     variant("sycl", default=False, description="Build with Sycl support")
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+
     with when("+cuda"):
         depends_on("cub", when="^cuda@:10")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.7.1:", type="build", when="@2025.09.0:")
+    depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
     depends_on("blt@0.5.0:0.5.3", type="build", when="@2022.03.0:2023.06.0")
