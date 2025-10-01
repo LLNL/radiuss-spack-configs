@@ -55,6 +55,11 @@ build-on-lassen:
     forward:
       pipeline_variables: true
   needs: [generate-on-lassen]
+  rules:
+    # Runs except if we explicitly deactivate lassen by variable.
+    - if: '$ON_LASSEN == "OFF"'
+      when: never
+    - when: on_success
 
 rm-spack-lassen:
   extends: [.on-lassen, .lassen-variables]

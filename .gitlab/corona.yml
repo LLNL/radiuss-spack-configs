@@ -75,6 +75,11 @@ build-on-corona:
     forward:
       pipeline_variables: true
   needs: [generate-on-corona]
+  rules:
+    # Runs except if we explicitly deactivate corona by variable.
+    - if: '$ON_CORONA == "OFF"'
+      when: never
+    - when: on_success
 
 rm-spack-corona:
   extends: [.on-corona, .corona-variables]
