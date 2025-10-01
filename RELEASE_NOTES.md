@@ -1,4 +1,16 @@
 
+# v2025.09.1
+
+## Packages
+- Add latest release of some RADIUSS packages.
+- Style changes.
+
+## Configs
+- Add sycl compiler tied to rocm 6.3.1.
+
+## CI
+- Allow to deactivate a CI machine by variable.
+
 # v2025.09.0
 
 Recommended Spack version: 1.0.2:
