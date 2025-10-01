@@ -115,6 +115,15 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: llvm@18.1.8+clang~flang~lld~lldb
+      prefix: /usr/tce/packages/clang/clang-18.1.8
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-18.1.8/bin/clang
+          cxx: /usr/tce/packages/clang/clang-18.1.8/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
     - spec: llvm@19.0.0git+clang~flang~lld~lldb
       prefix: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1
       extra_attributes:
@@ -171,14 +180,6 @@
       prefix: /usr/tce/packages/cmake/cmake-3.22.4
     - spec: cmake@3.23.1
       prefix: /usr/tce/packages/cmake/cmake-3.23.1
-  cuda:
-    version: [11.8.0, 10.1.168]
-    buildable: false
-    externals:
-    - spec: cuda@10.1.168
-      prefix: /usr/tce/packages/cuda/cuda-10.1.168
-    - spec: cuda@11.8.0
-      prefix: /usr/tce/packages/cuda/cuda-11.8.0
   hip:
     version: [5.7.1, 6.0.2]
     buildable: false
@@ -246,6 +247,30 @@
     - spec: rocprim@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2/
 
+  cuda:
+    version: [12.9.1, 12.6.0, 12.2.2, 11.8.0, 11.7.0, 11.5.0, 11.2.0, 11.1.0, 10.2.89, 10.1.168]
+    buildable: false
+    externals:
+    - spec: cuda@12.9.1+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.9.1
+    - spec: cuda@12.6.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.6.0
+    - spec: cuda@12.2.2+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.2.2
+    - spec: cuda@11.8.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.8.0
+    - spec: cuda@11.7.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.7.0
+    - spec: cuda@11.5.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.5.0
+    - spec: cuda@11.2.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.2.0
+    - spec: cuda@11.1.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.1.0
+    - spec: cuda@10.2.89+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.2.89
+    - spec: cuda@10.1.168+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.1.168
   # Special case (module / wrapper)
   mvapich2:
     buildable: false
@@ -262,6 +287,8 @@
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=14.0.6
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=18.1.8
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-10.3.1
