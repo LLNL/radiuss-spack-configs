@@ -1,0 +1,11 @@
+##############################################################################
+# Copyright (c) 2025, Lawrence Livermore National Security, LLC and RADIUSS
+# project contributors. See the COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (MIT)
+##############################################################################
+
+clang_18_1_1_cuda_12_6_0:
+  variables:
+    SPEC: "${PROJECT_MATRIX_VARIANTS} %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers ${PROJECT_MATRIX_DEPS}"
+  extends: .job_on_matrix

@@ -75,6 +75,11 @@ build-on-tioga:
     forward:
       pipeline_variables: true
   needs: [generate-on-tioga]
+  rules:
+    # Runs except if we explicitly deactivate tioga by variable.
+    - if: '$ON_TIOGA == "OFF"'
+      when: never
+    - when: on_success
 
 rm-spack-tioga:
   extends: [.on-tioga, .tioga-variables]

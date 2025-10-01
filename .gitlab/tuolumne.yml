@@ -75,6 +75,11 @@ build-on-tuolumne:
     forward:
       pipeline_variables: true
   needs: [generate-on-tuolumne]
+  rules:
+    # Runs except if we explicitly deactivate tuolumne by variable.
+    - if: '$ON_TUOLUMNE == "OFF"'
+      when: never
+    - when: on_success
 
 rm-spack-tuolumne:
   extends: [.on-tuolumne, .tuolumne-variables]

@@ -113,24 +113,6 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: llvm@19.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1
-      extra_attributes:
-        compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang++
-        flags: {}
-        environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib, /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib64]
-    - spec: llvm@20.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2
-      extra_attributes:
-        compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang++
-        flags: {}
-        environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib, /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib64]
 
   # external packages (module)
   cmake:
