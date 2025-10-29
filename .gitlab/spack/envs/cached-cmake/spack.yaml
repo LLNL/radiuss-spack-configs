@@ -14,8 +14,8 @@ spack:
       commit: a3806d96d2
       git: https://github.com/spack/spack-packages.git
   include:
-    - $LCSCHEDCLUSTER/config.yaml
-    - $LCSCHEDCLUSTER/packages.yaml
+  - $LCSCHEDCLUSTER/config.yaml
+  - $LCSCHEDCLUSTER/packages.yaml
   concretizer:
     reuse: false
     unify: false
@@ -48,13 +48,8 @@ spack:
     - '%gcc@=11.2.1'
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
-    ## XL as fortran provider is causing issues in those toolchains...
-    #- +cuda %clang-14 ^cuda@11.7.0+allow-unsupported-compilers
-    #- +cuda %clang-16 ^cuda@11.8.0+allow-unsupported-compilers
-    #- +cuda %clang-14-ibm ^cuda@11.7.0+allow-unsupported-compilers
-    #- +cuda %clang-16-ibm ^cuda@11.8.0+allow-unsupported-compilers
-    - +cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers
-    when: env.get("LCSCHEDCLUSTER", "") == "lassen"
+    - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
+    when: env.get("LCSCHEDCLUSTER", "") == "matrix"
   - compilers:
     - +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1
     - '%cce@=19.0.0'
@@ -94,4 +89,5 @@ spack:
     - 'sina +rocm amdgpu_target=gfx906 %llvm-amdgpu@=5.7.1 ^hip@5.7.1'
     # caliper + rocmcc 6.4.1 needs fixed handling of libunwind in callback and sampler services
     - 'caliper +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
-    - 'caliper +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1' 
+    - 'caliper +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
+    - 'caliper +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers'

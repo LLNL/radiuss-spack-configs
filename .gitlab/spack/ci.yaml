@@ -31,6 +31,13 @@ ci:
         script::
         - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
         - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
+    #- match:
+    #  - 'target=sapphirerapids +cuda'
+    #  build-job:
+    #    tags: [matrix, shell]
+    #    script::
+    #    - export JOBID=$(squeue -h --name=${DANE_ALLOC_NAME} --format=%A)
+    #    - srun $( [[ -n "${JOBID}" ]] && echo "--jobid=${JOBID}" ) ${DANE_JOB_ALLOC} .gitlab/spack/ci-script.sh
     - match:
       - 'target=power9le'
       build-job:
