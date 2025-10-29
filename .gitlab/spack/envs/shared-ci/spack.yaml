@@ -50,8 +50,8 @@ spack:
     - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
-    when: env.get("LCSCHEDCLUSTER", "") == "matrix"
     - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
+    when: env.get("LCSCHEDCLUSTER", "") == "matrix"
   - compilers:
     - +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1
     - '%cce@=19.0.0'
