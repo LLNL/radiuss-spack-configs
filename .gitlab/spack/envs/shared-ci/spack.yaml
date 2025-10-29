@@ -46,6 +46,8 @@ spack:
     - '%oneapi-2023-gcc-10'
     - '%clang-14-gcc-11'
     - '%gcc@=11.2.1'
+    # matrix spec
+    - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
     - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers

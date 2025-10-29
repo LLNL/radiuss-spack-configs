@@ -283,7 +283,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp@0.2.2:0.2.3", when="@0.14.0")
     depends_on("camp@0.1.0", when="@0.10.0:0.13.0")
 
-    depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
+    depends_on("cmake@3.24:", when="@2025.09.0:", type="build")
+    depends_on("cmake@3.23:", when="@2024.07.0:2025.03.2", type="build")
     depends_on("cmake@3.23:", when="@2022.10.0:2024.02.2+rocm", type="build")
     depends_on("cmake@3.20:", when="@2022.10.0:2024.02.2", type="build")
     depends_on("cmake@3.20:", when="@:2022.03+rocm", type="build")
@@ -431,8 +432,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         # C++17
-        if (spec.satisfies("@2025.09.0:") or
-            (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))):
+        if spec.satisfies("@2025.09.0:") or (
+            spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl")
+        ):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
         # C++14
         elif spec.satisfies("@0.14.0:2025.09.0"):

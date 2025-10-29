@@ -7,8 +7,8 @@
 
 variables:
   MATRIX_ALLOC_NAME: ${CI_PROJECT_NAME}_ci_${CI_PIPELINE_ID}
-  MATRIX_SHARED_ALLOC: "--exclusive --reservation=ci --time=60 --nodes=1"
-  MATRIX_JOB_ALLOC: "--reservation=ci --overlap --nodes=1"
+  MATRIX_SHARED_ALLOC: "--exclusive --time=60 --nodes=1"
+  MATRIX_JOB_ALLOC: "--overlap --nodes=1"
 
 .on-matrix:
   tags:
