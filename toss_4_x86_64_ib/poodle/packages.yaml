@@ -113,6 +113,15 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: llvm@18.1.8+clang~flang~lld~lldb
+      prefix: /usr/tce/packages/clang/clang-18.1.8
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-18.1.8/bin/clang
+          cxx: /usr/tce/packages/clang/clang-18.1.8/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
 
   # external packages (module)
   cmake:
@@ -166,6 +175,8 @@
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=14.0.6
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=18.1.8
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-10.3.1
