@@ -47,10 +47,10 @@ spack:
     - '%clang-14-gcc-11'
     - '%gcc@=11.2.1'
     # matrix spec
-    - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
+    - +cuda cuda_arch=90 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
-    - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
+    - +cuda cuda_arch=90 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "matrix"
   - compilers:
     - +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1
@@ -79,4 +79,4 @@ spack:
     # caliper + rocmcc 6.4.1 needs fixed handling of libunwind in callback and sampler services
     - 'caliper +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
     - 'caliper +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
-    - 'caliper +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers'
+    - 'caliper +cuda cuda_arch=90 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers'
