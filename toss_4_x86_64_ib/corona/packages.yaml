@@ -58,6 +58,26 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: gcc@12.1.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-12.1.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-12.1.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-12.1.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-12.1.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: gcc@13.3.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-13.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-13.3.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-13.3.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-13.3.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   intel-oneapi-compilers-classic:
     externals:
     - spec: intel-oneapi-compilers-classic@2021.6.0
@@ -102,6 +122,16 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: intel-oneapi-compilers@2025.2.0
+      prefix: /usr/tce/packages/intel/intel-2025.2.0
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icx
+          cxx: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icpx
+          fortran: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/ifx
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   llvm:
     externals:
     - spec: llvm@14.0.6+clang~flang~lld~lldb
@@ -113,24 +143,15 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: llvm@19.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1
+    - spec: llvm@22.0.0git+clang~flang~lld~lldb
+      prefix: /usr/workspace/raja-dev/clang_sycl_16b7bcb09915_hip_gcc10.3.1_rocm6.4.2
       extra_attributes:
         compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/bin/clang++
+          c: /usr/workspace/raja-dev/clang_sycl_16b7bcb09915_hip_gcc10.3.1_rocm6.4.2/bin/clang
+          cxx: /usr/workspace/raja-dev/clang_sycl_16b7bcb09915_hip_gcc10.3.1_rocm6.4.2/bin/clang++
         flags: {}
         environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/lib, /usr/workspace/raja-dev/clang_sycl_e42590ef4b94_hip_gcc10.3.1_rocm6.3.1/lib64]
-    - spec: llvm@20.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2
-      extra_attributes:
-        compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang++
-        flags: {}
-        environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib, /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib64]
+        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_16b7bcb09915_hip_gcc10.3.1_rocm6.4.2/lib, /usr/workspace/raja-dev/clang_sycl_16b7bcb09915_hip_gcc10.3.1_rocm6.4.2/lib64]
   llvm-amdgpu:
     externals:
     - spec: llvm-amdgpu@5.7.1
@@ -153,6 +174,16 @@
         flags: {}
         environment: {}
         extra_rpaths: [/opt/rocm-6.0.2/lib, /opt/rocm-6.0.2/llvm/lib]
+    - spec: llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2/llvm
+      extra_attributes:
+        compilers:
+          cc: /opt/rocm-6.4.2/llvm/bin/amdclang
+          cxx: /opt/rocm-6.4.2/llvm/bin/amdclang++
+          fortran: /opt/rocm-6.4.2/llvm/bin/amdflang
+        flags: {}
+        environment: {}
+        extra_rpaths: [/opt/rocm-6.4.2/lib, /opt/rocm-6.4.2/llvm/lib]
 
   # external packages (module)
   cmake:
