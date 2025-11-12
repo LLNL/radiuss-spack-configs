@@ -211,21 +211,25 @@
     - spec: cuda@11.8.0
       prefix: /usr/tce/packages/cuda/cuda-11.8.0
   hip:
-    version: [5.7.1, 6.0.2]
+    version: [5.7.1, 6.0.2, 6.4.2]
     buildable: false
     externals:
     - spec: hip@5.7.1%llvm-amdgpu@5.7.1
       prefix: /opt/rocm-5.7.1/hip
     - spec: hip@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2
+    - spec: hip@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2
   hipsparse:
-    version: [5.7.1, 6.0.2]
+    version: [5.7.1, 6.0.2, 6.4.2]
     buildable: false
     externals:
     - spec: hipsparse@5.7.1%llvm-amdgpu@5.7.1
       prefix: /opt/rocm-5.7.1
     - spec: hipsparse@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2
+    - spec: hipsparse@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2
   hsa-rocr-dev:
     version: [5.7.1, 6.0.2]
     buildable: false
@@ -234,6 +238,8 @@
       prefix: /opt/rocm-5.7.1
     - spec: hsa-rocr-dev@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2
+    - spec: hsa-rocr-dev@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2
   ninja:
     version: [1.11.1]
     buildable: false
@@ -253,29 +259,35 @@
     - spec: python@3.9.12
       prefix: /usr/tce/packages/python/python-3.9.12
   rocminfo:
-    version: [5.7.1, 6.0.2]
+    version: [5.7.1, 6.0.2, 6.4.2]
     buildable: false
     externals:
     - spec: rocminfo@5.7.1%llvm-amdgpu@5.7.1
       prefix: /opt/rocm-5.7.1
     - spec: rocminfo@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2
+    - spec: rocminfo@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2
   rocm-device-libs:
-    version: [5.7.1, 6.0.2]
+    version: [5.7.1, 6.0.2, 6.4.2]
     buildable: false
     externals:
     - spec: rocm-device-libs@5.7.1%llvm-amdgpu@5.7.1
       prefix: /opt/rocm-5.7.1/
     - spec: rocm-device-libs@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2/
+    - spec: rocm-device-libs@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2/
   rocprim:
-    version: [5.7.1, 6.0.2]
+    version: [5.7.1, 6.0.2, 6.4.2]
     buildable: false
     externals:
     - spec: rocprim@5.7.1%llvm-amdgpu@5.7.1
       prefix: /opt/rocm-5.7.1/
     - spec: rocprim@6.0.2%llvm-amdgpu@6.0.2
       prefix: /opt/rocm-6.0.2/
+    - spec: rocprim@6.4.2%llvm-amdgpu@6.4.2
+      prefix: /opt/rocm-6.4.2/
 
   # Special case (module / wrapper)
   mvapich2:
@@ -492,17 +504,10 @@
       when: '%cxx'
     - spec: '%[virtuals=fortran]gcc@10.3.1'
       when: '%fortran'
-  sycl-clang-19-gcc-10:
-    - spec: '%[virtuals=c]llvm@19.0.0git+clang~flang~lld~lldb'
+  sycl-clang-22-gcc-10:
+    - spec: '%[virtuals=c]llvm@22.0.0git+clang~flang~lld~lldb'
       when: '%c'
-    - spec: '%[virtuals=cxx]llvm@19.0.0git+clang~flang~lld~lldb'
-      when: '%cxx'
-    - spec: '%[virtuals=fortran]gcc@10.3.1'
-      when: '%fortran'
-  sycl-clang-20-gcc-10:
-    - spec: '%[virtuals=c]llvm@20.0.0git+clang~flang~lld~lldb'
-      when: '%c'
-    - spec: '%[virtuals=cxx]llvm@20.0.0git+clang~flang~lld~lldb'
+    - spec: '%[virtuals=cxx]llvm@22.0.0git+clang~flang~lld~lldb'
       when: '%cxx'
     - spec: '%[virtuals=fortran]gcc@10.3.1'
       when: '%fortran'
@@ -535,4 +540,14 @@
     - spec: '%[virtuals=cxx]intel-oneapi-compilers@2023.2.1'
       when: '%cxx'
     - spec: '%[virtuals=fortran]intel-oneapi-compilers@2023.2.1'
+      when: '%fortran'
+  oneapi-2025-gcc-10:
+    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
+    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
+    - spec: fflags='-gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc'
+    - spec: '%[virtuals=c]intel-oneapi-compilers@2025.2.0'
+      when: '%c'
+    - spec: '%[virtuals=cxx]intel-oneapi-compilers@2025.2.0'
+      when: '%cxx'
+    - spec: '%[virtuals=fortran]intel-oneapi-compilers@2025.2.0'
       when: '%fortran'
