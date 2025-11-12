@@ -58,6 +58,16 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: gcc@13.3.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-13.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-13.3.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-13.3.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-13.3.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   intel-oneapi-compilers-classic:
     externals:
     - spec: intel-oneapi-compilers-classic@2021.6.0
@@ -99,6 +109,16 @@
           c: /collab/usr/global/tools/intel/toss_4_x86_64_ib/oneapi-2024.2.1/2024.2/bin/icx
           cxx: /collab/usr/global/tools/intel/toss_4_x86_64_ib/oneapi-2024.2.1/2024.2/bin/icpx
           fortran: /collab/usr/global/tools/intel/toss_4_x86_64_ib/oneapi-2024.2.1/2024.2/bin/ifx
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: intel-oneapi-compilers@2025.2.0
+      prefix: /usr/tce/packages/intel/intel-2025.2.0
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icx
+          cxx: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icpx
+          fortran: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/ifx
         flags: {}
         environment: {}
         extra_rpaths: []

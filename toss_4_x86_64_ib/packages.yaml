@@ -104,6 +104,16 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: intel-oneapi-compilers@2025.2.0
+      prefix: /usr/tce/packages/intel/intel-2025.2.0
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icx
+          cxx: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/icpx
+          fortran: /usr/tce/packages/intel/intel-2025.2.0/compiler/2025.2/bin/ifx
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   llvm:
     externals:
     - spec: llvm@14.0.6+clang~flang~lld~lldb
