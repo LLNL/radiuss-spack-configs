@@ -31,9 +31,7 @@ def spec_uses_gccname(spec):
     return using_gcc_name
 
 def hip_for_radiuss_projects(options, spec, compiler):
-    # adrienbernede-22-11:
-    #   Specific to Umpire, attempt port to RAJA and CHAI
-    rocm_root = dirname(spec["llvm-amdgpu"].prefix)
+    rocm_root = spec["llvm-amdgpu"].prefix
     hip_link_flags = ""
     if spec_uses_toolchain(spec):
         gcc_prefix = spec_uses_toolchain(spec)[0]
@@ -209,7 +207,7 @@ class Camp(CMakePackage, CudaPackage, ROCmPackage):
 
         options.append(self.define_from_variant("ENABLE_HIP", "rocm"))
         if spec.satisfies("+rocm"):
-            rocm_root = dirname(spec["llvm-amdgpu"].prefix)
+            rocm_root = spec["llvm-amdgpu"].prefix
             options.append("-DROCM_PATH={0}".format(rocm_root))
 
             archs = ";".join(self.spec.variants["amdgpu_target"].value)
