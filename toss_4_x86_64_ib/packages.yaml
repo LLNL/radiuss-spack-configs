@@ -550,6 +550,7 @@
     - spec: '%[virtuals=cxx]llvm@22.0.0git+clang~flang~lld~lldb'
       when: '%cxx'
     - spec: '%[virtuals=fortran]gcc@10.3.1'
+      when: '%fortran'
   intel-classic-2021-gcc-10:
     - spec: cflags='-gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc'
     - spec: cxxflags='-gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/g++'
