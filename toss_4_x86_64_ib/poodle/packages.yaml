@@ -239,6 +239,9 @@
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=12.1.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=13.3.1
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-13.3.1
 
   # System packages (use dnf)
   autoconf:
