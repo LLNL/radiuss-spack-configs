@@ -1,7 +1,7 @@
 spack:
   repos:
     builtin:
-      branch: woptim/rsc-2025-11
+      commit: 504d680e78
       git: https://github.com/adrienbernede/spack-packages.git
   include:
     - config.yaml
