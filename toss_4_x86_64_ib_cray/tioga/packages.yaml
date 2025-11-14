@@ -42,6 +42,16 @@
         flags: {}
         environment: {}
         extra_rpaths: [/opt/cray/pe/mpich/8.1.31/gtl/lib]
+    - spec: cce@19.0.0
+      prefix: /usr/tce/packages/cce-tce/cce-19.0.0
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/cce-tce/cce-19.0.0/bin/craycc
+          cxx: /usr/tce/packages/cce-tce/cce-19.0.0/bin/crayCC
+          fortran: /usr/tce/packages/cce-tce/cce-19.0.0/bin/crayftn
+        flags: {}
+        environment: {}
+        extra_rpaths: [/opt/cray/pe/mpich/8.1.31/gtl/lib]
   gcc:
     externals:
     - spec: gcc@12.2.1 languages='c,c++,fortran'
@@ -366,6 +376,8 @@
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-18.0.1-magic
     - spec: cray-mpich@8.1.32%cce@19.0.0
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-19.0.0-magic
+    - spec: cray-mpich@8.1.32%cce@20.0.0
+      prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-20.0.0-magic
     - spec: cray-mpich@8.1.32%gcc@12.2.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-gcc-12.2.1-magic
     - spec: cray-mpich@8.1.32%gcc@13.3.1
