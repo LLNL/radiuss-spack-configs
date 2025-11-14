@@ -58,16 +58,6 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@12.1.1 languages='c,c++,fortran'
-      prefix: /usr/tce/packages/gcc/gcc-12.1.1
-      extra_attributes:
-        compilers:
-          c: /usr/tce/packages/gcc/gcc-12.1.1/bin/gcc
-          cxx: /usr/tce/packages/gcc/gcc-12.1.1/bin/g++
-          fortran: /usr/tce/packages/gcc/gcc-12.1.1/bin/gfortran
-        flags: {}
-        environment: {}
-        extra_rpaths: []
     - spec: gcc@13.3.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-13.3.1
       extra_attributes:
