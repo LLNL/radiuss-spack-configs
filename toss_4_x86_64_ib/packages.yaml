@@ -60,6 +60,16 @@
         flags: {}
         environment: {}
         extra_rpaths: []
+    - spec: gcc@13.3.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-13.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-13.3.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-13.3.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-13.3.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   intel-oneapi-compilers-classic:
     externals:
     - spec: intel-oneapi-compilers-classic@2021.6.0
@@ -300,6 +310,9 @@
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=12.1.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=13.3.1
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-13.3.1
 
   # System packages (use dnf)
   autoconf:
@@ -498,6 +511,15 @@
     - spec: '%[virtuals=cxx]llvm@14.0.6+clang~flang~lld~lldb'
       when: '%cxx'
     - spec: '%[virtuals=fortran]gcc@11.2.1'
+      when: '%fortran'
+  clang-18-gcc-13:
+    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-13.3.1'
+    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-13.3.1'
+    - spec: '%[virtuals=c]llvm@18.1.8+clang~flang~lld~lldb'
+      when: '%c'
+    - spec: '%[virtuals=cxx]llvm@18.1.8+clang~flang~lld~lldb'
+      when: '%cxx'
+    - spec: '%[virtuals=fortran]gcc@13.3.1'
       when: '%fortran'
   sycl-clang-19-gcc-10:
     - spec: '%[virtuals=c]llvm@19.0.0git+clang~flang~lld~lldb'
