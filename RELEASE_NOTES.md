@@ -1,3 +1,59 @@
+# v2025.10.0
+
+Recommended Spack version: v1.0.2
+Vetted spack-packages commit: a3806d96d2
+
+## Machine Changes
+- Retire Lassen
+- Add Matrix for CUDA jobs
+
+## Packages
+- Update RAJA CMake requirement to 3.24+ for versions 2025.09.0 and later
+- Add CMake 3.25.2 to available external packages
+
+## Configs Update
+- Add Matrix machine configuration (toss_4_x86_64_ib)
+- Add LLVM 18.1.8 compiler to non-CUDA machines
+- Add CUDA externals to Dane (non-GPU machine) for cross-compilation compatibility with Matrix, enabling optimized builds for Matrix architecture
+
+## CI
+- Add Matrix to CI pipeline (but turn it off)
+- Update CI configurations for Matrix and Dane
+- Fix spec list configuration in shared CI environment
+
+# v2025.09.1
+
+Recommended Spack version: v1.0.2
+Vetted spack-packages commit: a3806d96d2
+
+## Packages
+- Add latest release of some RADIUSS packages.
+- Style changes.
+
+## Configs
+- Add sycl compiler tied to rocm 6.3.1.
+
+## CI
+- Allow to deactivate a CI machine by variable.
+
+# v2025.09.0
+
+Recommended Spack version: 1.0.2:
+Vetted spack-packages commit: a3806d96d2
+
+Update Spack configurations to v1 format
+- Remove compilers.yaml
+- Move compiler definition to packages.yaml
+- Create appropriate toolchains
+Update most packages with 2025.09 release.
+Add support for spack-packages repository set from environment
+
+Retire Ruby
+
+Update CI configuration
+Use CI reservation on Dane
+
+Add patches for Caliper
 
 # v2025.06.0
 

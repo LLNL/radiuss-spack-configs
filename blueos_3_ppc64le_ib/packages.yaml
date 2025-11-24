@@ -10,8 +10,202 @@
     require:
     - spec: ^blt%gcc
       when: '%gcc ^blt'
-    - spec: ^blt%clang
-      when: '%clang ^blt'
+    - spec: ^blt%llvm
+      when: '%llvm ^blt'
+    - spec: ^spectrum-mpi
+      when: '^mpi'
+  xl:
+    externals:
+    - spec: xl@16.1.1.10+r
+      prefix: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1
+      extra_attributes:
+        compilers:
+          fortran: /usr/tce/packages/xl/xl-2021.09.22-gcc-8.3.1/bin/xlf2003_r
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: xl@16.1.1.12+r
+      prefix: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1
+      extra_attributes:
+        compilers:
+          fortran: /usr/tce/packages/xl/xl-2022.08.19-gcc-8.3.1/bin/xlf2003_r
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: xl@16.1.1.14+r
+      prefix: /usr/tce/packages/xl/xl-2023.06.28-cuda-11.8.0-gcc-11.2.1
+      extra_attributes:
+        compilers:
+          fortran: /usr/tce/packages/xl/xl-2023.06.28-cuda-11.8.0-gcc-11.2.1/bin/xlf2003_r
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+  llvm:
+    externals:
+    - spec: llvm@13.0.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-13.0.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-13.0.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-13.0.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@14.0.5+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-14.0.5
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-14.0.5/bin/clang
+          cxx: /usr/tce/packages/clang/clang-14.0.5/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@14.0.5.gcc.8.3.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-14.0.5-gcc-8.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-14.0.5-gcc-8.3.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-14.0.5-gcc-8.3.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-16.0.6
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-16.0.6/bin/clang
+          cxx: /usr/tce/packages/clang/clang-16.0.6/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6.gcc.11.2.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-16.0.6-gcc-11.2.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-16.0.6-gcc-11.2.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-16.0.6-gcc-11.2.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-16.0.6-cuda-11.8.0-gcc-11.2.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-16.0.6-cuda-11.8.0-gcc-11.2.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-16.0.6-cuda-11.8.0-gcc-11.2.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    # IBM clang
+    - spec: llvm@14.0.5.ibm+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-ibm-14.0.5
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang
+          cxx: /usr/tce/packages/clang/clang-ibm-14.0.5/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@14.0.5.ibm.gcc.8.3.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-ibm-14.0.5-gcc-8.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-ibm-14.0.5-gcc-8.3.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-ibm-14.0.5-gcc-8.3.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6.ibm+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-ibm-16.0.6
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-ibm-16.0.6/bin/clang
+          cxx: /usr/tce/packages/clang/clang-ibm-16.0.6/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6.ibm.gcc.11.2.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-ibm-16.0.6-gcc-11.2.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-ibm-16.0.6-gcc-11.2.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-ibm-16.0.6-gcc-11.2.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/clang/clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/clang/clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1/bin/clang
+          cxx: /usr/tce/packages/clang/clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1/bin/clang++
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+  gcc:
+    externals:
+    - spec: gcc@8.3.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-8.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-8.3.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-8.3.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: gcc@11.2.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-11.2.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-11.2.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-11.2.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-11.2.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+  nvhpc:
+    externals:
+    - spec: nvhpc@21.11
+      prefix: /usr/tce/packages/pgi/pgi-21.11
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/pgi/pgi-21.11/bin/nvcc
+          cxx: /usr/tce/packages/pgi/pgi-21.11/bin/nvc++
+          fortran: /usr/tce/packages/pgi/pgi-21.11/bin/nvfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: nvhpc@22.7
+      prefix: /usr/tce/packages/pgi/pgi-22.7
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/pgi/pgi-22.7/bin/nvcc
+          cxx: /usr/tce/packages/pgi/pgi-22.7/bin/nvc++
+          fortran: /usr/tce/packages/pgi/pgi-22.7/bin/nvfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: nvhpc@22.11
+      prefix: /usr/tce/packages/pgi/pgi-22.11
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/pgi/pgi-22.11/bin/nvcc
+          cxx: /usr/tce/packages/pgi/pgi-22.11/bin/nvc++
+          fortran: /usr/tce/packages/pgi/pgi-22.11/bin/nvfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: nvhpc@23.1
+      prefix: /usr/tce/packages/pgi/pgi-23.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/pgi/pgi-23.1/bin/nvcc
+          cxx: /usr/tce/packages/pgi/pgi-23.1/bin/nvc++
+          fortran: /usr/tce/packages/pgi/pgi-23.1/bin/nvfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
   cmake:
     version: [3.23.1, 3.22.4, 3.21.1, 3.20.2, 3.18.0, 3.16.8, 3.14.5]
     buildable: false
@@ -61,72 +255,40 @@
   spectrum-mpi:
     buildable: false
     externals:
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=9.0.0
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-9.0.0
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=10.0.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-10.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=11.0.0
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-11.0.0
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=12.0.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-12.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=12.0.1.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-12.0.1-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=13.0.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=13.0.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-13.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@14.0.5+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-14.0.5
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.gcc.8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@14.0.5.gcc.8.3.1+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-14.0.5-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=15.0.6
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-15.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.cuda.11.8.0.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6.gcc.11.2.1+clang~lld~lldb~flang
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6-gcc-11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-16.0.6-cuda-11.8.0-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=9.0.0.ibm
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-2019.10.03
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=10.0.1.ibm
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-10.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=11.0.0.ibm
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-11.0.0
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=12.0.1.ibm
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-12.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=12.0.1.ibm.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-12.0.1-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=13.0.1.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=13.0.1.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-13.0.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=14.0.5.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-14.0.5
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=14.0.5.ibm.gcc.8.3.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=14.0.5.ibm.gcc.8.3.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-14.0.5-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=15.0.6.ibm
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-15.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm.gcc.8.3.1
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6-gcc-8.3.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm.gcc.11.2.1
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6-gcc-11.2.1
+    - spec: spectrum-mpi@10.3.1.03rtm0%llvm@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%gcc@=4.9.3
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-4.9.3
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@=8.3.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-8.3.1
     - spec: spectrum-mpi@10.3.1.03rtm0%gcc@=11.2.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-gcc-11.2.1
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.10
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.09.22
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.11
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2021.12.22
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.12
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2022.08.19
     - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.14
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=16.1.1.14.cuda.11.8.0.gcc.11.2.1
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2023.06.28-cuda-11.8.0-gcc-11.2.1
-    - spec: spectrum-mpi@10.3.1.03rtm0%xl@=beta2019.06.20
-      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-beta-2019.06.20
     - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=21.11
       prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-nvhpc-21.11
     - spec: spectrum-mpi@10.3.1.03rtm0%nvhpc@=22.7
@@ -140,82 +302,14 @@
   netlib-lapack:
     buildable: false
     externals:
-    #- spec: netlib-lapack@3.    %clang@=9.0.0
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-9.0.0
-    #- spec: netlib-lapack@3.    %clang@=10.0.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-10.0.1
-    #- spec: netlib-lapack@3.    %clang@=11.0.0
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-11.0.0
-    #- spec: netlib-lapack@3.    %clang@=12.0.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-12.0.1
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-12.0.1-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=13.0.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-13.0.1
-    #- spec: netlib-lapack@3.    %clang@=14.0.5
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-14.0.5
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-14.0.5-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=15.0.6
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-15.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.cuda.11.8.0.gcc.11.2.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-16.0.6-cuda-11.8.0-gcc-11.2.1
-    #- spec: netlib-lapack@3.    %clang@=9.0.0.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-2019.10.03
-    #- spec: netlib-lapack@3.    %clang@=10.0.1.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-10.0.1
-    #- spec: netlib-lapack@3.    %clang@=11.0.0.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-11.0.0
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-12.0.1
-    #- spec: netlib-lapack@3.    %clang@=12.0.1.ibm.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-12.0.1-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=13.0.1.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-13.0.1
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-14.0.5
-    #- spec: netlib-lapack@3.    %clang@=14.0.5.ibm.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-14.0.5-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=15.0.6.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-15.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-16.0.6
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -clang-ibm-16.0.6-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %clang@=16.0.6.ibm.cuda.11.8.0.gcc.11.2.1
-    #  prefix: /usr/tce/packages/lapack/lapack-      -clang-ibm-16.0.6-cuda-11.8.0-gcc-11.2.1
     - spec: netlib-lapack@3.8.0%gcc@=4.9.3
       prefix: /usr/tcetmp/packages/lapack/lapack-3.8.0-P9-gcc-4.9.3
     - spec: netlib-lapack@3.9.0%gcc@=8.3.1
       prefix: /usr/tcetmp/packages/lapack/lapack-3.9.0-P9-gcc-7.3.1
     - spec: netlib-lapack@3.11.0%gcc@=11.2.1
       prefix: /usr/tcetmp/packages/lapack/lapack-3.11.0-P9-gcc-11.2.1
-    #- spec: netlib-lapack@3.    %xl@=16.1.1.10
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2021.09.22
-    #- spec: netlib-lapack@3.    %xl@=16.1.1.10.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2021.09.22-gcc-8.3.1
-    #- spec: netlib-lapack@3.    %xl@=16.1.1.11
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2021.12.22
-    #- spec: netlib-lapack@3.    %xl@=16.1.1.12
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2022.08.19
-    #- spec: netlib-lapack@3.    %xl@=16.1.1.12.gcc.8.3.1
-    #  prefix: /usr/tce/packages/lapack/lapack-3.    -xl-2022.08.19-gcc-8.3.1
     - spec: netlib-lapack@3.12.0%xl@=16.1.1.14
       prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-xl-2023.06.28
-    - spec: netlib-lapack@3.12.0%xl@=16.1.1.14.cuda.11.8.0.gcc.11.2.1
-      prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-xl-2023.06.28
-    #- spec: netlib-lapack@%xl@=beta2019.06.20
-    #  prefix: /usr/tce/packages/lapack/lapack--xl-beta-2019.06.20
-    #- spec: netlib-lapack@%nvhpc@=21.11
-    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-21.11
-    #- spec: netlib-lapack@%nvhpc@=22.7
-    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.7
-    #- spec: netlib-lapack@%nvhpc@=22.11
-    #  prefix: /usr/tce/packages/lapack/lapack--nvhpc-22.11
     - spec: netlib-lapack@3.12.0%nvhpc@=24.1
       prefix: /usr/tcetmp/packages/lapack/lapack-3.12.0-nv-24.1
     - spec: netlib-lapack@3.9.0
@@ -373,3 +467,39 @@
     externals:
     - spec: pdsh@2.34
       prefix: /usr
+'toolchains:':
+  clang-13:
+    - spec: '%c=llvm@13.0.1+clang~lld~lldb~flang'
+      when: '%c'
+    - spec: '%cxx=llvm@13.0.1+clang~lld~lldb~flang'
+      when: '%cxx'
+    - spec: '%fortran=xl@16.1.1.10+r'
+      when: '%fortran'
+  clang-14:
+    - spec: '%c=llvm@14.0.5.gcc.8.3.1+clang~lld~lldb~flang'
+      when: '%c'
+    - spec: '%cxx=llvm@14.0.5.gcc.8.3.1+clang~lld~lldb~flang'
+      when: '%cxx'
+    - spec: '%fortran=xl@16.1.1.12+r'
+      when: '%fortran'
+  clang-16:
+    - spec: '%c=llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
+      when: '%c'
+    - spec: '%cxx=llvm@16.0.6.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
+      when: '%cxx'
+    - spec: '%fortran=xl@16.1.1.14+r'
+      when: '%fortran'
+  clang-14-ibm:
+    - spec: '%c=llvm@14.0.5.ibm.gcc.8.3.1+clang~lld~lldb~flang'
+      when: '%c'
+    - spec: '%cxx=llvm@14.0.5.ibm.gcc.8.3.1+clang~lld~lldb~flang'
+      when: '%cxx'
+    - spec: '%fortran=xl@16.1.1.12+r'
+      when: '%fortran'
+  clang-16-ibm:
+    - spec: '%c=llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
+      when: '%c'
+    - spec: '%cxx=llvm@16.0.6.ibm.cuda.11.8.0.gcc.11.2.1+clang~lld~lldb~flang'
+      when: '%cxx'
+    - spec: '%fortran=xl@16.1.1.14+r'
+      when: '%fortran'
