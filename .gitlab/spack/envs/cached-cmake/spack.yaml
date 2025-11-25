@@ -11,7 +11,7 @@ spack:
   repos:
     llnl_radiuss: ./spack_repo/llnl_radiuss/
     builtin:
-      commit: a3806d96d2
+      commit: a229f54670
       git: https://github.com/spack/spack-packages.git
   include:
   - $LCSCHEDCLUSTER/config.yaml
@@ -44,19 +44,19 @@ spack:
     when: env.get("LCSCHEDCLUSTER", "") == "corona"
   - compilers:
     - '%oneapi-2023-gcc-10'
-    - '%clang-14-gcc-11'
-    - '%gcc@=11.2.1'
+    - '%clang-14-gcc-13'
+    - '%gcc@=13.3.1'
     when: env.get("LCSCHEDCLUSTER", "") == "dane"
   - compilers:
-    - +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
+    - +cuda cuda_arch=90 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers
     when: env.get("LCSCHEDCLUSTER", "") == "matrix"
   - compilers:
     - +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1
-    - '%cce@=19.0.0'
+    - '%cce@=20.0.0'
     when: env.get("LCSCHEDCLUSTER", "") == "tioga"
   - compilers:
     - +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1
-    - '%cce@=19.0.0'
+    - '%cce@=20.0.0'
     when: env.get("LCSCHEDCLUSTER", "") == "tuolumne"
 
   - cached-cmake-projects:
@@ -85,9 +85,9 @@ spack:
     - 'sina +cuda %clang-14 ^cuda@11.7.0+allow-unsupported-compilers'
     - 'sina +cuda %clang-16-ibm ^cuda@11.8.0+allow-unsupported-compilers'
     - 'sina +cuda %clang-16 ^cuda@11.8.0+allow-unsupported-compilers'
-    - 'sina +cuda %gcc@=11.2.1 ^cuda@11.8.0+allow-unsupported-compilers'
+    - 'sina +cuda %gcc@=13.3.1 ^cuda@11.8.0+allow-unsupported-compilers'
     - 'sina +rocm amdgpu_target=gfx906 %llvm-amdgpu@=5.7.1 ^hip@5.7.1'
     # caliper + rocmcc 6.4.1 needs fixed handling of libunwind in callback and sampler services
     - 'caliper +rocm amdgpu_target=gfx90a %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
     - 'caliper +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1'
-    - 'caliper +cuda cuda_arch=75 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers'
+    - 'caliper +cuda cuda_arch=90 %llvm@=18.1.8 ^cuda@12.6.0+allow-unsupported-compilers'

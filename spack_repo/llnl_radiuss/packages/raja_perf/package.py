@@ -38,6 +38,12 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     version("develop", branch="develop", submodules="True")
     version("main", branch="main", submodules="True")
     version(
+        "2025.03.0",
+        tag="v2025.03.0",
+        commit="b66b9d7a1c6826037fed991492bc3ea1893d86ac",
+        submodules="True",
+    )
+    version(
         "2024.07.0",
         tag="v2024.07.0",
         commit="6e81aa58af244a13755a694bfdc7bc301139a244",
@@ -121,6 +127,7 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cxx", type="build")  # generated
 
     depends_on("blt")
+    depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
     depends_on("blt@0.6.2:", type="build", when="@2024.07.0:")
     depends_on("blt@0.5.3", type="build", when="@2023.06")
     depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10")
@@ -347,8 +354,10 @@ class RajaPerf(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_option("RAJA_ENABLE_SYCL", spec.satisfies("+sycl")))
 
         # C++17
-        if spec.satisfies("@2025.09.0:") or (
-            spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl")
+        if (
+            spec.satisfies("@2025.09.0:")
+            or (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))
+            or (spec.satisfies("^rocprim@7.0:"))
         ):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
         # C++14
