@@ -1,8 +1,8 @@
 spack:
   repos:
     builtin::
-      branch: woptim/radiuss-packages-update
-      git: https://github.com/adrienbernede/spack-packages.git
+      commit: a229f54670
+      git: https://github.com/spack/spack-packages.git
   include:
     - config.yaml
     - packages.yaml
