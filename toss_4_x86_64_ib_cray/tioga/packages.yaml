@@ -42,13 +42,13 @@
         flags: {}
         environment: {}
         extra_rpaths: [/opt/cray/pe/mpich/8.1.31/gtl/lib]
-    - spec: cce@19.0.0
-      prefix: /usr/tce/packages/cce-tce/cce-19.0.0
+    - spec: cce@20.0.0
+      prefix: /usr/tce/packages/cce-tce/cce-20.0.0
       extra_attributes:
         compilers:
-          c: /usr/tce/packages/cce-tce/cce-19.0.0/bin/craycc
-          cxx: /usr/tce/packages/cce-tce/cce-19.0.0/bin/crayCC
-          fortran: /usr/tce/packages/cce-tce/cce-19.0.0/bin/crayftn
+          c: /usr/tce/packages/cce-tce/cce-20.0.0/bin/craycc
+          cxx: /usr/tce/packages/cce-tce/cce-20.0.0/bin/crayCC
+          fortran: /usr/tce/packages/cce-tce/cce-20.0.0/bin/crayftn
         flags: {}
         environment: {}
         extra_rpaths: [/opt/cray/pe/mpich/8.1.31/gtl/lib]
