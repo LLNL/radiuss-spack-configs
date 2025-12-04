@@ -236,6 +236,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("gpu-profiling", default=False, description="Enable GPU profiling")
 
     variant("plugins", default=False, description="Enable runtime plugins")
+    variant("caliper", default=False, description="Enable caliper support")
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
     # TODO: figure out gtest dependency and then set this default True
@@ -298,6 +299,8 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cmake@3.14:", when="@:2022.03", type="build")
 
     depends_on("llvm-openmp", when="+openmp %apple-clang")
+
+    depends_on("caliper", when="+caliper")
 
     depends_on("rocprim", when="+rocm")
     with when("+rocm @0.12.0:"):
@@ -410,6 +413,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         if "camp" in self.spec:
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
 
+        if "caliper" in self.spec:
+            entries.append(cmake_cache_path("caliper_DIR", spec["caliper"].prefix))
+
         # Build options
         entries.append("#------------------{0}".format("-" * 60))
         entries.append("# Build Options")
@@ -460,6 +466,10 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             cmake_cache_option("RAJA_ENABLE_RUNTIME_PLUGINS", spec.satisfies("+plugins"))
         )
 
+        entries.append(
+            cmake_cache_option("RAJA_ENABLE_CALIPER", spec.satisfies("+caliper"))
+        )
+        
         if spec.satisfies("+omptarget"):
             entries.append(
                 cmake_cache_string(

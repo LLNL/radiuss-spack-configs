@@ -151,6 +151,7 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("raja", default=False, description="Build plugin for RAJA")
     variant("examples", default=True, description="Build examples.")
     variant("openmp", default=False, description="Build using OpenMP")
+    variant("disable_rm", default=False, description="Disable resource manager")
     # TODO: figure out gtest dependency and then set this default True
     # and remove the +tests conflict below.
     variant(
@@ -354,6 +355,12 @@ class Chai(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(
             cmake_cache_option(
                 "{}ENABLE_PICK".format(option_prefix), spec.satisfies("+enable_pick")
+            )
+        )
+        
+        entries.append(
+            cmake_cache_option(
+                "{}DISABLE_RM".format(option_prefix), spec.satisfies("+disable_rm")
             )
         )
 
