@@ -369,6 +369,9 @@
       prefix: /opt/rocm-6.4.1
   cray-mpich:
     buildable: false
+    extra_attributes:
+      extra_rpaths:
+      - /opt/cray/pe/lib64/cce
     externals:
     - spec: cray-mpich@8.1.32%cce@17.0.1
       prefix: /usr/tce/packages/cray-mpich/cray-mpich-8.1.32-cce-17.0.1-magic
