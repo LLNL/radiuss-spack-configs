@@ -1,4 +1,4 @@
-# v2025.12.0
+# v2025.11.0
 
 Recommended Spack version: v1.0.2,
 Vetted spack-packages commit: a229f54670
