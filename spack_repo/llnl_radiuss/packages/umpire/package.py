@@ -252,7 +252,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
-    depends_on("fortran", when="+fortran", type="build")
+    depends_on("fortran", type="build", when="+fortran")
 
     depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
     depends_on("cmake@3.23:", when="@2022.10.0: +rocm", type="build")
@@ -279,10 +279,10 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+openmp", when="+openmp")
     depends_on("camp~cuda", when="~cuda")
     depends_on("camp~rocm", when="~rocm")
-    depends_on("camp@main", when="@develop")
-    depends_on("camp@2025.09.2:", when="@2025.09.0:")
-    depends_on("camp@2025.03.0:", when="@2025.03.0:")
-    depends_on("camp@2024.07.0:", when="@2024.07.0:")
+    depends_on("camp@2025.12:", when="@develop")
+    depends_on("camp@2025.09", when="@2025.09")
+    depends_on("camp@2025.03", when="@2025.03")
+    depends_on("camp@2024.07", when="@2024.07")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")
     depends_on("camp@2023.06.0", when="@2023.06.0")
@@ -340,6 +340,9 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
     # currently only available for cuda.
     conflicts("+shared", when="+cuda")
 
+    # https://github.com/LLNL/Umpire/pull/992
+    conflicts("^cuda@13:", when="+cuda")
+
     def _get_sys_type(self, spec):
         sys_type = spec.architecture
         if "SYS_TYPE" in env:
@@ -367,7 +370,7 @@ class Umpire(CachedCMakePackage, CudaPackage, ROCmPackage):
 
         option_prefix = "UMPIRE_" if spec.satisfies("@2022.03.0:") else ""
 
-        if spec.satisfies("+fortran") and "fortran" in spec:
+        if spec.satisfies("+fortran"):
             entries.append(cmake_cache_option("ENABLE_FORTRAN", True))
         else:
             entries.append(cmake_cache_option("ENABLE_FORTRAN", False))
