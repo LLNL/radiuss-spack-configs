@@ -1,3 +1,63 @@
+# v2025.12.0
+
+Recommended Spack version: v1.0.2,
+Vetted spack-packages commit: a229f54670
+
+## Packages
+- Camp:
+    - add release 2025.12
+- Care:
+    - better constraints on umpire raja and chai dependencies (protect from c++ standard mix up)
+- CHAI:
+    - better constraints on umpire and raja dependencies (protect from c++ standard mix up)
+- quandary:
+    - add version 4.3
+- RAJA:
+    - better constraints on camp (protect from c++ standard mix up)
+    - add conflict with cuda 13:
+    - add rocprim 7 requires c++17.
+- RAJAPerf:
+    - add release 2025.03 which requires blt 7
+    - add rocprim7 requires c++17.
+- Umpire:
+    - better constraints on camp (protect from c++ standard mix up)
+    - add conflict with cuda 13:.
+- Do not use dirname to infer rocm root from llvm-amdgpu prefix
+
+## Configs Update
+- Corona:
+    - gcc 13
+    - oneapi 2025
+    - sycl clang 22 custom install
+    - llvm-amdgpu 6.4.2
+- Dane:
+    - gcc 13
+    - llvm 19
+    - oneapi 2025
+    - llvm 14 gcc 13 toolchain
+    - llvm 18 gcc 13 toolchain
+    - llvm 19 gcc 13 toolchain
+- Matrix:
+    - gcc 13
+    - llvm 14 gcc 11 toolchain
+    - llvm 18 gcc 13 toolchain
+- Tioga:
+    - Add cce 20
+- Tuolumne:
+    - Add cce 20
+- Use rocm root as prefix for llvm-amdgpu
+
+## CI
+- Matrix: update to cuda_arch 90.
+
+## Shared specs:
+- llvm 14 -> llvm 19
+- oneapi 2023 -> oneapi 2025
+- gcc 10 -> gcc 13
+- gcc 11 -> gcc 13
+- cce 19 -> cce 20
+- sycl clang 20 -> sycl clang 22
+
 # v2025.10.0
 
 Recommended Spack version: v1.0.2
