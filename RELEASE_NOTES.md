@@ -4,6 +4,15 @@ Recommended Spack version: v1.0.2,
 Vetted spack-packages commit: a229f54670
 
 ## Packages
+- BLT:
+    - patch googletest with fix for oneapi 2025 (change in flag name).
+
+# v2025.11.0
+
+Recommended Spack version: v1.0.2,
+Vetted spack-packages commit: a229f54670
+
+## Packages
 - Camp:
     - add release 2025.12
 - Care:
