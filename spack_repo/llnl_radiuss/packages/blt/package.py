@@ -95,8 +95,8 @@ class Blt(Package):
 
     # https://github.com/google/googletest/pull/4798
     patch(
-        "https://github.com/LLNL/blt/commit/fb27be975b4be99d5bce7f8762d9e551ebf194e6.patch?full_index=1",
-        sha256="88009cb48437e785c45f3f4f64e78860876569fae9df46c2fd4949dba1fb736d",
+        "https://github.com/LLNL/blt/commit/5ff55b519fc8d5216b07edaf301e2d2bf328021e.patch?full_index=1",
+        sha256="116702b89d01e022546911fe0b823afa99a6b37a35077055141ad5d480508422",
         when="@0.7.1:",
     )
 
