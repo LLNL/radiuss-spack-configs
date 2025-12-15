@@ -5,12 +5,7 @@
 # SPDX-License-Identifier: (MIT)
 ##############################################################################
 
-rocmcc_6_4_1_hip:
+clang_18_1_8_gcc_13_cuda_12_6_0:
   variables:
-    SPEC: "${PROJECT_TUOLUMNE_VARIANTS} +rocm amdgpu_target=gfx942 %llvm-amdgpu@=6.4.1 ^hip@6.4.1 ${PROJECT_TUOLUMNE_DEPS}"
-  extends: .job_on_tuolumne
-
-cce_20_0_0:
-  variables:
-    SPEC: "${PROJECT_TUOLUMNE_VARIANTS} %cce@=20.0.0 ${PROJECT_TUOLUMNE_DEPS}"
-  extends: .job_on_tuolumne
+    SPEC: "${PROJECT_MATRIX_VARIANTS} %clang-18-gcc-13 ^cuda@12.6.0+allow-unsupported-compilers ${PROJECT_MATRIX_DEPS}"
+  extends: .job_on_matrix

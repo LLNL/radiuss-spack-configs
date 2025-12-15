@@ -76,6 +76,7 @@ class Blt(Package):
     #  if you export targets this could cause problems in downstream
     #  projects if not handled properly. More info here:
     #  https://llnl-blt.readthedocs.io/en/develop/tutorial/exporting_targets.html
+    version("0.7.1", sha256="136765087b78da96dff77dfd6eb9a1238dbfb67da9c7474bc8fb8532fc8ee015")
     version("0.7.0", sha256="df8720a9cba1199d21f1d32649cebb9dddf95aa61bc3ac23f6c8a3c6b6083528")
     version("0.6.2", sha256="84b663162957c1fe0e896ac8e94cbf2b6def4a152ccfa12a293db14fb25191c8")
     version("0.6.1", sha256="205540b704b8da5a967475be9e8f2d1a5e77009b950e7fbf01c0edabc4315906")
@@ -91,6 +92,13 @@ class Blt(Package):
     version("0.3.0", sha256="bb917a67cb7335d6721c997ba9c5dca70506006d7bba5e0e50033dd0836481a5")
     version("0.2.5", sha256="3a000f60194e47b3e5623cc528cbcaf88f7fea4d9620b3c7446ff6658dc582a5")
     version("0.2.0", sha256="c0cadf1269c2feb189e398a356e3c49170bc832df95e5564e32bdbb1eb0fa1b3")
+
+    # https://github.com/google/googletest/pull/4798
+    patch(
+        "https://github.com/LLNL/blt/commit/5ff55b519fc8d5216b07edaf301e2d2bf328021e.patch?full_index=1",
+        sha256="116702b89d01e022546911fe0b823afa99a6b37a35077055141ad5d480508422",
+        when="@0.7.1:",
+    )
 
     depends_on("c", type="build")  # generated
     depends_on("cxx", type="build")  # generated

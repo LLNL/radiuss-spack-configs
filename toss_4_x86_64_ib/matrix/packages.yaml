@@ -1,9 +1,11 @@
 'packages:':
   all:
     require:
-    - 'target=cascadelake'
+    - 'target=sapphirerapids'
     - spec: ^blt%intel-oneapi-compilers
       when: '%intel-oneapi-compilers ^blt'
+    - spec: ^blt%llvm
+      when: '%llvm ^blt'
     - spec: ^blt%gcc
       when: '%gcc ^blt'
     - spec: ^blt%intel-oneapi-compilers-classic
@@ -15,6 +17,7 @@
       lapack: [netlib-lapack]
       mpi: [mvapich2]
       zlib-api: [zlib]
+      pkgconfig: [pkgconf]
   gcc-runtime:
     require:
     - '%gcc'
@@ -25,7 +28,7 @@
   # compilers
   gcc:
     externals:
-    - spec: gcc@10.3.1 languages:='c,c++,fortran'
+    - spec: gcc@10.3.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-10.3.1
       extra_attributes:
         compilers:
@@ -35,7 +38,7 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@11.2.1 languages:='c,c++,fortran'
+    - spec: gcc@11.2.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-11.2.1
       extra_attributes:
         compilers:
@@ -45,13 +48,23 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: gcc@12.1.1 languages:='c,c++,fortran'
+    - spec: gcc@12.1.1 languages='c,c++,fortran'
       prefix: /usr/tce/packages/gcc/gcc-12.1.1
       extra_attributes:
         compilers:
           c: /usr/tce/packages/gcc/gcc-12.1.1/bin/gcc
           cxx: /usr/tce/packages/gcc/gcc-12.1.1/bin/g++
           fortran: /usr/tce/packages/gcc/gcc-12.1.1/bin/gfortran
+        flags: {}
+        environment: {}
+        extra_rpaths: []
+    - spec: gcc@13.3.1 languages='c,c++,fortran'
+      prefix: /usr/tce/packages/gcc/gcc-13.3.1
+      extra_attributes:
+        compilers:
+          c: /usr/tce/packages/gcc/gcc-13.3.1/bin/gcc
+          cxx: /usr/tce/packages/gcc/gcc-13.3.1/bin/g++
+          fortran: /usr/tce/packages/gcc/gcc-13.3.1/bin/gfortran
         flags: {}
         environment: {}
         extra_rpaths: []
@@ -110,28 +123,19 @@
         flags: {}
         environment: {}
         extra_rpaths: []
-    - spec: llvm@19.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1
+    - spec: llvm@18.1.8+clang~flang~lld~lldb
+      prefix: /usr/tce/packages/clang/clang-18.1.8
       extra_attributes:
         compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/bin/clang++
+          c: /usr/tce/packages/clang/clang-18.1.8/bin/clang
+          cxx: /usr/tce/packages/clang/clang-18.1.8/bin/clang++
         flags: {}
         environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib, /usr/workspace/raja-dev/clang_sycl_2f03ef85fee5_hip_gcc10.3.1_rocm5.7.1/lib64]
-    - spec: llvm@20.0.0git+clang~flang~lld~lldb
-      prefix: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2
-      extra_attributes:
-        compilers:
-          c: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang
-          cxx: /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/bin/clang++
-        flags: {}
-        environment: {}
-        extra_rpaths: [/usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib, /usr/workspace/raja-dev/clang_sycl_730cd3a5275f_hip_gcc10.3.1_rocm6.0.2/lib64]
+        extra_rpaths: []
 
   # external packages (module)
   cmake:
-    version: [3.23.1, 3.22.4, 3.21.1, 3.19.2, 3.14.5]
+    version: [3.25.2, 3.23.1, 3.22.4, 3.21.1, 3.19.2, 3.14.5]
     buildable: false
     externals:
     - spec: cmake@3.14.5
@@ -144,6 +148,8 @@
       prefix: /usr/tce/packages/cmake/cmake-3.22.4
     - spec: cmake@3.23.1
       prefix: /usr/tce/packages/cmake/cmake-3.23.1
+    - spec: cmake@3.25.2
+      prefix: /usr/tce/packages/cmake/cmake-3.25.2
   ninja:
     version: [1.11.1]
     buildable: false
@@ -163,6 +169,30 @@
     - spec: python@3.9.12
       prefix: /usr/tce/packages/python/python-3.9.12
 
+  cuda:
+    version: [12.9.1, 12.6.0, 12.2.2, 11.8.0, 11.7.0, 11.5.0, 11.2.0, 11.1.0, 10.2.89, 10.1.168]
+    buildable: false
+    externals:
+    - spec: cuda@12.9.1+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.9.1
+    - spec: cuda@12.6.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.6.0
+    - spec: cuda@12.2.2+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-12.2.2
+    - spec: cuda@11.8.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.8.0
+    - spec: cuda@11.7.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.7.0
+    - spec: cuda@11.5.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.5.0
+    - spec: cuda@11.2.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.2.0
+    - spec: cuda@11.1.0+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-11.1.0
+    - spec: cuda@10.2.89+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.2.89
+    - spec: cuda@10.1.168+allow-unsupported-compilers
+      prefix: /usr/tce/packages/cuda/cuda-10.1.168
   # Special case (module / wrapper)
   mvapich2:
     buildable: false
@@ -177,8 +207,10 @@
         file_systems=lustre,nfs,ufs process_managers=slurm %intel-oneapi-compilers@=2023.2.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-intel-2023.2.1
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
-        file_systems=lustre,nfs,ufs process_managers=slurm %clang@=14.0.6
+        file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=14.0.6
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-clang-14.0.6
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %llvm@=18.1.8
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=10.3.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-10.3.1
@@ -188,6 +220,9 @@
     - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
         file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=12.1.1
       prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-12.1.1
+    - spec: mvapich2@2.3.7 ~cuda~debug~regcache~wrapperrpath ch3_rank_bits=32
+        file_systems=lustre,nfs,ufs process_managers=slurm %gcc@=13.3.1
+      prefix: /usr/tce/packages/mvapich2/mvapich2-2.3.7-gcc-13.3.1
 
   # System packages (use dnf)
   autoconf:
@@ -369,14 +404,32 @@
       prefix: /usr
 
 'toolchains:':
-  clang-14-gcc-10:
-    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
-    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-10.3.1'
+  clang-14-gcc-11:
+    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
+    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
     - spec: '%[virtuals=c]llvm@14.0.6+clang~flang~lld~lldb'
       when: '%c'
     - spec: '%[virtuals=cxx]llvm@14.0.6+clang~flang~lld~lldb'
       when: '%cxx'
-    - spec: '%[virtuals=fortran]gcc@10.3.1'
+    - spec: '%[virtuals=fortran]gcc@11.2.1'
+      when: '%fortran'
+  clang-14-gcc-11:
+    - spec: cflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
+    - spec: cxxflags='--gcc-toolchain=/usr/tce/packages/gcc/gcc-11.2.1'
+    - spec: '%[virtuals=c]llvm@14.0.6+clang~flang~lld~lldb'
+      when: '%c'
+    - spec: '%[virtuals=cxx]llvm@14.0.6+clang~flang~lld~lldb'
+      when: '%cxx'
+    - spec: '%[virtuals=fortran]gcc@11.2.1'
+      when: '%fortran'
+  clang-18-gcc-13:
+    - spec: cflags='--gcc-install-dir=/usr/tce/packages/gcc/gcc-13.3.1/lib/gcc/x86_64-redhat-linux/13'
+    - spec: cxxflags='--gcc-install-dir=/usr/tce/packages/gcc/gcc-13.3.1/lib/gcc/x86_64-redhat-linux/13'
+    - spec: '%[virtuals=c]llvm@18.1.8+clang~flang~lld~lldb'
+      when: '%c'
+    - spec: '%[virtuals=cxx]llvm@18.1.8+clang~flang~lld~lldb'
+      when: '%cxx'
+    - spec: '%[virtuals=fortran]gcc@13.3.1'
       when: '%fortran'
   intel-classic-2021-gcc-10:
     - spec: cflags='-gcc-name=/usr/tce/packages/gcc/gcc-10.3.1/bin/gcc'

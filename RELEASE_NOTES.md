@@ -1,3 +1,128 @@
+# v2025.11.0
+
+Recommended Spack version: v1.0.2,
+Vetted spack-packages commit: a229f54670
+
+## Packages
+- BLT:
+    - patch googletest with fix for oneapi 2025 (change in flag name).
+
+# v2025.11.0
+
+Recommended Spack version: v1.0.2,
+Vetted spack-packages commit: a229f54670
+
+## Packages
+- Camp:
+    - add release 2025.12
+- Care:
+    - better constraints on umpire raja and chai dependencies (protect from c++ standard mix up)
+- CHAI:
+    - better constraints on umpire and raja dependencies (protect from c++ standard mix up)
+- quandary:
+    - add version 4.3
+- RAJA:
+    - better constraints on camp (protect from c++ standard mix up)
+    - add conflict with cuda 13:
+    - add rocprim 7 requires c++17.
+- RAJAPerf:
+    - add release 2025.03 which requires blt 7
+    - add rocprim7 requires c++17.
+- Umpire:
+    - better constraints on camp (protect from c++ standard mix up)
+    - add conflict with cuda 13:.
+- Do not use dirname to infer rocm root from llvm-amdgpu prefix
+
+## Configs Update
+- Corona:
+    - gcc 13
+    - oneapi 2025
+    - sycl clang 22 custom install
+    - llvm-amdgpu 6.4.2
+- Dane:
+    - gcc 13
+    - llvm 19
+    - oneapi 2025
+    - llvm 14 gcc 13 toolchain
+    - llvm 18 gcc 13 toolchain
+    - llvm 19 gcc 13 toolchain
+- Matrix:
+    - gcc 13
+    - llvm 14 gcc 11 toolchain
+    - llvm 18 gcc 13 toolchain
+- Tioga:
+    - Add cce 20
+- Tuolumne:
+    - Add cce 20
+- Use rocm root as prefix for llvm-amdgpu
+
+## CI
+- Matrix: update to cuda_arch 90.
+
+## Shared specs:
+- llvm 14 -> llvm 19
+- oneapi 2023 -> oneapi 2025
+- gcc 10 -> gcc 13
+- gcc 11 -> gcc 13
+- cce 19 -> cce 20
+- sycl clang 20 -> sycl clang 22
+
+# v2025.10.0
+
+Recommended Spack version: v1.0.2
+Vetted spack-packages commit: a3806d96d2
+
+## Machine Changes
+- Retire Lassen
+- Add Matrix for CUDA jobs
+
+## Packages
+- Update RAJA CMake requirement to 3.24+ for versions 2025.09.0 and later
+- Add CMake 3.25.2 to available external packages
+
+## Configs Update
+- Add Matrix machine configuration (toss_4_x86_64_ib)
+- Add LLVM 18.1.8 compiler to non-CUDA machines
+- Add CUDA externals to Dane (non-GPU machine) for cross-compilation compatibility with Matrix, enabling optimized builds for Matrix architecture
+
+## CI
+- Add Matrix to CI pipeline (but turn it off)
+- Update CI configurations for Matrix and Dane
+- Fix spec list configuration in shared CI environment
+
+# v2025.09.1
+
+Recommended Spack version: v1.0.2
+Vetted spack-packages commit: a3806d96d2
+
+## Packages
+- Add latest release of some RADIUSS packages.
+- Style changes.
+
+## Configs
+- Add sycl compiler tied to rocm 6.3.1.
+
+## CI
+- Allow to deactivate a CI machine by variable.
+
+# v2025.09.0
+
+Recommended Spack version: 1.0.2:
+Vetted spack-packages commit: a3806d96d2
+
+Update Spack configurations to v1 format
+- Remove compilers.yaml
+- Move compiler definition to packages.yaml
+- Create appropriate toolchains
+Update most packages with 2025.09 release.
+Add support for spack-packages repository set from environment
+
+Retire Ruby
+
+Update CI configuration
+Use CI reservation on Dane
+
+Add patches for Caliper
 
 # v2025.06.0
 

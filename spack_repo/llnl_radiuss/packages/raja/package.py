@@ -46,6 +46,18 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     version("develop", branch="develop", submodules=submodules)
     version("main", branch="main", submodules=submodules)
     version(
+        "2025.09.1",
+        tag="v2025.09.1",
+        commit="1e0756eda3c344da362e483afb9100ebd8137a2c",
+        submodules=submodules,
+    )
+    version(
+        "2025.09.0",
+        tag="v2025.09.0",
+        commit="ca756788dbdd43fec2a3840389126ae94a905d5f",
+        submodules=submodules,
+    )
+    version(
         "2025.03.2",
         tag="v2025.03.2",
         commit="6e36a94380adbe88fed11a3213fc08461428ece0",
@@ -224,6 +236,7 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     variant("gpu-profiling", default=False, description="Enable GPU profiling")
 
     variant("plugins", default=False, description="Enable runtime plugins")
+    variant("caliper", default=False, description="Enable caliper support")
     variant("examples", default=True, description="Build examples.")
     variant("exercises", default=True, description="Build exercises.")
     # TODO: figure out gtest dependency and then set this default True
@@ -248,8 +261,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("cxx", type="build")
 
     depends_on("blt", type="build")
+    depends_on("blt@0.7.1:", type="build", when="@2025.09.0:")
     depends_on("blt@0.7.0:", type="build", when="@2025.03.0:")
-    depends_on("blt@0.6.2", type="build", when="@2024.02.1:2024.02.2")
+    depends_on("blt@0.6.2:", type="build", when="@2024.02.1:")
     depends_on("blt@0.6.1", type="build", when="@2024.02.0")
     depends_on("blt@0.5.3", type="build", when="@2023.06.0:2023.06.1")
     depends_on("blt@0.5.2:0.5.3", type="build", when="@2022.10.5")
@@ -264,8 +278,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp+omptarget", when="+omptarget")
     depends_on("camp+sycl", when="+sycl")
     depends_on("camp@main", when="@develop")
-    depends_on("camp@2025.03.0", when="@2025.03")
-    depends_on("camp@2024.07.0", when="@2024.02.2")
+    depends_on("camp@2025.09:", when="@2025.09:")
+    depends_on("camp@2025.03", when="@2025.03")
+    depends_on("camp@2024.07", when="@2024.07")
     depends_on("camp@2024.02.1", when="@2024.02.1")
     depends_on("camp@2024.02.0", when="@2024.02.0")
     depends_on("camp@2023.06.0", when="@2023.06.0:2023.06.1")
@@ -275,13 +290,16 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
     depends_on("camp@0.2.2:0.2.3", when="@0.14.0")
     depends_on("camp@0.1.0", when="@0.10.0:0.13.0")
 
-    depends_on("cmake@3.23:", when="@2024.07.0:", type="build")
+    depends_on("cmake@3.24:", when="@2025.09.0:", type="build")
+    depends_on("cmake@3.23:", when="@2024.07.0:2025.03.2", type="build")
     depends_on("cmake@3.23:", when="@2022.10.0:2024.02.2+rocm", type="build")
     depends_on("cmake@3.20:", when="@2022.10.0:2024.02.2", type="build")
     depends_on("cmake@3.20:", when="@:2022.03+rocm", type="build")
     depends_on("cmake@3.14:", when="@:2022.03", type="build")
 
     depends_on("llvm-openmp", when="+openmp %apple-clang")
+
+    depends_on("caliper", when="+caliper")
 
     depends_on("rocprim", when="+rocm")
     with when("+rocm @0.12.0:"):
@@ -310,6 +328,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         msg="Support for SYCL was introduced in RAJA after 2024.02 release, "
         "please use a newer release.",
     )
+
+    # https://github.com/spack/spack-packages/pull/2059#issuecomment-3443184517
+    conflicts("^cuda@13:", when="+cuda")
 
     def _get_sys_type(self, spec):
         sys_type = spec.architecture
@@ -355,17 +376,17 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append("#------------------{0}\n".format("-" * 30))
 
         entries.append(cmake_cache_option("ENABLE_OPENMP", spec.satisfies("+openmp")))
+        entries.append(cmake_cache_option("ENABLE_CUDA", spec.satisfies("+cuda")))
 
         if spec.satisfies("+cuda"):
-            entries.append(cmake_cache_option("ENABLE_CUDA", True))
             cuda_for_radiuss_projects(entries, spec)
-        else:
-            entries.append(cmake_cache_option("ENABLE_CUDA", False))
 
         if spec.satisfies("+rocm"):
             entries.append(cmake_cache_option("ENABLE_HIP", True))
             hipcc_flags = []
-            if self.spec.satisfies("@2025.09.0:"):
+            if self.spec.satisfies("^rocprim@7.0"):
+                hipcc_flags.append("-std=c++17")
+            elif self.spec.satisfies("@2025.09.0:"):
                 hipcc_flags.append("-std=c++17")
             elif self.spec.satisfies("@0.14.0:2025.09.0"):
                 hipcc_flags.append("-std=c++14")
@@ -390,6 +411,9 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
         entries.append(cmake_cache_path("BLT_SOURCE_DIR", spec["blt"].prefix))
         if "camp" in self.spec:
             entries.append(cmake_cache_path("camp_DIR", spec["camp"].prefix))
+
+        if "caliper" in self.spec:
+            entries.append(cmake_cache_path("caliper_DIR", spec["caliper"].prefix))
 
         # Build options
         entries.append("#------------------{0}".format("-" * 60))
@@ -423,8 +447,11 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             entries.append(cmake_cache_string("CMAKE_CXX_FLAGS_RELEASE", "-O1"))
 
         # C++17
-        if (spec.satisfies("@2025.09.0:") or
-            (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))):
+        if (
+            spec.satisfies("@2025.09.0:")
+            or (spec.satisfies("@2024.07.0:") and spec.satisfies("+sycl"))
+            or (spec.satisfies("^rocprim@7.0:"))
+        ):
             entries.append(cmake_cache_string("BLT_CXX_STD", "c++17"))
         # C++14
         elif spec.satisfies("@0.14.0:2025.09.0"):
@@ -438,6 +465,10 @@ class Raja(CachedCMakePackage, CudaPackage, ROCmPackage):
             cmake_cache_option("RAJA_ENABLE_RUNTIME_PLUGINS", spec.satisfies("+plugins"))
         )
 
+        entries.append(
+            cmake_cache_option("RAJA_ENABLE_CALIPER", spec.satisfies("+caliper"))
+        )
+        
         if spec.satisfies("+omptarget"):
             entries.append(
                 cmake_cache_string(

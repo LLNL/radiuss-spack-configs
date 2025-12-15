@@ -1,7 +1,10 @@
 spack:
+  repos:
+    builtin::
+      commit: a229f54670
+      git: https://github.com/spack/spack-packages.git
   include:
     - config.yaml
-    - compilers.yaml
     - packages.yaml
   concretizer:
     reuse: false
