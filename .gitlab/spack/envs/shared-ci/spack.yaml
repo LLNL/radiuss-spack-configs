@@ -10,7 +10,7 @@ spack:
   #[general--]
   repos:
     builtin:
-      commit: e33db82
+      commit: 38874c5d9c
       git: https://github.com/davidbeckingsale/spack-packages.git
   include:
   - $LCSCHEDCLUSTER/config.yaml
